@@ -1,0 +1,30 @@
+{
+  "name": "root",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "gen": "lerna run --scope  code-gen gen",
+    "dev": "lerna run dev --stream",
+    "debug": "lerna run debug --stream",
+    "build": "lerna run build --stream",
+    "boot": "lerna bootstrap",
+    "export": "lerna run export --stream",
+    "clean": "lerna run clean --stream",
+    "one": "npx lerna bootstrap && lerna run gen --stream && lerna run build --stream && lerna run export --stream"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "devDependencies": {
+    "husky": "^4.0.10",
+    "lerna": "^3.20.2",
+    "prettier": "^1.19.1",
+    "pretty-quick": "^2.0.1"
+  },
+  "license": "gplv3",
+  "version": "0.0.0"
+}
