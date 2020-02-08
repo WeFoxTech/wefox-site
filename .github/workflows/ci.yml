@@ -1,0 +1,26 @@
+name: CI
+on:
+  pull_request:
+    paths-ignore:
+      - .github/workflows/auto_release.yml
+      - README.*
+  push:
+    paths-ignore:
+      - .github/workflows/auto_release.yml
+      - README.*
+      - .gitignore
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - run: yarn
+      - run: yarn boot
+      - run: yarn gen
+      - run: yarn build
+      - run: yarn export
