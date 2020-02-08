@@ -37,9 +37,7 @@ module.exports = withMDX({
       ...defaultPathMap,
       '/': { page: '/' },
       '/about': { page: '/about' },
-      '/p/hello-nextjs': { page: '/post', query: { title: 'hello- i am from query' } },
+      // '/p/hello-nextjs': { page: '/about', query: { title: 'hello- i am from query' } },
     };
   },
-
-  // assetPrefix: '/ipns/Qmd3HzpnpSsLeUQF2mJEXn24a1yYo2LTaQyoq4mwxkse1Z/',
 });
