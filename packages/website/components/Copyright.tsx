@@ -20,12 +20,12 @@ export const Copyright: FunctionComponent = () => {
     <>
       <Typography className={classes.root}>
         &copy; {new Date().getFullYear()}
-        <Tooltip title="foxundermoon">
-          <Link className={classes.link} href="https://fox.mn">
-            fox.mn
+        <Tooltip title="微狐科技">
+          <Link className={classes.link} href="https://vvfox.com">
+            vvfox.com
           </Link>
         </Tooltip>
-        . All Rights Reserved
+         All Rights Reserved
       </Typography>
     </>
   );
