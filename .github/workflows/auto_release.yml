@@ -1,0 +1,165 @@
+name: auto release
+
+on:
+  push:
+    paths-ignore:
+      - .github/workflows/ci.yml
+      - README.*
+    branches:
+      - master
+      - releases/**
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      CLEAR_BUCKET: 'no'
+    steps:
+      - name: check prerelease
+        if: endsWith(github.event.head_commit.message,':prerelease')
+        run: |
+          echo "::set-env name=RELEASE_TYPE::prerelease"
+          echo "::set-env name=PRERELEASE::true"
+          echo "::set-env name=NEED_RELEASE::yes"
+      - name: check release
+        if: endsWith(github.event.head_commit.message,':release')
+        run: |
+          echo "::set-env name=RELEASE_TYPE::release"
+          echo "::set-env name=PRERELEASE::false"
+          echo "::set-env name=NEED_RELEASE::yes"
+      # - name: exit if needn't release
+      #   if: env.NEED_RELEASE != 'yes'
+      #   run: |
+      #     echo "needn't release"
+      #     exit 1
+      - uses: actions/checkout@v2
+        if: env.NEED_RELEASE == 'yes'
+
+      # -----------------  build number ----------------------------------------
+      - name: Generate build number
+        if: env.NEED_RELEASE == 'yes'
+        id: buildnumber
+        uses: einaregilsson/build-number@v2
+        with:
+          token: ${{secrets.github_token}}
+      - name: set version env
+        run: |
+          echo "::set-env name=VERSION::$(cat lerna.json|jq -r .version)"
+      - run: sudo timedatectl set-timezone Asia/Shanghai
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        if: env.NEED_RELEASE == 'yes'
+        with:
+          node-version: 12.x
+      - name: Create Release
+        if: env.NEED_RELEASE == 'yes'
+        id: create_release
+        uses: actions/create-release@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ env.VERSION }}.${{ steps.buildnumber.outputs.build_number }}
+          release_name: Release ${{ env.VERSION }}.${{ steps.buildnumber.outputs.build_number }}
+          body: |
+            # release summary
+            |     item        |             value            |
+            | --------------- |   ------------------------   |
+            | entry cid       | `/ipfs/${{ env.IPFS_CID }}`  |
+            |  entry ipns     | `/ipns/${{ env.IPNS_ID }}`   |
+            | assets ipfs CID | `${{ env.ASSETS_IPFS_CID }}` |
+
+
+            # centralized deployed
+            - [https://dncov.fox.mn](https://dncov.fox.mn)
+
+            # decentralized deployed
+
+            ## global access
+            - https://ipfs.io/ipfs/${{ env.IPFS_CID }}
+            - https://ipfs.infura.io/ipfs/${{ env.IPFS_CID }}
+
+            ## in Chaina without proxy
+            - http://ncov.fox.mn:2020/ipfs/${{ env.IPFS_CID }}
+
+          draft: false
+          prerelease: ${{ env.PRERELEASE }}
+      - name: gen file name
+        if: env.NEED_RELEASE == 'yes'
+        run: |
+          name=$(cat ./packages/transparent-info-app/package.json |jq -r .name)
+          fileName=${name}-${{ env.VERSION }}.${{ steps.buildnumber.outputs.build_number }}.tar.gz
+          tar  -cf "./${fileName}"   ./packages/transparent-info-app/out
+          echo "::set-env name=FILE_NAME::${fileName}"
+
+      - name: Upload Release Asset
+        if: env.NEED_RELEASE == 'yes'
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./${{ env.FILE_NAME }}
+          asset_name: ${{ env.FILE_NAME }}
+          asset_content_type: application/gzip
+      #  ---------------- release for centralized --------------------------------------
+      - name: Setup qshell
+        uses: foxundermoon/setup-qshell@v1
+        if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
+        with:
+          qshell-version: '2.4.0'
+      - name: show qshell version
+        if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
+        run: qshell version
+      - name: login qshell
+        if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
+        run: |
+          qshell account ${{ secrets.QN_AK }} ${{ secrets.QN_SK }} foxmn
+      - name: rebuild-for-centralize
+        if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
+        env:
+          SHA: ${{ github.sha }}
+          VERSION: ${{ env.VERSION }}
+          BUILD_NUMBER: ${{ steps.buildnumber.outputs.build_number }}
+          ON_IPFS: 'no'
+          ASSETS_IPFS_CID: ${{ env.ASSETS_IPFS_CID }}
+          IPFS_CID: ${{ env.IPFS_CID }}
+
+        run: |
+          echo "IPFS_CID=${{ env.IPFS_CID }}   ASSETS_IPFS_CID=${{ env.ASSETS_IPFS_CID }}"
+          yarn one
+      - name: cp to cout
+        if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
+        run: |
+          cp -r  ${{ env.OUT_DIR }} ./cout
+      - name: clear-bucket
+        if: env.CLEAR_BUCKET == 'yes' && env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
+        run: |
+          qshell listbucket ${{ secrets.QN_BUCKET }} -o filelist
+          qshell batchdelete  ${{ secrets.QN_BUCKET }}  -y  -i  filelist
+
+      - name: upload
+        if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
+        run: |
+          qshell  qupload2   \
+          --bucket  ${{ secrets.QN_BUCKET }}  \
+          --overwrite  \
+          --src-dir . \
+          --log-file ../upload.log \
+          --thread-count 100
+        working-directory: ./cout
+      - uses: actions/upload-artifact@v1
+        if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
+        with:
+          name: upload.log
+          path: ./upload.log
+      - name: refresh-cdn
+        if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
+        working-directory: ./cout
+        run: |
+          find . | grep -v '^./_next' | \
+          sed  -e 's|./|https://vvfox.com/|' | \
+          sed  -n '1d;p'  | \
+          tee -a refresh.xt | \
+          qshell cdnrefresh
+          echo 'https://vvfox.com' |qshell cdnrefresh
