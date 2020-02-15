@@ -3,7 +3,7 @@
   "version": 2,
   "scope": "wefox",
   "builds": [{ "src": "./out/*", "use": "@now/static" }],
-  "regions": ["cle1"],
+  "regions": ["sfo1"],
   "routes": [
     { "src": "/(.*)", "dest": "/out/$1" },
     { "handle": "filesystem" },
