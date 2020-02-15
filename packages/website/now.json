@@ -1,0 +1,15 @@
+{
+  "name": "home-website",
+  "version": 2,
+  "scope": "wefox",
+  "builds": [{ "src": "./out/*", "use": "@now/static" }],
+  "regions": ["cle1"],
+  "routes": [
+    { "src": "/(.*)", "dest": "/out/$1" },
+    { "handle": "filesystem" },
+    { "src": "/.*", "status": 404, "dest": "/out/404.html" }
+  ],
+  "github": {
+    "enabled": false
+  }
+}
