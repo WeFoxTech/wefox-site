@@ -1,0 +1,27 @@
+name: preview
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: build
+        run: |
+          yarn one
+      - name: deploy
+        uses: foxundermoon/now-deploy-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          zeit-token: ${{ secrets.ZEIT_TOKEN }}
+          zeit-team-id: team_IcdA4KZF7VghnRhAtBMuOr66
+          now-args: '--no-clipboard'
+          working-directory: ./packages/website
