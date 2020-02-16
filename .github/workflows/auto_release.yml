@@ -156,19 +156,20 @@ jobs:
         if: env.NEED_RELEASE == 'yes'
         with:
           url: ${{ secrets.FEISHU_BOT }}
-          title: 《${{ github.event.pull_request.title }}》release success
+          title: website ${{ env.env.RELEASE_TYPE }} success
           text: |
             view: ${{ steps.deploy.outputs.preview-url }}
             action detail: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}
             committer: ${{ github.actor }}
             repo: ${{ github.event.repository.html_url }}
             compare: ${{ github.event.compare }}
+            headCommit: ${{ github.event.head_commit.url }}
       - name: release action failed notice
         uses: foxundermoon/feishu-action@v1
         if: env.NEED_RELEASE == 'yes' && failure()
         with:
           url: ${{ secrets.FEISHU_BOT }}
-          title: website CI failure
+          title: website ${{ env.env.RELEASE_TYPE }} failure
           text: |
             action detail: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}
             repo: ${{ github.event.repository.html_url }}
