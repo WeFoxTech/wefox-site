@@ -6,7 +6,6 @@
   "regions": ["sfo1"],
   "public": true,
   "routes": [
-
     { "src": "/(.*)", "dest": "/out/$1" },
     { "handle": "filesystem" },
     { "src": "/.*", "status": 404, "dest": "/out/404.html" }
