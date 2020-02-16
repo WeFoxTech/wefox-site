@@ -59,6 +59,16 @@ jobs:
           BUILD_NUMBER: ${{ steps.buildnumber.outputs.build_number }}
         run: |
           yarn one
+      - name: deploy
+        uses: foxundermoon/now-deploy-action@master
+        id: deploy
+        if: env.NEED_RELEASE == 'yes'
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          zeit-token: ${{ secrets.ZEIT_TOKEN }}
+          zeit-team-id: team_IcdA4KZF7VghnRhAtBMuOr66
+          now-args: '--no-clipboard ${{ env.NOW_ARGS }}'
+          working-directory: ./packages/website
       - name: Create Release
         if: env.NEED_RELEASE == 'yes'
         id: create_release
@@ -70,7 +80,8 @@ jobs:
           release_name: Release ${{ env.VERSION }}.${{ steps.buildnumber.outputs.build_number }}
           body: |
             # release summary
-            https://wefox.tech
+            current release: ${{ steps.deploy.outputs.preview-url }}
+            latest release : https://wefox.tech
           draft: false
           prerelease: ${{ env.PRERELEASE }}
       - name: gen file name
@@ -105,16 +116,6 @@ jobs:
         if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
         run: |
           qshell account ${{ secrets.QN_AK }} ${{ secrets.QN_SK }} foxmn
-      - name: deploy
-        uses: foxundermoon/now-deploy-action@master
-        id: deploy
-        if: env.NEED_RELEASE == 'yes'
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          zeit-token: ${{ secrets.ZEIT_TOKEN }}
-          zeit-team-id: team_IcdA4KZF7VghnRhAtBMuOr66
-          now-args: '--no-clipboard ${{ env.NOW_ARGS }}'
-          working-directory: ./packages/website
       # - name: cp to cout
       #   if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
       #   run: |
@@ -156,9 +157,10 @@ jobs:
         if: env.NEED_RELEASE == 'yes'
         with:
           url: ${{ secrets.FEISHU_BOT }}
-          title: website ${{ env.env.RELEASE_TYPE }} success
+          title: website ${{ env.RELEASE_TYPE }} success
           text: |
-            view: ${{ steps.deploy.outputs.preview-url }}
+            view:   ${{ steps.deploy.outputs.preview-url }}
+            release: ${{ github.event.repository.html_url }}/releases/tag/${{ env.VERSION }}.${{ steps.buildnumber.outputs.build_number }}
             action detail: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}
             committer: ${{ github.actor }}
             repo: ${{ github.event.repository.html_url }}
@@ -169,7 +171,7 @@ jobs:
         if: env.NEED_RELEASE == 'yes' && failure()
         with:
           url: ${{ secrets.FEISHU_BOT }}
-          title: website ${{ env.env.RELEASE_TYPE }} failure
+          title: website ${{ env.RELEASE_TYPE }} failure
           text: |
             action detail: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}
             repo: ${{ github.event.repository.html_url }}
