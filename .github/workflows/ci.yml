@@ -1,9 +1,9 @@
 name: CI
 on:
-  pull_request:
-    paths-ignore:
-      - .github/workflows/auto_release.yml
-      - README.*
+  # pull_request:
+  #   paths-ignore:
+  #     - .github/workflows/auto_release.yml
+  #     - README.*
   push:
     paths-ignore:
       - .github/workflows/auto_release.yml
@@ -24,3 +24,15 @@ jobs:
       - run: yarn gen
       - run: yarn build
       - run: yarn export
+      - name: CI failed notice
+        uses: foxundermoon/feishu-action@v1
+        if: failure()
+        with:
+          url: ${{ secrets.FEISHU_BOT }}
+          title: website CI failure
+          text: |
+            run detail: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}
+            repository: ${{ github.repository }}
+            headCommit: ${{ github.event.head_commit.url }}
+            committer: ${{ github.actor }}
+            compare: ${{ github.event.compare }}
