@@ -4,6 +4,7 @@ on:
   push:
     paths-ignore:
       - .github/workflows/ci.yml
+      - .github/workflows/preview.yml
       - README.*
     branches:
       - master
@@ -21,17 +22,16 @@ jobs:
           echo "::set-env name=RELEASE_TYPE::prerelease"
           echo "::set-env name=PRERELEASE::true"
           echo "::set-env name=NEED_RELEASE::yes"
+          echo "::set-env name=NOW_ARGS:: "
       - name: check release
         if: endsWith(github.event.head_commit.message,':release')
         run: |
           echo "::set-env name=RELEASE_TYPE::release"
           echo "::set-env name=PRERELEASE::false"
           echo "::set-env name=NEED_RELEASE::yes"
-      # - name: exit if needn't release
-      #   if: env.NEED_RELEASE != 'yes'
-      #   run: |
-      #     echo "needn't release"
-      #     exit 1
+          echo "::set-env name=NOW_ARGS::--prod"
+
+
       - uses: actions/checkout@v2
         if: env.NEED_RELEASE == 'yes'
 
@@ -62,33 +62,15 @@ jobs:
           release_name: Release ${{ env.VERSION }}.${{ steps.buildnumber.outputs.build_number }}
           body: |
             # release summary
-            |     item        |             value            |
-            | --------------- |   ------------------------   |
-            | entry cid       | `/ipfs/${{ env.IPFS_CID }}`  |
-            |  entry ipns     | `/ipns/${{ env.IPNS_ID }}`   |
-            | assets ipfs CID | `${{ env.ASSETS_IPFS_CID }}` |
-
-
-            # centralized deployed
-            - [https://dncov.fox.mn](https://dncov.fox.mn)
-
-            # decentralized deployed
-
-            ## global access
-            - https://ipfs.io/ipfs/${{ env.IPFS_CID }}
-            - https://ipfs.infura.io/ipfs/${{ env.IPFS_CID }}
-
-            ## in Chaina without proxy
-            - http://ncov.fox.mn:2020/ipfs/${{ env.IPFS_CID }}
-
+            https://wefox.tech
           draft: false
           prerelease: ${{ env.PRERELEASE }}
       - name: gen file name
         if: env.NEED_RELEASE == 'yes'
         run: |
-          name=$(cat ./packages/transparent-info-app/package.json |jq -r .name)
+          name=$(cat ./packages/website/package.json |jq -r .name)
           fileName=${name}-${{ env.VERSION }}.${{ steps.buildnumber.outputs.build_number }}.tar.gz
-          tar  -cf "./${fileName}"   ./packages/transparent-info-app/out
+          tar  -cf "./${fileName}"   ./packages/website/out
           echo "::set-env name=FILE_NAME::${fileName}"
 
       - name: Upload Release Asset
@@ -115,51 +97,81 @@ jobs:
         if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
         run: |
           qshell account ${{ secrets.QN_AK }} ${{ secrets.QN_SK }} foxmn
-      - name: rebuild-for-centralize
+      - name: build
         if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
         env:
           SHA: ${{ github.sha }}
           VERSION: ${{ env.VERSION }}
           BUILD_NUMBER: ${{ steps.buildnumber.outputs.build_number }}
-          ON_IPFS: 'no'
-          ASSETS_IPFS_CID: ${{ env.ASSETS_IPFS_CID }}
-          IPFS_CID: ${{ env.IPFS_CID }}
-
         run: |
-          echo "IPFS_CID=${{ env.IPFS_CID }}   ASSETS_IPFS_CID=${{ env.ASSETS_IPFS_CID }}"
           yarn one
-      - name: cp to cout
-        if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
-        run: |
-          cp -r  ${{ env.OUT_DIR }} ./cout
-      - name: clear-bucket
-        if: env.CLEAR_BUCKET == 'yes' && env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
-        run: |
-          qshell listbucket ${{ secrets.QN_BUCKET }} -o filelist
-          qshell batchdelete  ${{ secrets.QN_BUCKET }}  -y  -i  filelist
 
-      - name: upload
-        if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
-        run: |
-          qshell  qupload2   \
-          --bucket  ${{ secrets.QN_BUCKET }}  \
-          --overwrite  \
-          --src-dir . \
-          --log-file ../upload.log \
-          --thread-count 100
-        working-directory: ./cout
-      - uses: actions/upload-artifact@v1
-        if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
+      - name: deploy
+        uses: foxundermoon/now-deploy-action@master
+        id: deploy
+        if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'prerelease'
         with:
-          name: upload.log
-          path: ./upload.log
-      - name: refresh-cdn
-        if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
-        working-directory: ./cout
-        run: |
-          find . | grep -v '^./_next' | \
-          sed  -e 's|./|https://vvfox.com/|' | \
-          sed  -n '1d;p'  | \
-          tee -a refresh.xt | \
-          qshell cdnrefresh
-          echo 'https://vvfox.com' |qshell cdnrefresh
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          zeit-token: ${{ secrets.ZEIT_TOKEN }}
+          zeit-team-id: team_IcdA4KZF7VghnRhAtBMuOr66
+          now-args: '--no-clipboard ${{ env.NOW_ARGS }}'
+          working-directory: ./packages/website
+      # - name: cp to cout
+      #   if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
+      #   run: |
+      #     cp -r  ${{ env.OUT_DIR }} ./cout
+      # - name: clear-bucket
+      #   if: env.CLEAR_BUCKET == 'yes' && env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
+      #   run: |
+      #     qshell listbucket ${{ secrets.QN_BUCKET }} -o filelist
+      #     qshell batchdelete  ${{ secrets.QN_BUCKET }}  -y  -i  filelist
+
+      # - name: upload
+      #   if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
+      #   run: |
+      #     qshell  qupload2   \
+      #     --bucket  ${{ secrets.QN_BUCKET }}  \
+      #     --overwrite  \
+      #     --src-dir . \
+      #     --log-file ../upload.log \
+      #     --thread-count 100
+      #   working-directory: ./cout
+      # - uses: actions/upload-artifact@v1
+      #   if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
+      #   with:
+      #     name: upload.log
+      #     path: ./upload.log
+      # - name: refresh-cdn
+      #   if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
+      #   working-directory: ./cout
+      #   run: |
+      #     find . | grep -v '^./_next' | \
+      #     sed  -e 's|./|https://wefox.tech/|' | \
+      #     sed  -n '1d;p'  | \
+      #     tee -a refresh.xt | \
+      #     qshell cdnrefresh
+      #     echo 'https://wefox.tech' |qshell cdnrefresh
+
+      - name: deploy website success
+        uses: foxundermoon/feishu-action@v1
+        if: env.NEED_RELEASE == 'yes'
+        with:
+          url: ${{ secrets.FEISHU_BOT }}
+          title: 《${{ github.event.pull_request.title }}》release success
+          text: |
+            view: ${{ steps.deploy.outputs.preview-url }}
+            committer: ${{ github.actor }}
+            repo: ${{ github.event.repository.html_url }}
+            compare: ${{ github.event.compare }}
+      - name: CI failed notice
+        uses: foxundermoon/feishu-action@v1
+        if: env.NEED_RELEASE == 'yes' && failure()
+        with:
+          url: ${{ secrets.FEISHU_BOT }}
+          title: website CI failure
+          text: |
+            run detail: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}
+            repo: ${{ github.event.repository.html_url }}
+            headCommit: ${{ github.event.head_commit.url }}
+            committer: ${{ github.actor }}
+            compare: ${{ github.event.compare }}
