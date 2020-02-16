@@ -32,7 +32,7 @@ jobs:
           title: website CI failure
           text: |
             run detail: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}
-            repository: ${{ github.repository }}
+            repo: ${{ github.event.repository.html_url }}
             headCommit: ${{ github.event.head_commit.url }}
             committer: ${{ github.actor }}
             compare: ${{ github.event.compare }}

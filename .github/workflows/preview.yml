@@ -35,8 +35,7 @@ jobs:
             preview: ${{ steps.deploy.outputs.preview-url }}
             PR: ${{ github.event.pull_request._links.html.href }}
             committer: ${{ github.actor }}
-            repository: ${{ github.repository }}
-            compare: ${{ github.event.compare }}
+            repo: ${{ github.event.repository.html_url }}
 
       - name: deploy website preview failed
         uses: foxundermoon/feishu-action@v1
@@ -46,7 +45,5 @@ jobs:
           title: deploy failure for website preview 
           text: |
             run detail: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}
-            repository: ${{ github.repository }}
             PR: ${{ github.event.pull_request._links.html.href }}
-            committer: ${{ github.actor }}
-            compare: ${{ github.event.compare }}
+            repo: ${{ github.event.repository.html_url }}
