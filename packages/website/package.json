@@ -1,22 +1,22 @@
 {
-  "name": "vvfox-website",
+  "name": "wefox-website",
   "version": "0.1.0",
-  "description": "the Micro Fox web site",
+  "description": "WeFox Technology's official website",
   "keywords": [
-    "vvfox",
-    "micro fox",
+    "wefox",
     "微狐",
-    "微狐科技"
+    "微狐科技",
+    "WeFox.tech"
   ],
-  "author": "fox <fox@vvfox.com>",
-  "homepage": "https://github.com/foxundermoon/vvfox-website#readme",
-  "license": "MIT",
+  "author": "fox <i@fox.mn>",
+  "homepage": "https://github.com/WeFoxTech/website#readme",
+  "license": "CC BY-NC-SA 4.0",
   "directories": {
     "test": "__tests__"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/foxundermoon/vvfox-website.git"
+    "url": "git+https://github.com/WeFoxTech/website.git"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1",
@@ -29,7 +29,7 @@
     "clean": "rimraf .next out gen"
   },
   "bugs": {
-    "url": "https://github.com/foxundermoon/vvfox-website/issues"
+    "url": "https://github.com/WeFoxTech/website/issues"
   },
   "dependencies": {
     "@mapbox/rehype-prism": "^0.4.0",
