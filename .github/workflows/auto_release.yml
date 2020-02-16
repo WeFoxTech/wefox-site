@@ -108,7 +108,7 @@ jobs:
       - name: deploy
         uses: foxundermoon/now-deploy-action@master
         id: deploy
-        if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'prerelease'
+        if: env.NEED_RELEASE == 'yes'
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           zeit-token: ${{ secrets.ZEIT_TOKEN }}
@@ -159,17 +159,18 @@ jobs:
           title: 《${{ github.event.pull_request.title }}》release success
           text: |
             view: ${{ steps.deploy.outputs.preview-url }}
+            action detail: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}
             committer: ${{ github.actor }}
             repo: ${{ github.event.repository.html_url }}
             compare: ${{ github.event.compare }}
-      - name: CI failed notice
+      - name: release action failed notice
         uses: foxundermoon/feishu-action@v1
         if: env.NEED_RELEASE == 'yes' && failure()
         with:
           url: ${{ secrets.FEISHU_BOT }}
           title: website CI failure
           text: |
-            run detail: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}
+            action detail: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}
             repo: ${{ github.event.repository.html_url }}
             headCommit: ${{ github.event.head_commit.url }}
             committer: ${{ github.actor }}
