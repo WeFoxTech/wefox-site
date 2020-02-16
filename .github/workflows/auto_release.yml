@@ -51,6 +51,14 @@ jobs:
         if: env.NEED_RELEASE == 'yes'
         with:
           node-version: 12.x
+      - name: build
+        if: env.NEED_RELEASE == 'yes'
+        env:
+          SHA: ${{ github.sha }}
+          VERSION: ${{ env.VERSION }}
+          BUILD_NUMBER: ${{ steps.buildnumber.outputs.build_number }}
+        run: |
+          yarn one
       - name: Create Release
         if: env.NEED_RELEASE == 'yes'
         id: create_release
@@ -97,15 +105,6 @@ jobs:
         if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
         run: |
           qshell account ${{ secrets.QN_AK }} ${{ secrets.QN_SK }} foxmn
-      - name: build
-        if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
-        env:
-          SHA: ${{ github.sha }}
-          VERSION: ${{ env.VERSION }}
-          BUILD_NUMBER: ${{ steps.buildnumber.outputs.build_number }}
-        run: |
-          yarn one
-
       - name: deploy
         uses: foxundermoon/now-deploy-action@master
         id: deploy
