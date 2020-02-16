@@ -2,7 +2,7 @@
   "name": "home-website",
   "version": 2,
   "scope": "wefox",
-  "builds": [{ "src": "./out/*", "use": "@now/static" }],
+  "builds": [{ "src": "./out/**", "use": "@now/static" }],
   "regions": ["sfo1"],
   "routes": [
     { "src": "/(.*)", "dest": "/out/$1" },
