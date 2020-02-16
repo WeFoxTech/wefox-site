@@ -1,1 +1,3 @@
-export const projectUrl = 'https://github.com/foxundermoon/vvfox-website';
+export const githubOrg = 'WeFoxTech'
+export const repoName = 'website';
+export const projectUrl = `https://github.com/${githubOrg}/${repoName}`;
