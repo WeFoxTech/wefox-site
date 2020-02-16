@@ -4,7 +4,10 @@
   "scope": "wefox",
   "builds": [{ "src": "./out/**", "use": "@now/static" }],
   "regions": ["sfo1"],
+  "public": true,
+  "trailingSlash": true,
   "routes": [
+    { "src":"/_next/(.*)" , "dest":"/out/_next/$1"},
     { "src": "/(.*)", "dest": "/out/$1" },
     { "handle": "filesystem" },
     { "src": "/.*", "status": 404, "dest": "/out/404.html" }
