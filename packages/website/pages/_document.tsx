@@ -15,6 +15,19 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
           />
           <Hilight />
+          <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            var _hmt = _hmt || [];
+            (function() {
+              var hm = document.createElement("script");
+              hm.src = "https://hm.baidu.com/hm.js?1eabe0b7af838995ee139de0fbbfe132";
+              var s = document.getElementsByTagName("script")[0]; 
+              s.parentNode.insertBefore(hm, s);
+            })();
+          `,
+          }}
+        />
         </Head>
         <body>
           <Main />
