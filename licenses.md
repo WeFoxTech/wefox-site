@@ -1,5 +1,3 @@
-https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
-
 Attribution-NonCommercial-ShareAlike 4.0 International
 
 =======================================================================
@@ -437,3 +435,6 @@ the avoidance of doubt, this paragraph does not form part of the
 public licenses.
 
 Creative Commons may be contacted at creativecommons.org.
+
+https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
+
