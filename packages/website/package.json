@@ -26,7 +26,8 @@
     "start": "next start",
     "debug": "NODE_OPTIONS=--inspect next",
     "type-check": "tsc",
-    "clean": "rimraf .next out gen"
+    "clean": "rimraf .next out gen",
+    "serve": "npx serve out"
   },
   "bugs": {
     "url": "https://github.com/WeFoxTech/website/issues"
