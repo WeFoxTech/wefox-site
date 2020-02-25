@@ -32,7 +32,7 @@ module.exports = withMDX({
     BUILD_NUMBER: process.env.BUILD_NUMBER || '1',
     SHA: process.env.SHA || 'c7a880b6ae1825521b0a0ee1686fd7af198b735e',
   },
-  exportPathMap: async function(defaultPathMap, { dev, dir, outDir, distDir, buildId }) {
+  _exportPathMap: async function(defaultPathMap, { dev, dir, outDir, distDir, buildId }) {
     return {
       ...defaultPathMap,
       '/': { page: '/' },

@@ -1,10 +1,17 @@
-import * as React from 'react';
-import Layout from '../components/Layout';
-import About from '../components/section/About.mdx';
-const AboutPage = () => (
-  <Layout title="关于微狐科技">
-    <About />
-  </Layout>
-);
+import React from 'react';
+import Head from 'next/head';
+import { getInitialLocale } from '../src/translations/getInitialLocale';
 
-export default AboutPage;
+const Index: React.FC = () => {
+  React.useEffect(() => {
+    window.location.replace(`/${getInitialLocale()}`);
+  });
+
+  return (
+    <Head>
+      <meta name="robots" content="noindex, nofollow" />
+    </Head>
+  );
+};
+
+export default Index;
