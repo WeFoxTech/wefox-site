@@ -1,11 +1,24 @@
 import * as React from 'react';
-import Link from '../src/Link';
 import Head from 'next/head';
-import { AppBar, Toolbar, Typography, Theme, Container, useMediaQuery } from '@material-ui/core';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Theme,
+  Container,
+
+} from '@material-ui/core';
 import { Footer } from './Footer';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { BottomNav } from './BottomNav';
 import { Component } from 'react';
+import LanguageIcon from '@material-ui/icons/Translate';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import useTranslation from '../src/hooks/useTranslation';
+import { languageNames, localeNames, Locale } from '../src/translations/config';
+import { useRouter } from 'next/router';
+import { LocaleContext } from '../src/context/LocaleContext';
+import { LocaleSwitcher } from './LocaleSwitcher';
 
 interface Props {
   title?: string;
@@ -14,7 +27,7 @@ interface Props {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     main: {
-      minHeight: '80vh',
+      // minHeight: '80vh',
       // background: 'linear-gradient(45deg,#fe5196,#f77062)'
     },
   })
@@ -26,7 +39,12 @@ const Layout: React.FunctionComponent<Props> = ({
   toolbar = null,
 }) => {
   const classes = useStyles();
-  const islargeScreen = useMediaQuery((theme: Theme) => theme.breakpoints.between('lg', 'xl'));
+  const { t, locale } = useTranslation();
+
+  const router = useRouter();
+
+  const [languageMenu, setLanguageMenu] = React.useState<Element | null>(null);
+
   return (
     <>
       <Head>
@@ -39,11 +57,12 @@ const Layout: React.FunctionComponent<Props> = ({
         <Toolbar>
           <Typography>{title}</Typography>
           {toolbar}
+          <LocaleSwitcher />
         </Toolbar>
       </AppBar>
 
       <main className={classes.main}>
-        <Container maxWidth={islargeScreen ? 'md' : 'sm'}>{children}</Container>
+        <Container maxWidth="md">{children}</Container>
       </main>
       <footer>
         <Footer />

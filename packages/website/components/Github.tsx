@@ -1,10 +1,10 @@
 import { FunctionComponent } from 'react';
 import { projectUrl } from '../src/consts';
-import Link from '../src/Link';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-import { Theme, Button } from '@material-ui/core';
+import { Link, Theme, Button } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import { Edit as EditIcon } from '@material-ui/icons';
+import useTranslation from '../src/hooks/useTranslation';
 interface EditMeProps {
   path: string;
   title?: string;
@@ -41,15 +41,18 @@ export function getEditUrl(path: string) {
 
 export const EditMe: FunctionComponent<EditMeProps> = ({
   path,
-  title = '编辑此页',
+  title,
   btn = false,
   newtab = true,
 }) => {
   const classes = useStyles();
   const router = useRouter();
-
+  const { t } = useTranslation();
   const full = getEditUrl(path);
   const target = newtab ? '_blank' : undefined;
+  if (!title) {
+    title = t('gh.editMe');
+  }
 
   if (btn) {
     return (
