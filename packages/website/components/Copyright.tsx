@@ -1,6 +1,5 @@
 import { FunctionComponent } from 'react';
-import { Typography, Theme, Tooltip, Container } from '@material-ui/core';
-import Link from '../src/Link';
+import { Typography, Theme, Tooltip, Container ,Link } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -21,8 +20,8 @@ export const Copyright: FunctionComponent = () => {
       <Typography className={classes.root}>
         &copy; {new Date().getFullYear()}
         <Tooltip title="微狐科技">
-          <Link className={classes.link} href="https://vvfox.com">
-            vvfox.com
+          <Link className={classes.link} href="https://wefox.tech">
+            wefox.tech
           </Link>
         </Tooltip>
          All Rights Reserved
