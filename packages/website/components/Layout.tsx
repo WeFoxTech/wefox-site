@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Link from '../src/Link';
 import Head from 'next/head';
 import {
   AppBar,
@@ -7,13 +6,7 @@ import {
   Typography,
   Theme,
   Container,
-  useMediaQuery,
-  Tooltip,
-  Button,
-  MenuItem,
-  Divider,
-  Box,
-  Menu,
+
 } from '@material-ui/core';
 import { Footer } from './Footer';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
@@ -49,29 +42,8 @@ const Layout: React.FunctionComponent<Props> = ({
   const { t, locale } = useTranslation();
 
   const router = useRouter();
-  const {
-    locale: { lang },
-  } = React.useContext(LocaleContext);
-  const handleLocaleChange = (v: Locale) => {
-    const regex = new RegExp(`^/(${locales.join('|')})`);
-    router.push(router.pathname, router.asPath.replace(regex, `/${v}`));
-
-    setLanguageMenu(null);
-  };
 
   const [languageMenu, setLanguageMenu] = React.useState<Element | null>(null);
-
-  const handleLanguageIconClick: React.MouseEventHandler<HTMLButtonElement> = event => {
-    console.log('handleLanguageIconClick ');
-    console.log(event.currentTarget);
-    setLanguageMenu(event.currentTarget);
-  };
-
-  const handleLanguageMenuClose = (event: any) => {
-    console.log('handleLanguageMenuClose close language menu');
-    setLanguageMenu(null);
-    console.log(languageMenu);
-  };
 
   return (
     <>
@@ -85,7 +57,6 @@ const Layout: React.FunctionComponent<Props> = ({
         <Toolbar>
           <Typography>{title}</Typography>
           {toolbar}
-
           <LocaleSwitcher />
         </Toolbar>
       </AppBar>
