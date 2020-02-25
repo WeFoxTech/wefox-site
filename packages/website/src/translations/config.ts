@@ -7,4 +7,4 @@ export const languageNames = {
 
 export type Locale = keyof typeof languageNames
 
-export const locales =  Object.keys(languageNames) as Locale[]
+export const localeNames =  Object.keys(languageNames) as Locale[]

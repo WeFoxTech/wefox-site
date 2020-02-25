@@ -7,7 +7,7 @@ import LanguageIcon from '@material-ui/icons/Translate';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import useTranslation from '../src/hooks/useTranslation';
 
-import { languageNames, locales, Locale } from '../src/translations/config';
+import { languageNames, localeNames, Locale } from '../src/translations/config';
 
 export const LocaleSwitcher: React.FC = () => {
   const { t, locale } = useTranslation();
@@ -21,7 +21,7 @@ export const LocaleSwitcher: React.FC = () => {
 
   const handleLocaleChange = React.useCallback(
     (l: Locale) => {
-      const regex = new RegExp(`^/(${locales.join('|')})`);
+      const regex = new RegExp(`^/(${localeNames.join('|')})`);
       router.push(router.pathname, router.asPath.replace(regex, `/${l}`));
       setLanguageMenu(null);
     },
@@ -61,7 +61,7 @@ export const LocaleSwitcher: React.FC = () => {
         open={Boolean(languageMenu)}
         onClose={handleLanguageMenuClose}
       >
-        {locales.map(l => (
+        {localeNames.map(l => (
           <MenuItem key={l} selected={lang === l} onClick={e => handleLocaleChange(l)} lang={l}>
             {languageNames[l]}
           </MenuItem>

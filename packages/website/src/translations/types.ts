@@ -1,4 +1,4 @@
-import { locales, Locale } from './config';
+import { localeNames, Locale } from './config';
 
 import  EnLocale from './locales/en'
 
@@ -26,5 +26,5 @@ export type Strings = {
 
 
 export function isLocale(tested: string): tested is Locale {
-  return locales.some(locale => locale === tested);
+  return localeNames.some(locale => locale === tested);
 }

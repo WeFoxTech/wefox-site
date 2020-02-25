@@ -1,4 +1,4 @@
-import { locales, Locale } from "./config";
+import { localeNames, Locale } from "./config";
 import { Namespace } from "./types";
 
 

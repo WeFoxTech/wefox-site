@@ -15,7 +15,7 @@ import { Component } from 'react';
 import LanguageIcon from '@material-ui/icons/Translate';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import useTranslation from '../src/hooks/useTranslation';
-import { languageNames, locales, Locale } from '../src/translations/config';
+import { languageNames, localeNames, Locale } from '../src/translations/config';
 import { useRouter } from 'next/router';
 import { LocaleContext } from '../src/context/LocaleContext';
 import { LocaleSwitcher } from './LocaleSwitcher';
