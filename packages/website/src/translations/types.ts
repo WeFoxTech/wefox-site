@@ -1,9 +1,18 @@
 import { locales, Locale } from './config';
 
-// import  NS from './locales/en'
-// export type Locale = typeof locales[number]
+import  EnLocale from './locales/en'
 
-// export type AllTranslations = typeof NS
+
+type UnionToIntersection<U> = 
+  (U extends any ? (k: U)=>void : never) extends ((k: infer I)=>void) ? I : never
+
+export type AllTranslations  =  typeof  EnLocale
+
+export type  TranslationNamespaces =  keyof AllTranslations
+
+export  type MergedTranslations = AllTranslations[TranslationNamespaces]
+
+export  type TranslationKey = keyof  UnionToIntersection<MergedTranslations>
 
 export interface Translations {
   [key: string]: string;
@@ -15,9 +24,6 @@ export type Strings = {
   [key in Locale]: Translations;
 };
 
-// export interface Namespace {
-//   namespace: string
-// }
 
 export function isLocale(tested: string): tested is Locale {
   return locales.some(locale => locale === tested);
