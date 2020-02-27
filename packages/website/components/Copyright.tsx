@@ -18,16 +18,14 @@ export const Copyright: FunctionComponent = () => {
   const classes = useStyles();
   const { t } = useTranslation();
   return (
-    <>
-      <Typography className={classes.root}>
-        &copy; {new Date().getFullYear()}
-        <Tooltip title={t('inc.name')}>
-          <Link className={classes.link} href="https://wefox.tech">
-            wefox.tech
-          </Link>
-        </Tooltip>
-        All Rights Reserved
-      </Typography>
-    </>
+    <Typography component="span" className={classes.root}>
+      &copy; 2016 - {new Date().getFullYear()}
+      <Tooltip title={t('inc.name')}>
+        <Link className={classes.link} href="https://wefox.tech">
+          wefox.tech
+        </Link>
+      </Tooltip>
+      {t('inc.copyright')}
+    </Typography>
   );
 };

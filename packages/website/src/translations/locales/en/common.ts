@@ -10,6 +10,7 @@ const common = {
   aboutLink: 'about me',
   'gh.editMe': 'edit me on GitHub',
   'inc.name': 'WeFox tech',
+  'inc.copyright': 'All Rights Reserved',
 };
 
 export default common;

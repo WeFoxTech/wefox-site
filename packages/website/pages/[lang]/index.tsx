@@ -1,22 +1,31 @@
 import React from 'react';
 import Layout from '../../components/Layout';
 import useTranslation from '../../src/hooks/useTranslation';
-import { Typography } from '@material-ui/core';
+import { Typography, Divider } from '@material-ui/core';
 import withLocale from '../../src/hocs/withLocale';
 import { GetstaticProps } from '../../src/types/next';
 import locales from '../../src/translations/locales';
 import Link from '../../src/Link';
+import { Mission } from '../../components/home/Mission';
+import { TechStacks } from '../../components/home/TechStack';
+import { Team } from '../../components/team/Team';
 
 const IndexPage: React.FC = () => {
   const { t, locale } = useTranslation();
 
   return (
-    <Layout title={t('l.title')}>
-      <Typography>{t('contactMe')} </Typography>
+    <Layout title={t('l.title')} maxWidth={false}>
+      <Mission />
+      <Divider />
+
+      <TechStacks />
+      {/* <Typography>{t('contactMe')} </Typography>
 
       <Link href="/[lang]/about" as={`/${locale}/about`}>
         {t('aboutLink')}
-      </Link>
+      </Link> */}
+      <Divider />
+      <Team />
     </Layout>
   );
 };

@@ -20,15 +20,21 @@ import { useRouter } from 'next/router';
 import { LocaleContext } from '../src/context/LocaleContext';
 import { LocaleSwitcher } from './LocaleSwitcher';
 
+import {ContainerProps} from '@material-ui/core'
+
 interface Props {
   title?: string;
   toolbar?: Component;
+  maxWidth?:  ContainerProps["maxWidth"];
 }
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     main: {
       // minHeight: '80vh',
       // background: 'linear-gradient(45deg,#fe5196,#f77062)'
+    },
+    grow: {
+      flex: '1 1 auto',
     },
   })
 );
@@ -37,6 +43,7 @@ const Layout: React.FunctionComponent<Props> = ({
   children,
   title = 'This is the default title',
   toolbar = null,
+  maxWidth = 'md',
 }) => {
   const classes = useStyles();
   const { t, locale } = useTranslation();
@@ -57,17 +64,17 @@ const Layout: React.FunctionComponent<Props> = ({
         <Toolbar>
           <Typography>{title}</Typography>
           {toolbar}
+          <div className={classes.grow}></div>
           <LocaleSwitcher />
         </Toolbar>
       </AppBar>
 
       <main className={classes.main}>
-        <Container maxWidth="md">{children}</Container>
+        <Container maxWidth={maxWidth}>{children}</Container>
       </main>
       <footer>
         <Footer />
       </footer>
-      <BottomNav />
     </>
   );
 };

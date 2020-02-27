@@ -24,7 +24,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           zeit-token: ${{ secrets.ZEIT_TOKEN }}
           zeit-team-id: team_IcdA4KZF7VghnRhAtBMuOr66
-          now-args: '--no-clipboard -c'
+          now-args: '--no-clipboard'
           working-directory: ./packages/website
       - name: deploy website preview success
         uses: foxundermoon/feishu-action@v1
