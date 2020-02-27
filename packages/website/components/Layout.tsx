@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme: Theme) =>
       // minHeight: '80vh',
       // background: 'linear-gradient(45deg,#fe5196,#f77062)'
     },
+    grow: {
+      flex: '1 1 auto',
+    },
   })
 );
 
@@ -57,6 +60,7 @@ const Layout: React.FunctionComponent<Props> = ({
         <Toolbar>
           <Typography>{title}</Typography>
           {toolbar}
+          <div className={classes.grow}></div>
           <LocaleSwitcher />
         </Toolbar>
       </AppBar>
@@ -67,7 +71,6 @@ const Layout: React.FunctionComponent<Props> = ({
       <footer>
         <Footer />
       </footer>
-      <BottomNav />
     </>
   );
 };
