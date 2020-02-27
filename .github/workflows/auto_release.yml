@@ -15,6 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CLEAR_BUCKET: 'no'
+      QN_BUCKET: wefox-site
+      DOMAIN: wefox.tech
+      OUT_DIR: ./packages/website/out
     steps:
       - name: check prerelease
         if: endsWith(github.event.head_commit.message,':prerelease')
@@ -81,7 +84,7 @@ jobs:
           body: |
             # release summary
             current release: ${{ steps.deploy.outputs.preview-url }}
-            latest release : https://wefox.tech
+            latest release : https://${{ env.DOMAIN }}
           draft: false
           prerelease: ${{ env.PRERELEASE }}
       - name: gen file name
@@ -108,7 +111,7 @@ jobs:
         uses: foxundermoon/setup-qshell@v1
         if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
         with:
-          qshell-version: '2.4.0'
+          qshell-version: '2.4.1'
       - name: show qshell version
         if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
         run: qshell version
@@ -126,31 +129,31 @@ jobs:
       #     qshell listbucket ${{ secrets.QN_BUCKET }} -o filelist
       #     qshell batchdelete  ${{ secrets.QN_BUCKET }}  -y  -i  filelist
 
-      # - name: upload
-      #   if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
-      #   run: |
-      #     qshell  qupload2   \
-      #     --bucket  ${{ secrets.QN_BUCKET }}  \
-      #     --overwrite  \
-      #     --src-dir . \
-      #     --log-file ../upload.log \
-      #     --thread-count 100
-      #   working-directory: ./cout
+      - name: upload
+        if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
+        run: |
+          qshell  qupload2   \
+          --bucket  ${{ env.QN_BUCKET }}  \
+          --overwrite  \
+          --src-dir . \
+          --log-file ../upload.log \
+          --thread-count 100
+        working-directory: ${{ env.OUT_DIR }}
       # - uses: actions/upload-artifact@v1
       #   if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
       #   with:
       #     name: upload.log
       #     path: ./upload.log
-      # - name: refresh-cdn
-      #   if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
-      #   working-directory: ./cout
-      #   run: |
-      #     find . | grep -v '^./_next' | \
-      #     sed  -e 's|./|https://wefox.tech/|' | \
-      #     sed  -n '1d;p'  | \
-      #     tee -a refresh.xt | \
-      #     qshell cdnrefresh
-      #     echo 'https://wefox.tech' |qshell cdnrefresh
+      - name: refresh-cdn
+        if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
+        working-directory: ${{ env.OUT_DIR }}
+        run: |
+          find . | grep -v '^./_next' | \
+          sed  -e 's|./|https://${{ env.DOMAIN }}/|' | \
+          sed  -n '1d;p'  | \
+          tee -a refresh.xt | \
+          qshell cdnrefresh
+          echo 'https://${{ env.DOMAIN}}' |qshell cdnrefresh
 
       - name: deploy website success
         uses: foxundermoon/feishu-action@v1
@@ -159,7 +162,7 @@ jobs:
           url: ${{ secrets.FEISHU_BOT }}
           title: website ${{ env.RELEASE_TYPE }} success
           text: |
-            view:   ${{ steps.deploy.outputs.preview-url }}
+            view:   ${{ steps.deploy.outputs.preview-url }}  https://${{ env.DOMAIN }}
             release: ${{ github.event.repository.html_url }}/releases/tag/${{ env.VERSION }}.${{ steps.buildnumber.outputs.build_number }}
             action detail: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}
             committer: ${{ github.actor }}
