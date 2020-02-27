@@ -22,7 +22,9 @@ export const LocaleSwitcher: React.FC = () => {
   const handleLocaleChange = React.useCallback(
     (l: Locale) => {
       const regex = new RegExp(`^/(${localeNames.join('|')})`);
-      router.push(router.pathname, router.asPath.replace(regex, `/${l}`));
+      const asPath = router.asPath.replace(regex, `/${l}`);
+      console.log(`router.pathname: [${router.pathname}]   asPath: [${asPath}]`);
+      router.push(router.pathname, asPath);
       setLanguageMenu(null);
     },
     [router]
