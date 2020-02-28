@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "alwaysStrict": true,
@@ -24,8 +25,11 @@
     "strict": true,
     "sourceMap": true,
     "target": "esnext",
-    "disableSourceOfProjectReferenceRedirect": true
+    "disableSourceOfProjectReferenceRedirect": true,
+    "paths": {
+      "~/*": ["./*"]
+    }
   },
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules","out", "public"],
   "include": ["next-env.d.ts", "types/*.d.ts", "**/*.ts", "**/*.tsx"]
 }
