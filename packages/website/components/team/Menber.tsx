@@ -3,7 +3,7 @@ import { Card, Avatar, Grid, Typography, Link, Tooltip } from '@material-ui/core
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import GitHubIcon from '@material-ui/icons/GitHub';
-import TwitterIcon from '@material-ui/icons/twitter';
+import TwitterIcon from '@material-ui/icons/Twitter';
 import SiteIcon from '@material-ui/icons/Language';
 import { WeiboIcon } from '../icons/Weibo';
 
