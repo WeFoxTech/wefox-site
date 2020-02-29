@@ -65,6 +65,8 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       marginTop: theme.spacing(marginTop),
       marginBottom: theme.spacing(marginBottom),
+      marginLeft: 0,
+      marginRight:0,
       display: 'flex',
       flex: 1,
       alignItems: 'center',

@@ -48,12 +48,17 @@ export default class MyApp extends App {
           <Head>
             <title>微狐科技</title>
             <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+            <meta name="apple-mobile-web-app-capable" content="yes"></meta>
+            <meta name="full-screen" content="true"></meta>
+            <meta name="x5-fullscreen" content="true"></meta>
+            <meta name="360-fullscreen" content="true"></meta>
+
           </Head>
           <ThemeProvider theme={theme}>
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
             <CssBaseline />
             <Component {...pageProps} />
-            <HomeFab />
+            {/* <HomeFab /> */}
           </ThemeProvider>
         </React.Fragment>
       </MDXProvider>
