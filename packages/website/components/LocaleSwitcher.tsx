@@ -22,8 +22,11 @@ export const LocaleSwitcher: React.FC = () => {
   const handleLocaleChange = React.useCallback(
     (l: Locale) => {
       const regex = new RegExp(`^/(${localeNames.join('|')})`);
-      const asPath = router.asPath.replace(regex, `/${l}`);
-      console.log(`router.pathname: [${router.pathname}]   asPath: [${asPath}]`);
+      console.log(router.asPath);
+      let asPath = router.asPath.replace(regex, `/${l}`);
+      if(asPath.endsWith('index.html')){
+        asPath = asPath.replace(/index\.html$/,'')
+      }
       router.push(router.pathname, asPath);
       setLanguageMenu(null);
     },
