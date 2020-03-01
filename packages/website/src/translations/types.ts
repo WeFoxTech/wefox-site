@@ -24,6 +24,7 @@ export type Strings = {
   [key in Locale]: Translations;
 };
 
+export  type InlineLocale<T> = { [key in Locale]: T }
 
 export function isLocale(tested: string): tested is Locale {
   return localeNames.some(locale => locale === tested);

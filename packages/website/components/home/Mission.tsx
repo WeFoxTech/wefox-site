@@ -6,9 +6,15 @@ import { marginTop, marginBottom } from './spacing';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    root: {
+      // position: 'absolute',
+      margin: 0,
+      backgroundColor: theme.palette.primary.main,
+      transformOrigin: '0 100%'
+    },
     mission: {
-      marginTop: theme.spacing(3),
-      marginBottom: theme.spacing(marginBottom),
+      paddingTop: theme.spacing(3),
+      paddingBottom: theme.spacing(16),
     },
   })
 );
@@ -28,14 +34,16 @@ export const Mission: React.FC = () => {
   const classes = useStyles();
 
   return (
-    <Container className={classes.mission} maxWidth="md">
-      <Typography variant="h1" component="strong">
-        {name[locale]}
-      </Typography>
+    <div className={classes.root}>
+      <Container className={classes.mission} maxWidth="md">
+        <Typography variant="h1" component="strong">
+          {name[locale]}
+        </Typography>
 
-      <Typography variant="h2" component="strong">
-        {solgan[locale]}
-      </Typography>
-    </Container>
+        <Typography variant="h2" component="strong">
+          {solgan[locale]}
+        </Typography>
+      </Container>
+    </div>
   );
 };
