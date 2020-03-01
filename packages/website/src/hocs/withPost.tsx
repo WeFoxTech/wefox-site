@@ -21,11 +21,7 @@ interface Meta {
 }
 
 const PostLayout: React.FC<{ meta: Meta }> = ({ meta, children }) => {
-  return (
-    <Layout maxWidth={false}>
-      <Container maxWidth="md">{children}</Container>
-    </Layout>
-  );
+  return <Layout title={meta.title}>{children}</Layout>;
 };
 
 export default (meta: Meta): React.FC => ({ children }) => {
