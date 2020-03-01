@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { Card, Avatar, Grid, Typography, Link, Tooltip } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -6,6 +6,7 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import SiteIcon from '@material-ui/icons/Language';
 import { WeiboIcon } from '../icons/Weibo';
+import { MDXComponent } from '~/src/types/mdx';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export type MenberBio = string | React.FC;
+export type MenberBio = string | MDXComponent | JSX.Element;
 export interface MenberData {
   name: string;
   cnName?: string;
@@ -51,6 +52,7 @@ export interface MenberData {
   twitter?: string;
   weibo?: string;
   bio: MenberBio;
+  bioCn?: MenberBio;
   site?: string;
   github?: string;
 }
@@ -129,7 +131,7 @@ export const Bio: React.FC<{ bio: MenberBio }> = ({ bio }) => {
   if (typeof bio === 'string') {
     return <Typography>{bio}</Typography>;
   } else if (React.isValidElement(bio)) {
-    return bio;
+    return <>{bio}</>;
   } else {
     throw new Error('bio must be a string or an element');
   }
