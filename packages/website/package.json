@@ -23,6 +23,7 @@
     "dev": "next",
     "build": "next build",
     "export": "next export",
+    "bae": "next build && next export",
     "start": "next start",
     "debug": "NODE_OPTIONS=--inspect next",
     "type-check": "tsc",

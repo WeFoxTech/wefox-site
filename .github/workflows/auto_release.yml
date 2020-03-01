@@ -20,14 +20,14 @@ jobs:
       OUT_DIR: ./packages/website/out
     steps:
       - name: check prerelease
-        if: endsWith(github.event.head_commit.message,':prerelease')
+        if: endsWith(github.event.head_commit.message,':prerelease') || endsWith(github.event.head_commit.message, '👀') || endsWith(github.event.head_commit.message, '👁')
         run: |
           echo "::set-env name=RELEASE_TYPE::prerelease"
           echo "::set-env name=PRERELEASE::true"
           echo "::set-env name=NEED_RELEASE::yes"
           echo "::set-env name=NOW_ARGS:: "
       - name: check release
-        if: endsWith(github.event.head_commit.message,':release')
+        if: endsWith(github.event.head_commit.message,':release') || endsWith(github.event.head_commit.message,'💯')
         run: |
           echo "::set-env name=RELEASE_TYPE::release"
           echo "::set-env name=PRERELEASE::false"
