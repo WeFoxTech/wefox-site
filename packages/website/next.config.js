@@ -1,19 +1,19 @@
 const rehypePrism = require('@mapbox/rehype-prism');
-
-const withMDX = require('@next/mdx')({
+const injection = require('./lib/next/headerAndFooter');
+const withMDX = require('@foxmn/next-mdx')({
   extension: /\.mdx?$/,
   options: {
     rehypePlugins: [rehypePrism],
-    hastPlugins: [rehypePrism], // <-----------  now effect
+    header: injection.header,
+    footer: injection.footer,
+    defaultExport: false,
   },
 });
 
 const assetPrefix = process.env['ASSETS_PREFIX'] || '/';
 const basePath = process.env['BASE_PATH'] || '';
 
-
-
-const exportTrailingSlash = true; 
+const exportTrailingSlash = true;
 console.log(
   `assetPrefix: [${assetPrefix}]  basePath: [${basePath}]  exportTrailingSlash: [${exportTrailingSlash}] `
 );

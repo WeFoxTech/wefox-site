@@ -19,6 +19,7 @@ interface Props {
   title?: string;
   toolbar?: Component;
   maxWidth?: ContainerProps['maxWidth'];
+  overrideToolbarRootColor?: boolean;
 }
 
 const overrideToolbarStyle = makeStyles(
@@ -69,8 +70,11 @@ const Layout: React.FunctionComponent<Props> = ({
   title = 'This is the default title',
   toolbar = null,
   maxWidth = 'md',
+  overrideToolbarRootColor= false,
 }) => {
-  overrideToolbarStyle();
+  if(overrideToolbarRootColor){
+    overrideToolbarStyle();
+  }
   const classes = useStyles();
   const { t, locale } = useTranslation();
 
