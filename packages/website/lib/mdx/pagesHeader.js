@@ -6,3 +6,4 @@ import withLocale from '~/src/hocs/withLocale';
 
 
 export default withPost({title: 'test'})
+

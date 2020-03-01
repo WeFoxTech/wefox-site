@@ -1,12 +1,11 @@
 const rehypePrism = require('@mapbox/rehype-prism');
-const injection = require('./lib/next/headerAndFooter');
+const injection = require('./lib/next/mdxInjection');
 const withMDX = require('@foxmn/next-mdx')({
   extension: /\.mdx?$/,
   options: {
     rehypePlugins: [rehypePrism],
-    header: injection.header,
-    footer: injection.footer,
-    defaultExport: false,
+    beforeCompile: injection.beforeCompile,
+    afterCompile: injection.afterCompile,
   },
 });
 
