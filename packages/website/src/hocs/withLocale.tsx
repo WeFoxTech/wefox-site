@@ -7,7 +7,7 @@ import {  Locale } from '../translations/config'
 import { LocaleProvider } from '../context/LocaleContext'
 import locales from '../translations/locales'
 
-interface LangProps {
+export  interface LangProps {
   locale?: Locale
   translations?: Translations
   namespace: Namespace

@@ -1,40 +1,29 @@
-import React, { PureComponent, FunctionComponent } from 'react'
-import { MDXProvider } from '@mdx-js/react'
-import Head from 'next/head'
-import { ThemeProvider } from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import theme from '../../src/theme'
-import { Container, Paper } from '@material-ui/core'
-import { Copyright } from './../../components/Copyright'
+import React, { PureComponent, FunctionComponent } from 'react';
+import { MDXProvider } from '@mdx-js/react';
+import { NextPage } from 'next';
+import Error from 'next/error';
+
+import Head from 'next/head';
+import { ThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import theme from '../../src/theme';
+import { Container, Paper } from '@material-ui/core';
+import { Copyright } from '~/components/Copyright';
+import { LocaleProvider } from '../context/LocaleContext';
+import { Locale } from '../translations/config';
+import { getDisplayName } from 'next/dist/next-server/lib/utils';
+import { isLocale, Translations, Namespace } from '../translations/types';
+import { LangProps } from './withLocale';
+import Layout from '~/components/Layout';
 
 interface Meta {
-  title: string
+  title: string;
 }
 
-export default (meta: Meta): FunctionComponent => ({ children }) => {
-  return (
-    <MDXProvider>
-      <React.Fragment>
-        <Head>
-          <title>{meta.title} |wefox</title>
-          <meta
-            name="viewport"
-            content="minimum-scale=1, initial-scale=1, width=device-width"
-          />
-        </Head>
-        <ThemeProvider theme={theme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          <main>
-            <Container maxWidth="md">
-              {children}
-            </Container>
-          </main>
-          <footer>
-            <Copyright />
-          </footer>
-        </ThemeProvider>
-      </React.Fragment>
-    </MDXProvider>
-  )
-}
+const PostLayout: React.FC<{ meta: Meta }> = ({ meta, children }) => {
+  return <Layout title={meta.title}>{children}</Layout>;
+};
+
+export default (meta: Meta): React.FC => ({ children }) => {
+  return <PostLayout meta={meta}>{children}</PostLayout>;
+};

@@ -14,7 +14,7 @@ const IndexPage: React.FC = () => {
   const { t, locale } = useTranslation();
 
   return (
-    <Layout title={t('l.title')} maxWidth={false}>
+    <Layout title={t('l.title')} maxWidth={false} overrideToolbarRootColor={true}>
       <Mission />
       <Divider />
 

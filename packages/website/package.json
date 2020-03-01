@@ -50,6 +50,8 @@
     "unfetch": "^4.1.0"
   },
   "devDependencies": {
+    "@foxmn/mdx-loader": "^1.5.14",
+    "@foxmn/next-mdx": "^9.2.3",
     "@mdx-js/loader": "^1.5.5",
     "@next/mdx": "9.2.2",
     "@types/node": "^13.5.0",
