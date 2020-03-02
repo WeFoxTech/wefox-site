@@ -22,6 +22,7 @@ const fox: MenberData = {
   name: 'fox',
   avatar: 'https://s.fox.mn/avatar/fox.png',
   bio: '',
+  id: ''
 };
 
 const data = teamData.concat(

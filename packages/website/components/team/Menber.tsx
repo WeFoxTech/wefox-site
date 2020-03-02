@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export type MenberBio = string | MDXComponent | JSX.Element;
 export interface MenberData {
   name: string;
+  id: string;
   cnName?: string;
   avatar?: string;
   twitter?: string;
@@ -158,7 +159,7 @@ export const Menber: React.FC<MenberProps> = ({ data }) => {
     <Grid item xs="auto">
       <Card
         className={classes.card}
-        elevation={hover ? 5 : 1}
+        elevation={hover ? 10 : 1}
         onMouseEnter={mouseEnter}
         onMouseLeave={mouseLeave}
       >
