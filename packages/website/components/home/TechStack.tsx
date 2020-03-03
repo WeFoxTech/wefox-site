@@ -82,13 +82,9 @@ const useStyles = makeStyles((theme: Theme) =>
       // borderRadius: theme.spacing(3),
       minWidth: theme.spacing(18),
     },
-    tagWrap: {
-      display: 'flex',
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexDirection: 'column',
+    tagWraper: {
       position: 'relative',
+      paddingBottom: theme.spacing(8),
     },
     center: {
       display: 'flex',
@@ -128,7 +124,7 @@ export const TechStacks: React.FC = () => {
       </Container>
 
       <Container maxWidth="lg">
-        <Grid container className={classes.center}>
+        <Grid container className={clsx(classes.tagWraper, classes.center)}>
           {techStacks[locale].map((e, i) => (
             <Tag key={i}>{e}</Tag>
           ))}
