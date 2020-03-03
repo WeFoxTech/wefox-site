@@ -22,29 +22,31 @@ const fox: MenberData = {
   name: 'fox',
   avatar: 'https://s.fox.mn/avatar/fox.png',
   bio: '',
-  id: ''
+  id: '',
 };
 
-const data = teamData.concat(
-  new Array(15).fill(fox).map((e, i) => {
-    let m: MenberData = Object.assign({}, e);
-    m.bio = new Array(i).fill('这是简短介绍').join('');
-    if (i < 4) {
-      m.github = 'foxundermoon';
-    }
+// const data = teamData.concat(
+//   new Array(15).fill(fox).map((e, i) => {
+//     let m: MenberData = Object.assign({}, e);
+//     m.bio = new Array(i).fill('这是简短介绍').join('');
+//     if (i < 4) {
+//       m.github = 'foxundermoon';
+//     }
 
-    if (i < 10 && i > 3) {
-      m.weibo = 'weiboid';
-      m.twitter = 'twiter_id';
-      m.github = 'foxundermoon';
-      m.site = 'https://fox.mn';
-    }
-    if (i > 10) {
-      m.site = 'https://fox.mn';
-    }
-    return m;
-  })
-);
+//     if (i < 10 && i > 3) {
+//       m.weibo = 'weiboid';
+//       m.twitter = 'twiter_id';
+//       m.github = 'foxundermoon';
+//       m.site = 'https://fox.mn';
+//     }
+//     if (i > 10) {
+//       m.site = 'https://fox.mn';
+//     }
+//     return m;
+//   })
+// );
+
+const data = teamData.filter(e => !e.hidden);
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

@@ -7,6 +7,7 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import SiteIcon from '@material-ui/icons/Language';
 import { WeiboIcon } from '../icons/Weibo';
 import { MDXComponent } from '~/src/types/mdx';
+import useTranslation from '~/src/hooks/useTranslation';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -56,6 +57,7 @@ export interface MenberData {
   bioCn?: MenberBio;
   site?: string;
   github?: string;
+  hidden?: boolean;
 }
 
 export const GitHub: React.FC<{ id?: string }> = ({ id }) => {
@@ -128,7 +130,14 @@ export const Weibo: React.FC<{ id?: string }> = ({ id }) => {
   }
 };
 
-export const Bio: React.FC<{ bio: MenberBio }> = ({ bio }) => {
+export const Bio: React.FC<{ menber: MenberData }> = ({ menber }) => {
+  const { t, locale } = useTranslation();
+  let bio;
+  if (locale === 'zh' && menber.bioCn) {
+    bio = menber.bioCn;
+  } else {
+    bio = menber.bio;
+  }
   if (typeof bio === 'string') {
     return <Typography>{bio}</Typography>;
   } else if (React.isValidElement(bio)) {
@@ -138,6 +147,21 @@ export const Bio: React.FC<{ bio: MenberBio }> = ({ bio }) => {
   }
 };
 
+const Name: React.FC<{ menber: MenberData }> = ({ menber }) => {
+  const { t, locale } = useTranslation();
+  let name: string;
+  if (locale === 'zh' && menber.cnName) {
+    name = menber.cnName;
+  } else {
+    name = menber.name;
+  }
+
+  return (
+    <Typography variant="h5" component="strong">
+      {name}
+    </Typography>
+  );
+};
 export interface MenberProps {
   data: MenberData;
 }
@@ -169,16 +193,14 @@ export const Menber: React.FC<MenberProps> = ({ data }) => {
           alt={data.name}
           src={data.avatar}
         ></Avatar>
-        <Typography variant="h5" component="strong">
-          {data.name}
-        </Typography>
+        <Name menber={data} />
         <Grid container className={classes.links}>
           <GitHub id={data.github}> </GitHub>
           <Twitter id={data.twitter}> </Twitter>
           <Weibo id={data.weibo}> </Weibo>
           <Site url={data.site}></Site>
         </Grid>
-        <Bio bio={data.bio}></Bio>
+        <Bio menber={data}></Bio>
       </Card>
     </Grid>
   );
