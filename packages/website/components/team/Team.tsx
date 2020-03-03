@@ -106,18 +106,6 @@ export const Team: React.FC = () => {
       <Grid className={classes.geistWrapper} container spacing={3}>
         {data.map((e, i) => (
           <Menber key={i} data={e} />
-          // <Grid key={i} item xs="auto">
-          //   <Card key={i} className={classes.card} elevation={5}>
-          //     <Avatar
-          //       className={classes.avatar}
-          //       variant="circle"
-          //       alt={e.name}
-          //       src={e.avatar}
-          //     ></Avatar>
-          //     <Typography>{e.name}</Typography>
-          //     <Link href={`https://twitter.com/${e.twitter}`}>{`@${e.twitter}`}</Link>
-          //   </Card>
-          // </Grid>
         ))}
       </Grid>
     </Container>
