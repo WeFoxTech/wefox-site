@@ -1,8 +1,9 @@
 import useTranslation from '../../src/hooks/useTranslation';
 import { Locale } from '../../src/translations/config';
-import { Typography, Container, Box, Chip } from '@material-ui/core';
+import { Typography, Container, Box, Chip, Grid } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { marginTop, marginBottom } from './spacing';
+import clsx from 'clsx';
 
 const commonTechNames = [
   'Blockchain',
@@ -62,21 +63,38 @@ const techStackTitle: { [key in Locale]: string } = {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
+    titleWraper: {
       marginTop: theme.spacing(marginTop),
-      marginBottom: theme.spacing(marginBottom),
-      marginLeft: 0,
-      marginRight:0,
+      marginBottom: theme.spacing(8),
+      // marginLeft: 0,
+      // marginRight: 0,
+    },
+    title: {
+      paddingBottom: marginTop,
+    },
+    tag: {
+      // marginTop: theme.spacing(1),
+      // marginLeft: theme.spacing(1),
+      padding: theme.spacing(2),
+      margin: theme.spacing(1),
+      // padding: '10px 10px 10px 10px',
+      // fontSize: '1.2em',
+      // borderRadius: theme.spacing(3),
+      minWidth: theme.spacing(18),
+    },
+    tagWrap: {
       display: 'flex',
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
       flexDirection: 'column',
+      position: 'relative',
     },
-    tag: {
-      marginTop: theme.spacing(1),
-      marginLeft: theme.spacing(1),
-      padding: '10px 10px 10px 10px',
+    center: {
+      display: 'flex',
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
   })
 );
@@ -84,18 +102,16 @@ const useStyles = makeStyles((theme: Theme) =>
 const Tag: React.FC = ({ children }) => {
   const classes = useStyles();
   return (
-    <Chip
-      variant="default"
-      color="secondary"
-      clickable={true}
-      size="medium"
-      label={children}
-      className={classes.tag}
-    >
-      {/* <Typography className={classes.tag} variant="h3" component="span"> */}
-      {/* {children} */}
-      {/* </Typography> */}
-    </Chip>
+    <Grid item xs="auto">
+      <Chip
+        variant="default"
+        color="primary"
+        clickable={true}
+        size="medium"
+        label={children}
+        className={classes.tag}
+      ></Chip>
+    </Grid>
   );
 };
 
@@ -104,13 +120,20 @@ export const TechStacks: React.FC = () => {
   const classes = useStyles();
 
   return (
-    <Container className={classes.root} maxWidth={false}>
-      <Typography variant="h3">{techStackTitle[locale]}</Typography>
-      <div>
-        {techStacks[locale].map((e, i) => (
-          <Tag key={i}>{e}</Tag>
-        ))}
-      </div>
-    </Container>
+    <>
+      <Container className={clsx(classes.center, classes.titleWraper)} maxWidth={'lg'}>
+        <Typography className={classes.title} variant="h3">
+          {techStackTitle[locale]}
+        </Typography>
+      </Container>
+
+      <Container maxWidth="lg">
+        <Grid container className={classes.center}>
+          {techStacks[locale].map((e, i) => (
+            <Tag key={i}>{e}</Tag>
+          ))}
+        </Grid>
+      </Container>
+    </>
   );
 };

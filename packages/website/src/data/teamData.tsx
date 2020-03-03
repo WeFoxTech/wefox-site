@@ -92,11 +92,13 @@ export const teamData: MenberData[] = [
   {
     id: 'steven',
     name: 'Steven🇳🇿',
-    cnName: undefined,
-    hidden: true,
+    cnName: '张潮',
+    hidden: false,
     avatar: `${avatarBaseUrl}/steven.jpg`,
-    bio: '新西兰资深前端工程师',
-    bioCn: '。。。',
+    bio:
+      'Graduated from Auckland University of Technology, Bachelor of computer and Information science. Working in a local company as front-end developer, know a thing or two about React and related staff.',
+    bioCn:
+      '毕业于新西兰奥克兰理工大学计算机与信息科学专业，目前在奥克兰当地一家公司做前端开发。技术栈以React为主。',
   },
   {
     id: 'sam',

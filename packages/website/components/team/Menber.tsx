@@ -32,6 +32,10 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingBottom: theme.spacing(2),
       maxWidth: theme.spacing(32),
     },
+    name:{
+        paddingTop: theme.spacing(2),
+        paddingBottom: theme.spacing(1),
+    },
     links: {
       display: 'flex',
       flex: 1,
@@ -148,6 +152,7 @@ export const Bio: React.FC<{ menber: MenberData }> = ({ menber }) => {
 };
 
 const Name: React.FC<{ menber: MenberData }> = ({ menber }) => {
+  const classes = useStyles();
   const { t, locale } = useTranslation();
   let name: string;
   if (locale === 'zh' && menber.cnName) {
@@ -157,7 +162,7 @@ const Name: React.FC<{ menber: MenberData }> = ({ menber }) => {
   }
 
   return (
-    <Typography variant="h5" component="strong">
+    <Typography  className={classes.name} variant="h5" component="strong">
       {name}
     </Typography>
   );
