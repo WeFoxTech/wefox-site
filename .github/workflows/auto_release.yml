@@ -141,11 +141,12 @@ jobs:
           --log-file ../upload.log \
           --thread-count 100
         working-directory: ${{ env.OUT_DIR }}
-      # - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v1
       #   if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
-      #   with:
-      #     name: upload.log
-      #     path: ./upload.log
+        if: failure()
+        with:
+          name: upload.log
+          path: ./packages/website/upload.log
       - name: refresh-cdn
         if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
         working-directory: ${{ env.OUT_DIR }}
