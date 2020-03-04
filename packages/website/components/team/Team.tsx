@@ -6,6 +6,7 @@ import useTranslation from '../../src/hooks/useTranslation';
 import { marginTop, marginBottom } from '../home/spacing';
 import { Menber, MenberData } from './Menber';
 import { teamData } from '../../src/data/teamData';
+import clsx from 'clsx';
 
 const teamTitle: InlineLocale<string> = {
   en: 'Our passionate team',
@@ -51,13 +52,9 @@ const data = teamData.filter(e => !e.hidden);
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      marginTop: theme.spacing(marginTop),
-      marginBottom: theme.spacing(marginBottom),
-      display: 'flex',
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexDirection: 'column',
+      marginTop: theme.spacing(16),
+      marginBottom: theme.spacing(8),
+      flexDirection: 'column'
     },
     teamTitle: {
       paddingBottom: theme.spacing(4),
@@ -85,7 +82,7 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingRight: theme.spacing(8),
       paddingBottom: theme.spacing(3),
     },
-    geistWrapper: {
+    center: {
       display: 'flex',
       flex: 1,
       alignItems: 'center',
@@ -97,13 +94,13 @@ export const Team: React.FC = () => {
   const classes = useStyles();
   const { t, locale } = useTranslation();
   return (
-    <Container className={classes.root} maxWidth="lg">
+    <Container className={clsx( classes.center, classes.root)} maxWidth="lg">
       <Typography className={classes.teamTitle} variant="h3" component="strong">
         {teamTitle[locale]}
       </Typography>
 
       <Typography className={classes.teamSummary}>{teamSummary[locale]}</Typography>
-      <Grid className={classes.geistWrapper} container spacing={3}>
+      <Grid className={classes.center} container spacing={3}>
         {data.map((e, i) => (
           <Menber key={i} data={e} />
         ))}

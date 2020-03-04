@@ -8,8 +8,8 @@ import { Item } from './Item';
 import { casesData } from '~/src/data/casesData.tsx';
 
 const caseTitle: InlineLocale<string> = {
-  en: 'success cases',
-  zh: '案列',
+  en: 'Our success cases',
+  zh: '我们的成功案列',
 };
 
 const caseSummary: InlineLocale<string> = {
@@ -20,8 +20,8 @@ const caseSummary: InlineLocale<string> = {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      marginTop: theme.spacing(8),
-      marginBottom: theme.spacing(marginBottom),
+      marginTop: theme.spacing(16),
+      marginBottom: theme.spacing(8),
       display: 'flex',
       flex: 1,
       alignItems: 'center',
