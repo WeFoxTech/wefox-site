@@ -9,6 +9,7 @@ import Link from '~/src/Link';
 import { Mission } from '~/components/home/Mission';
 import { TechStacks } from '~/components/home/TechStack';
 import { Team } from '~/components/team/Team';
+import { ShowCases } from '../../components/cases/Case';
 
 const IndexPage: React.FC = () => {
   const { t, locale } = useTranslation();
@@ -26,6 +27,11 @@ const IndexPage: React.FC = () => {
       </Link> */}
       <Divider />
       <Team />
+
+      <Divider />
+
+      <ShowCases />
+
     </Layout>
   );
 };

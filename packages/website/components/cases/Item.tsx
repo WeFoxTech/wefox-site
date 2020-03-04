@@ -1,0 +1,124 @@
+import React, { ReactElement } from 'react';
+import { Card, Avatar, Grid, Typography, Link, Tooltip } from '@material-ui/core';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
+import GitHubIcon from '@material-ui/icons/GitHub';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import SiteIcon from '@material-ui/icons/Language';
+import { WeiboIcon } from '../icons/Weibo';
+import { MDXComponent } from '~/src/types/mdx';
+import useTranslation from '~/src/hooks/useTranslation';
+import { ShowCaseDataItem } from '../../src/data/casesData';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    avatar: {
+      height: theme.spacing(16),
+      width: theme.spacing(16),
+      '& :hover': {
+        height: theme.spacing(17),
+        width: theme.spacing(17),
+      },
+    },
+    card: {
+      display: 'flex',
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexDirection: 'column',
+      position: 'relative',
+      paddingTop: theme.spacing(2),
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
+      paddingBottom: theme.spacing(2),
+      maxWidth: theme.spacing(32),
+    },
+    name:{
+        paddingTop: theme.spacing(2),
+        paddingBottom: theme.spacing(1),
+    },
+    links: {
+      display: 'flex',
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    social: {
+      padding: theme.spacing(1),
+    },
+    twitter: {},
+  })
+);
+
+
+
+
+export const Desc: React.FC<{ item: ShowCaseDataItem }> = ({ item }) => {
+  const { t, locale } = useTranslation();
+  let desc:string;
+  if (locale === 'zh' && item.cnDesc) {
+    desc = item.cnDesc;
+  } else {
+    desc  = item.desc;
+  }
+    return <Typography>{desc}</Typography>;
+
+};
+
+const Name: React.FC<{ item: ShowCaseDataItem }> = ({ item }) => {
+  const classes = useStyles();
+  const { t, locale } = useTranslation();
+  let name: string;
+  if (locale === 'zh' && item.cnName) {
+    name = item.cnName;
+  } else {
+    name = item.name;
+  }
+
+  return (
+    <Typography  className={classes.name} variant="h5" component="strong">
+      {name}
+    </Typography>
+  );
+};
+
+
+export const Item: React.FC<{item: ShowCaseDataItem}> = ({ item }) => {
+  const classes = useStyles();
+
+  const [hover, setHover] = React.useState(false);
+
+  const mouseEnter = () => {
+    setHover(true);
+  };
+
+  const mouseLeave = () => {
+    setHover(false);
+  };
+
+  return (
+    <Grid item xs="auto">
+      <Card
+        className={classes.card}
+        elevation={hover ? 10 : 1}
+        onMouseEnter={mouseEnter}
+        onMouseLeave={mouseLeave}
+      >
+        {/* <Avatar
+          className={classes.avatar}
+          variant="circle"
+          alt={data.name}
+          src={data.avatar}
+        ></Avatar> */}
+        <Name item={item} />
+        {/* <Grid container className={classes.links}>
+          <GitHub id={data.github}> </GitHub>
+          <Twitter id={data.twitter}> </Twitter>
+          <Weibo id={data.weibo}> </Weibo>
+          <Site url={data.site}></Site>
+        </Grid> */}
+        <Desc item={item}></Desc>
+      </Card>
+    </Grid>
+  );
+};
