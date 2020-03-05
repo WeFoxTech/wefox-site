@@ -2,11 +2,8 @@ import { AllTranslations } from '../../types';
 
 const common: AllTranslations['common'] = {
   contactMe: '联系我',
-  overlay_Homepage: 'Homepage',
-  overlay_Contact: 'Contact',
-  overlay_Who: 'Who',
-  overlay_How: 'How',
-  overlay_What: 'What',
+  qrUsage: '微信扫一扫联系我们',
+  phoneQrUsage: '长按二维码联系我们',
   'l.title': '我是标题',
   changeLanguage: '改变语言',
   aboutLink: '关于我',

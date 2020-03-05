@@ -1,10 +1,7 @@
 const common = {
   contactMe: 'Contact Me',
-  overlay_Homepage: 'Homepage',
-  overlay_Contact: 'Contact',
-  overlay_Who: 'Who',
-  overlay_How: 'How',
-  overlay_What: 'What',
+  qrUsage: 'Scan on WeChat to contact us',
+  phoneQrUsage: 'Long press the QR code to contact us',
   'l.title': 'this is title',
   changeLanguage: 'Change language',
   aboutLink: 'about me',

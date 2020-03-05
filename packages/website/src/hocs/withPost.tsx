@@ -2,13 +2,11 @@ import React, { PureComponent, FunctionComponent } from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import { NextPage } from 'next';
 import Error from 'next/error';
-
 import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../../src/theme';
 import { Container, Paper } from '@material-ui/core';
-import { Copyright } from '~/components/Copyright';
 import { LocaleProvider } from '../context/LocaleContext';
 import { Locale } from '../translations/config';
 import { getDisplayName } from 'next/dist/next-server/lib/utils';

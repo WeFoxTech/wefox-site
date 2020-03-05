@@ -58,17 +58,6 @@ export const casesData: ShowCaseDataItem[] = [
     cnDesc: '帮公司的《糖心交友》app担任技术顾问，目前该app在台湾、香港、马来西亚等南亚地区运营。',
   },
   {
-    timeRange: ['2019-11-01T00:00:00.000Z', 'now'],
-    site: 'http://company.hestech.cn',
-    name: 'RocketX Chat',
-    cnName: '火箭客服',
-    type: 'startup',
-    desc:
-      'The entrepreneurial team is committed to providing safe, stable and affordable customer service for small, medium and micro enterprises and individuals. We helped the entrepreneurial team to solve some front-end incurable diseases, and encapsulated the desktop with Electron. At present, the core technology of the team has also joined our consultant team, which can provide technical advisory services in the field of im and customer service for you.',
-    cnDesc:
-      '该创业团队致力于为中小微企业和个体提供安全、稳定、实惠的客服服务。我们帮该创业团队解决一些前端的疑难杂症、以及用Electron封装了桌面端。目前该团队的核心技术也加入了我们的顾问团队，可以为你提供im、客服领域的技术顾问服务。',
-  },
-  {
     timeRange: ['2020-03-03T00:00:00.000Z', '2020-03-03T00:00:00.000Z'],
     name: 'ZhangYe',
     cnName: '玄晔',
