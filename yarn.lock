@@ -1101,10 +1101,10 @@
     unique-filename "^1.1.1"
     which "^1.3.1"
 
-"@foxmn/mdx-loader@^1.5.13":
-  version "1.5.13"
-  resolved "https://registry.yarnpkg.com/@foxmn/mdx-loader/-/mdx-loader-1.5.13.tgz#9647f21c050fb042fef11c8351449018fb73d8f3"
-  integrity sha512-ygo30Jh5l1G2P6/yBT5fkEnec/MKSwPPs9BC7AUFJmM04r7HeB0QrSEFAmXXCLb4PQgTJvc6KIpiFBD0XbOfcQ==
+"@foxmn/mdx-loader@^1.5.14":
+  version "1.5.14"
+  resolved "https://registry.yarnpkg.com/@foxmn/mdx-loader/-/mdx-loader-1.5.14.tgz#a16dd808698ab682a83e45553cd1183b6e89ddd6"
+  integrity sha512-kjCnS1mWXyKbiDMjiDbfIyuOEdBysLHAp8T1mDb7NA0YZw7Ul+hA5CLgOUPFU+9OSMogJX8UT5OHExWePzagxw==
   dependencies:
     "@mdx-js/mdx" "^1.5.7"
     "@mdx-js/react" "^1.5.7"
@@ -3962,6 +3962,11 @@ date-fns@^2.0.1:
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.9.0.tgz#d0b175a5c37ed5f17b97e2272bbc1fa5aec677d2"
   integrity sha512-khbFLu/MlzLjEzy9Gh8oY1hNt/Dvxw3J6Rbc28cVoYWQaC1S3YI4xwkF9ZWcjDLscbZlY9hISMr66RFzZagLsA==
+
+date-fns@^2.10.0:
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.10.0.tgz#abd10604d8bafb0bcbd2ba2e9b0563b922ae4b6b"
+  integrity sha512-EhfEKevYGWhWlZbNeplfhIU/+N+x0iCIx7VzKlXma2EdQyznVlZhCptXUY+BegNpPW2kjdx15Rvq503YcXXrcA==
 
 dateformat@^3.0.0:
   version "3.0.3"

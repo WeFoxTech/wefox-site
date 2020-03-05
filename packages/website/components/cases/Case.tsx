@@ -72,7 +72,7 @@ export const ShowCases: React.FC = () => {
       </Typography>
 
       <Typography className={classes.teamSummary}>{caseSummary[locale]}</Typography>
-      <Grid className={classes.geistWrapper} container spacing={3}>
+      <Grid className={classes.geistWrapper} container spacing={4}>
         {casesData.map((e, i) => (
           <Item key={i} item={e} />
         ))}

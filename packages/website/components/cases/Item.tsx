@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Card, Avatar, Grid, Typography, Link, Tooltip } from '@material-ui/core';
+import { Card, Avatar, Grid, Typography, Link, Tooltip, Box } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import GitHubIcon from '@material-ui/icons/GitHub';
@@ -9,6 +9,15 @@ import { WeiboIcon } from '../icons/Weibo';
 import { MDXComponent } from '~/src/types/mdx';
 import useTranslation from '~/src/hooks/useTranslation';
 import { ShowCaseDataItem } from '../../src/data/casesData';
+import { Site } from '../team/Menber';
+import { formatWithOptions } from 'date-fns/fp';
+import { differenceInDays } from 'date-fns';
+import { zhCN, enUS } from 'date-fns/locale';
+import { Locale } from '../../src/translations/config';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
+import TrendingFlatIcon from '@material-ui/icons/TrendingFlat';
+import LinkIcon from '@material-ui/icons/Link';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,11 +40,11 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2),
       paddingBottom: theme.spacing(2),
-      maxWidth: theme.spacing(32),
+      maxWidth: theme.spacing(48),
     },
-    name:{
-        paddingTop: theme.spacing(2),
-        paddingBottom: theme.spacing(1),
+    name: {
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(1),
     },
     links: {
       display: 'flex',
@@ -50,22 +59,73 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-
-
+const timeFormat: (locale: Locale, fixedToday: boolean) => (date: Date) => string = (
+  locale,
+  fixedToday = false
+) => {
+  if (locale === 'zh') {
+    //  https://date-fns.org/v2.10.0/docs/format
+    return formatWithOptions({ locale: zhCN }, fixedToday ? 'yyyy年MMMMdo日' : 'yyyy年MMMM');
+  } else {
+    return formatWithOptions({ locale: enUS }, fixedToday ? 'MMM dd yyyy' : 'MMMM yyyy');
+  }
+};
 
 export const Desc: React.FC<{ item: ShowCaseDataItem }> = ({ item }) => {
   const { t, locale } = useTranslation();
-  let desc:string;
+  let desc: string;
   if (locale === 'zh' && item.cnDesc) {
     desc = item.cnDesc;
   } else {
-    desc  = item.desc;
+    desc = item.desc;
   }
-    return <Typography>{desc}</Typography>;
-
+  return <Typography>{desc}</Typography>;
 };
 
-const Name: React.FC<{ item: ShowCaseDataItem }> = ({ item }) => {
+const TimeBox: React.FC = ({ children }) => (
+  <Box
+    display="inline"
+    bgcolor="success.main"
+    p={4 / 8}
+    mx={2 / 8}
+    color="background.paper"
+    boxShadow={1}
+  >
+    <Typography variant="body2" component="span">{children}</Typography>
+  </Box>
+);
+const TimeRange: React.FC<{ item: ShowCaseDataItem }> = ({ item }) => {
+  let [from, to] = item.timeRange;
+  const { t, locale } = useTranslation();
+  const rangeDays = differenceInDays(new Date(to === 'now' ? Date.now() : to), new Date(from));
+  const fixedToday = rangeDays < 31;
+  let since = timeFormat(locale, fixedToday)(new Date(from));
+  let end;
+  if (to === 'now') {
+    if (locale === 'zh') {
+      end = '至今';
+    } else {
+      end = 'nowadays';
+    }
+  } else {
+    end = timeFormat(locale, fixedToday)(new Date(to));
+  }
+
+  return (
+    <Box display="flex" pb={2} pt={1}>
+      <TimeBox> {since}</TimeBox>
+      {rangeDays > 2 && (
+        <>
+          <Box pt={0.5}>
+            <TrendingFlatIcon />
+          </Box>
+          <TimeBox> {end}</TimeBox>
+        </>
+      )}
+    </Box>
+  );
+};
+const Name: React.FC<{ item: ShowCaseDataItem; showLink: boolean }> = ({ item, showLink }) => {
   const classes = useStyles();
   const { t, locale } = useTranslation();
   let name: string;
@@ -74,18 +134,26 @@ const Name: React.FC<{ item: ShowCaseDataItem }> = ({ item }) => {
   } else {
     name = item.name;
   }
-
-  return (
-    <Typography  className={classes.name} variant="h5" component="strong">
-      {name}
-    </Typography>
-  );
+  if (showLink && item.site) {
+    return (
+      <Link className={classes.name} href={item.site} target="_blank">
+        <Typography className={classes.name} variant="h6" component="strong">
+          <LinkIcon />
+          {name}
+        </Typography>
+      </Link>
+    );
+  } else {
+    return (
+      <Typography className={classes.name} variant="h6" component="strong">
+        {name}
+      </Typography>
+    );
+  }
 };
 
-
-export const Item: React.FC<{item: ShowCaseDataItem}> = ({ item }) => {
+export const Item: React.FC<{ item: ShowCaseDataItem }> = ({ item }) => {
   const classes = useStyles();
-
   const [hover, setHover] = React.useState(false);
 
   const mouseEnter = () => {
@@ -110,13 +178,15 @@ export const Item: React.FC<{item: ShowCaseDataItem}> = ({ item }) => {
           alt={data.name}
           src={data.avatar}
         ></Avatar> */}
-        <Name item={item} />
-        {/* <Grid container className={classes.links}>
-          <GitHub id={data.github}> </GitHub>
-          <Twitter id={data.twitter}> </Twitter>
-          <Weibo id={data.weibo}> </Weibo>
-          <Site url={data.site}></Site>
-        </Grid> */}
+        <Name item={item} showLink={hover} />
+
+        <TimeRange item={item} />
+        <Grid container className={classes.links}>
+          {/* <GitHub id={data.github}> </GitHub> */}
+          {/* <Twitter id={data.twitter}> </Twitter> */}
+          {/* <Weibo id={data.weibo}> </Weibo> */}
+          {/* <Site url={item.site}></Site> */}
+        </Grid>
         <Desc item={item}></Desc>
       </Card>
     </Grid>
