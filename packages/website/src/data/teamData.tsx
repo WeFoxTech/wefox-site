@@ -16,6 +16,8 @@ export const teamData: MenberData[] = [
     github: 'foxundermoon', // Github username , optional
     weibo: undefined, // weibo id , optional
     twitter: undefined, // twitter id , optional
+    email: 'i@fox.mn', //  email address , optional
+    tel: '+8613148371687', // tel number , optional
     avatar: `${avatarBaseUrl}/fox_mn.png`, // avatar url , optional
     bio:
       'Has multiple entrepreneurial experiences. He has rich R & D experience in front, back, mobile and blockchain. He has served as a technical consultant to a number of companies and individuals.', // bio description , required  string or function Component

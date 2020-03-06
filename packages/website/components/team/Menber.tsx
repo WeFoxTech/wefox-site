@@ -1,10 +1,14 @@
 import React, { ReactElement } from 'react';
-import { Card, Avatar, Grid, Typography, Link, Tooltip } from '@material-ui/core';
+import { Card, Avatar, Grid, Typography, Link, Tooltip, Box } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import SiteIcon from '@material-ui/icons/Language';
+import MailIcon from '@material-ui/icons/MailOutline';
+import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
+import PhoneIcon from '@material-ui/icons/Phone';
+import LinkIcon from '@material-ui/icons/Link';
 import { WeiboIcon } from '../icons/Weibo';
 import { MDXComponent } from '~/src/types/mdx';
 import useTranslation from '~/src/hooks/useTranslation';
@@ -32,24 +36,10 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingBottom: theme.spacing(2),
       maxWidth: theme.spacing(32),
     },
-    name:{
-        paddingTop: theme.spacing(2),
-        paddingBottom: theme.spacing(1),
-    },
-    links: {
-      display: 'flex',
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    social: {
-      padding: theme.spacing(1),
-    },
-    twitter: {},
   })
 );
 
-export type MenberBio = string | MDXComponent | JSX.Element;
+export type  MenberBio = string | MDXComponent | JSX.Element;
 export interface MenberData {
   name: string;
   id: string;
@@ -62,15 +52,24 @@ export interface MenberData {
   site?: string;
   github?: string;
   hidden?: boolean;
+  email?: string;
+  tel?: string;
 }
 
 export const GitHub: React.FC<{ id?: string }> = ({ id }) => {
-  const classes = useStyles();
-
   if (id) {
     return (
-      <Grid className={classes.social} item xs="auto">
-        <Tooltip title={`github.com/${id}`}>
+      <Grid item>
+        <Tooltip
+          title={
+            <>
+              <LinkIcon />
+              <Typography component="span" className="text-with-icon">
+                {`github.com/${id}`}
+              </Typography>
+            </>
+          }
+        >
           <Link target="_blank" href={`https://github.com/${id}`}>
             <GitHubIcon />
           </Link>
@@ -83,11 +82,19 @@ export const GitHub: React.FC<{ id?: string }> = ({ id }) => {
 };
 
 export const Twitter: React.FC<{ id?: string }> = ({ id }) => {
-  const classes = useStyles();
   if (id) {
     return (
-      <Grid className={clsx(classes.social)} item xs="auto">
-        <Tooltip title={`@${id}`}>
+      <Grid item>
+        <Tooltip
+          title={
+            <>
+              <LinkIcon />
+              <Typography component="span" className="text-with-icon">
+                {`@${id}`}
+              </Typography>
+            </>
+          }
+        >
           <Link target="_blank" href={`https://twitter.com/${id}`}>
             <TwitterIcon />
           </Link>
@@ -100,12 +107,20 @@ export const Twitter: React.FC<{ id?: string }> = ({ id }) => {
 };
 
 export const Site: React.FC<{ url?: string }> = ({ url }) => {
-  const classes = useStyles();
   if (url) {
     const short = url.replace(/https?:\/\//, '');
     return (
-      <Grid className={clsx(classes.social)} item xs="auto">
-        <Tooltip title={short}>
+      <Grid item>
+        <Tooltip
+          title={
+            <>
+              <LinkIcon />
+              <Typography component="span" className="text-with-icon">
+                {short}
+              </Typography>
+            </>
+          }
+        >
           <Link target="_blank" href={url}>
             <SiteIcon />
           </Link>
@@ -118,13 +133,71 @@ export const Site: React.FC<{ url?: string }> = ({ url }) => {
 };
 
 export const Weibo: React.FC<{ id?: string }> = ({ id }) => {
-  const classes = useStyles();
   if (id) {
     return (
-      <Grid className={clsx(classes.social)} item xs="auto">
-        <Tooltip title={`@${id}`}>
+      <Grid item>
+        <Tooltip
+          title={
+            <>
+              <LinkIcon />
+              <Typography component="span" className="text-with-icon">
+                {`@${id}`}
+              </Typography>
+            </>
+          }
+        >
           <Link target="_blank" href={`https://weibo.com/${id}`}>
             <WeiboIcon />
+          </Link>
+        </Tooltip>
+      </Grid>
+    );
+  } else {
+    return null;
+  }
+};
+
+const Email: React.FC<{ address?: string }> = ({ address }) => {
+  if (address) {
+    return (
+      <Grid item>
+        <Tooltip
+          title={
+            <>
+              <AlternateEmailIcon />
+              <Typography component="span" className="text-with-icon">
+                {address}
+              </Typography>
+            </>
+          }
+        >
+          <Link href={`mailto:${address}`}>
+            <MailIcon />
+          </Link>
+        </Tooltip>
+      </Grid>
+    );
+  } else {
+    return null;
+  }
+};
+
+const Tel: React.FC<{ tel?: string }> = ({ tel }) => {
+  if (tel) {
+    return (
+      <Grid item>
+        <Tooltip
+          title={
+            <>
+              <PhoneIcon />
+              <Typography component="span" className="text-with-icon">
+                {tel}
+              </Typography>
+            </>
+          }
+        >
+          <Link href={`tel:${tel}`}>
+            <PhoneIcon />
           </Link>
         </Tooltip>
       </Grid>
@@ -162,11 +235,14 @@ const Name: React.FC<{ menber: MenberData }> = ({ menber }) => {
   }
 
   return (
-    <Typography  className={classes.name} variant="h5" component="strong">
-      {name}
-    </Typography>
+    <Box clone py={2}>
+      <Typography variant="h5" component="strong">
+        {name}
+      </Typography>
+    </Box>
   );
 };
+
 export interface MenberProps {
   data: MenberData;
 }
@@ -199,11 +275,13 @@ export const Menber: React.FC<MenberProps> = ({ data }) => {
           src={data.avatar}
         ></Avatar>
         <Name menber={data} />
-        <Grid container className={classes.links}>
+        <Grid container spacing={2} justify="center">
           <GitHub id={data.github}> </GitHub>
           <Twitter id={data.twitter}> </Twitter>
           <Weibo id={data.weibo}> </Weibo>
           <Site url={data.site}></Site>
+          <Email address={data.email} />
+          <Tel tel={data.tel} />
         </Grid>
         <Bio menber={data}></Bio>
       </Card>
