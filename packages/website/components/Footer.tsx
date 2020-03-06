@@ -1,8 +1,9 @@
-import { Container, Theme, Typography, Grid, Tooltip, Link as MuiLink } from '@material-ui/core';
+import { Container, Theme, Typography, Grid, Tooltip, Link as MuiLink, Box } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { Version } from './Version';
 import Link from '~/src/Link';
 import useTranslation from '../src/hooks/useTranslation';
+import { Contact } from './Contact';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -15,7 +16,12 @@ export const Footer: React.FC = () => {
   const { t } = useTranslation();
   // const classes = useStyles();
   return (
+    <Box bgcolor="grey.100">
+
     <Grid container spacing={1} justify="center">
+
+<Contact />
+
       <Grid item>
         <Typography component="span">&copy;2016-{new Date().getFullYear()}</Typography>
       </Grid>
@@ -37,5 +43,7 @@ export const Footer: React.FC = () => {
         </Typography>
       </Grid>
     </Grid>
+    </Box>
+
   );
 };

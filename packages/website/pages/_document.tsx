@@ -3,6 +3,7 @@ import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheets } from '@material-ui/core/styles';
 import theme from '../src/theme';
 import Hilight from '../components/hilight';
+import GlobalStyles from '~/components/globalStyle';
 export default class MyDocument extends Document {
   render() {
     return (
@@ -15,10 +16,12 @@ export default class MyDocument extends Document {
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
           />
+          <GlobalStyles />
           <Hilight />
+
           <script
-          dangerouslySetInnerHTML={{
-            __html: `
+            dangerouslySetInnerHTML={{
+              __html: `
             var _hmt = _hmt || [];
             (function() {
               var hm = document.createElement("script");
@@ -27,8 +30,8 @@ export default class MyDocument extends Document {
               s.parentNode.insertBefore(hm, s);
             })();
           `,
-          }}
-        />
+            }}
+          />
         </Head>
         <body>
           <Main />

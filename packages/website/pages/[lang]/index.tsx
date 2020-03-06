@@ -10,6 +10,7 @@ import { Mission } from '~/components/home/Mission';
 import { TechStacks } from '~/components/home/TechStack';
 import { Team } from '~/components/team/Team';
 import { ShowCases } from '../../components/cases/Case';
+import { Contact } from '~/components/Contact';
 
 const IndexPage: React.FC = () => {
   const { t, locale } = useTranslation();
@@ -31,6 +32,8 @@ const IndexPage: React.FC = () => {
       <Divider />
 
       <ShowCases />
+
+      <Divider />
 
     </Layout>
   );
