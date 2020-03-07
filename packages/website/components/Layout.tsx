@@ -101,8 +101,6 @@ const Layout: React.FunctionComponent<Props> = ({
         })}
 
         <title>{optMeta('title', locale, meta)}</title>
-
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
       </Head>
       <ElevationScroll>
         <AppBar position="sticky">
