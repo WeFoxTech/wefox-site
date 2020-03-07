@@ -5,6 +5,7 @@ import { Locale } from './translations/config';
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
 
 // https://gist.github.com/lancejpollard/1978404
+// https://github.com/joshbuchea/HEAD
 
 export interface HtmlMeta {
   title: string;

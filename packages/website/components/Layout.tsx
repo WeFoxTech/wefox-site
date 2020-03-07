@@ -92,8 +92,6 @@ const Layout: React.FunctionComponent<Props> = ({
   return (
     <>
       <Head>
-        <title>{optMeta('title', locale, meta)}</title>
-        <meta charSet="utf-8" />
         {metaKeys.map((k, i) => {
           const value = optMeta(k, locale, meta);
           if (value) {
@@ -101,7 +99,9 @@ const Layout: React.FunctionComponent<Props> = ({
           }
           return null;
         })}
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+        <title>{optMeta('title', locale, meta)}</title>
+
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
       </Head>
       <ElevationScroll>

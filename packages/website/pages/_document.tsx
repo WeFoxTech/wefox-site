@@ -10,6 +10,14 @@ export default class MyDocument extends Document {
       // @ts-ignore
       <html lang={this.props.locale || 'en'}>
         <Head>
+          <meta charSet="utf-8" />
+          <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+
+          <meta name="apple-mobile-web-app-capable" content="yes"></meta>
+          <meta name="full-screen" content="true"></meta>
+          <meta name="x5-fullscreen" content="true"></meta>
+          <meta name="360-fullscreen" content="true"></meta>
+
           {/* PWA primary color */}
           <meta name="theme-color" content={theme.palette.primary.main} />
           <link
