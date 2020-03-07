@@ -216,7 +216,7 @@ export const Bio: React.FC<{ menber: MenberData }> = ({ menber }) => {
     bio = menber.bio;
   }
   if (typeof bio === 'string') {
-    return <Typography>{bio}</Typography>;
+    return  <Typography>{bio}</Typography> ;
   } else if (React.isValidElement(bio)) {
     return <>{bio}</>;
   } else {
@@ -225,7 +225,6 @@ export const Bio: React.FC<{ menber: MenberData }> = ({ menber }) => {
 };
 
 const Name: React.FC<{ menber: MenberData }> = ({ menber }) => {
-  const classes = useStyles();
   const { t, locale } = useTranslation();
   let name: string;
   if (locale === 'zh' && menber.cnName) {
@@ -235,7 +234,7 @@ const Name: React.FC<{ menber: MenberData }> = ({ menber }) => {
   }
 
   return (
-    <Box clone py={2}>
+    <Box clone pt={1}>
       <Typography variant="h5" component="strong">
         {name}
       </Typography>
@@ -275,6 +274,7 @@ export const Menber: React.FC<MenberProps> = ({ data }) => {
           src={data.avatar}
         ></Avatar>
         <Name menber={data} />
+        <Box pt={2}>
         <Grid container spacing={2} justify="center">
           <GitHub id={data.github}> </GitHub>
           <Twitter id={data.twitter}> </Twitter>
@@ -283,6 +283,8 @@ export const Menber: React.FC<MenberProps> = ({ data }) => {
           <Email address={data.email} />
           <Tel tel={data.tel} />
         </Grid>
+        </Box>
+
         <Bio menber={data}></Bio>
       </Card>
     </Grid>
