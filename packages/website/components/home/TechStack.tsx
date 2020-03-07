@@ -20,7 +20,7 @@ const commonTechNames = [
   'java',
   'dart',
   'swift',
-  'csharp',
+  'C#',
   'javascript',
   'kotlin',
   'python',
@@ -53,7 +53,7 @@ const techStacks: { [key in Locale]: string[] } = {
     ...commonTechNames,
   ],
 
-  zh: ['区块链', 'AI人工智能', '大数据', '算法', '搜索', ...commonTechNames],
+  zh: ['区块链', '推荐算法', '大数据', '搜索', ...commonTechNames],
 };
 
 const techStackTitle: { [key in Locale]: string } = {
@@ -66,20 +66,13 @@ const useStyles = makeStyles((theme: Theme) =>
     titleWraper: {
       marginTop: theme.spacing(marginTop),
       marginBottom: theme.spacing(8),
-      // marginLeft: 0,
-      // marginRight: 0,
     },
     title: {
       paddingBottom: marginTop,
     },
     tag: {
-      // marginTop: theme.spacing(1),
-      // marginLeft: theme.spacing(1),
       padding: theme.spacing(2),
       margin: theme.spacing(1),
-      // padding: '10px 10px 10px 10px',
-      // fontSize: '1.2em',
-      // borderRadius: theme.spacing(3),
       minWidth: theme.spacing(18),
     },
     tagWraper: {
