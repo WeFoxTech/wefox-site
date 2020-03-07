@@ -48,6 +48,7 @@ export const Footer: React.FC = () => {
             >{`浙ICP备16033599号-6`}</MuiLink>
           </Typography>
         </Grid>
+        <Version />
       </Grid>
     </Box>
   );

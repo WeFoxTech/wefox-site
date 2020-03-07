@@ -8,6 +8,9 @@ const common = {
   'inc.name': 'WeFox tech',
   'inc.copyright': 'All Rights Reserved',
   'inc.shortName': 'WeFox',
+  version: 'Version',
+  commit: 'Commit',
+  buildNumber: 'Build Number',
 };
 
 export default common;

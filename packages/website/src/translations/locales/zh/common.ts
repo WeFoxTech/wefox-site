@@ -10,6 +10,9 @@ const common: AllTranslations['common'] = {
   'inc.name': '微狐科技',
   'inc.copyright': '版权所有',
   'inc.shortName': '微狐',
+  version: '版本号',
+  commit: '提交hash',
+  buildNumber: '构建号',
 };
 
 export default common;
