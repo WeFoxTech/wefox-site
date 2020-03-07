@@ -8,6 +8,7 @@ const common = {
   'gh.editMe': 'edit me on GitHub',
   'inc.name': 'WeFox tech',
   'inc.copyright': 'All Rights Reserved',
+  'inc.shortName': 'WeFox',
 };
 
 export default common;

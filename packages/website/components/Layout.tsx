@@ -1,6 +1,14 @@
 import * as React from 'react';
 import Head from 'next/head';
-import { AppBar, Toolbar, Typography, Theme, Container, useScrollTrigger } from '@material-ui/core';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Theme,
+  Container,
+  useScrollTrigger,
+  Box,
+} from '@material-ui/core';
 import { Footer } from './Footer';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { BottomNav } from './BottomNav';
@@ -12,9 +20,8 @@ import { languageNames, localeNames, Locale } from '../src/translations/config';
 import { useRouter } from 'next/router';
 import { LocaleContext } from '../src/context/LocaleContext';
 import { LocaleSwitcher } from './LocaleSwitcher';
-
 import { ContainerProps } from '@material-ui/core';
-
+import LogoMenu from '~/components/home/LogoMenu'
 interface Props {
   title?: string;
   toolbar?: Component;
@@ -41,9 +48,9 @@ const useStyles = makeStyles((theme: Theme) =>
       flex: '1 1 auto',
     },
 
-    container:{
+    container: {
       padding: 0,
-    }
+    },
   })
 );
 
@@ -69,9 +76,9 @@ const Layout: React.FunctionComponent<Props> = ({
   title = 'This is the default title',
   toolbar = null,
   maxWidth = 'md',
-  overrideToolbarRootColor= false,
+  overrideToolbarRootColor = false,
 }) => {
-  if(overrideToolbarRootColor){
+  if (overrideToolbarRootColor) {
     overrideToolbarStyle();
   }
   const classes = useStyles();
@@ -92,8 +99,9 @@ const Layout: React.FunctionComponent<Props> = ({
       <ElevationScroll>
         <AppBar position="sticky">
           <Toolbar>
-            {/* <Typography>{title}</Typography> */}
+            <LogoMenu />
             {toolbar}
+
             <div className={classes.grow}></div>
             <LocaleSwitcher />
           </Toolbar>
@@ -102,7 +110,9 @@ const Layout: React.FunctionComponent<Props> = ({
       <Toolbar />
 
       <main className={classes.main}>
-        <Container className={classes.container} maxWidth={maxWidth}>{children}</Container>
+        <Container className={classes.container} maxWidth={maxWidth}>
+          {children}
+        </Container>
       </main>
       <footer>
         <Footer />

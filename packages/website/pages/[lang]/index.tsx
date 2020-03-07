@@ -9,7 +9,7 @@ import Link from '~/src/Link';
 import { Mission } from '~/components/home/Mission';
 import { TechStacks } from '~/components/home/TechStack';
 import { Team } from '~/components/team/Team';
-import { ShowCases } from '../../components/cases/Case';
+import { ShowCases } from '~/components/cases/Case';
 import { Contact } from '~/components/Contact';
 
 const IndexPage: React.FC = () => {
@@ -19,22 +19,12 @@ const IndexPage: React.FC = () => {
     <Layout title={t('l.title')} maxWidth={false} overrideToolbarRootColor={true}>
       <Mission />
       <Divider />
-
       <TechStacks />
-      {/* <Typography>{t('contactMe')} </Typography>
-
-      <Link href="/[lang]/about" as={`/${locale}/about`}>
-        {t('aboutLink')}
-      </Link> */}
       <Divider />
       <Team />
-
       <Divider />
-
       <ShowCases />
-
       <Divider />
-
     </Layout>
   );
 };
@@ -49,7 +39,6 @@ export async function unstable_getStaticPaths() {
 
 export const unstable_getStaticProps: GetstaticProps = async ({ params }) => {
   const { lang } = params;
-
   return {
     props: {
       locale: lang,
