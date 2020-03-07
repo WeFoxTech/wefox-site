@@ -1,4 +1,12 @@
-import { Container, Theme, Typography, Grid, Tooltip, Link as MuiLink, Box } from '@material-ui/core';
+import {
+  Container,
+  Theme,
+  Typography,
+  Grid,
+  Tooltip,
+  Link as MuiLink,
+  Box,
+} from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { Version } from './Version';
 import Link from '~/src/Link';
@@ -17,33 +25,30 @@ export const Footer: React.FC = () => {
   // const classes = useStyles();
   return (
     <Box bgcolor="grey.100">
+      <Grid container spacing={1} justify="center">
+        <Contact />
 
-    <Grid container spacing={1} justify="center">
+        <Grid item>
+          <Typography component="span">&copy;2016-{new Date().getFullYear()}</Typography>
+        </Grid>
+        <Grid item>
+          <Tooltip title={t('inc.name')}>
+            <Link href="https://wefox.tech">wefox.tech</Link>
+          </Tooltip>
+        </Grid>
 
-<Contact />
-
-      <Grid item>
-        <Typography component="span">&copy;2016-{new Date().getFullYear()}</Typography>
+        <Grid item>
+          <Typography> {t('inc.copyright')}</Typography>
+        </Grid>
+        <Grid item>
+          <Typography component="span">
+            <MuiLink
+              target="_blank"
+              href="http://www.beian.miit.gov.cn/"
+            >{`浙ICP备16033599号-6`}</MuiLink>
+          </Typography>
+        </Grid>
       </Grid>
-      <Grid item>
-        <Tooltip title={t('inc.name')}>
-          <Link href="https://wefox.tech">wefox.tech</Link>
-        </Tooltip>
-      </Grid>
-
-      <Grid item>
-        <Typography> {t('inc.copyright')}</Typography>
-      </Grid>
-      <Grid item>
-        <Typography component="span">
-          <MuiLink
-            target="_blank"
-            href="http://www.beian.miit.gov.cn/"
-          >{`浙ICP备16033599号-6`}</MuiLink>
-        </Typography>
-      </Grid>
-    </Grid>
     </Box>
-
   );
 };
