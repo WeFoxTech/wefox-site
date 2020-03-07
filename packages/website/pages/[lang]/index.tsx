@@ -11,12 +11,24 @@ import { TechStacks } from '~/components/home/TechStack';
 import { Team } from '~/components/team/Team';
 import { ShowCases } from '~/components/cases/Case';
 import { Contact } from '~/components/Contact';
+import { PageMeta } from '../../src/PageMeta';
 
 const IndexPage: React.FC = () => {
   const { t, locale } = useTranslation();
+  const commonKeyworks = ['wefox'];
+  const meta: PageMeta = {
+    title: 'WeFox Technology',
+    keywords: [...commonKeyworks, 'technical consulting', 'Technical Adviser'],
+    description: 'Professional technical consulting and consulting services',
+    zh: {
+      title: '微狐科技',
+      keywords: [...commonKeyworks, '微狐', '微狐科技', '技术咨询', '技术顾问'],
+      description: '专业的技术咨询、顾问服务',
+    },
+  };
 
   return (
-    <Layout title={t('l.title')} maxWidth={false} overrideToolbarRootColor={true}>
+    <Layout meta={meta} maxWidth={false} overrideToolbarRootColor={true}>
       <Mission />
       <Divider />
       <TechStacks />

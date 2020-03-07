@@ -4,7 +4,6 @@ const common: AllTranslations['common'] = {
   contactMe: '联系我',
   qrUsage: '微信扫一扫联系我们',
   phoneQrUsage: '长按二维码联系我们',
-  'l.title': '我是标题',
   changeLanguage: '改变语言',
   aboutLink: '关于我',
   'gh.editMe': '在GitHub上编辑我',

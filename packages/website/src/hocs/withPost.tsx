@@ -9,19 +9,15 @@ import theme from '../../src/theme';
 import { Container, Paper } from '@material-ui/core';
 import { LocaleProvider } from '../context/LocaleContext';
 import { Locale } from '../translations/config';
-import { getDisplayName } from 'next/dist/next-server/lib/utils';
 import { isLocale, Translations, Namespace } from '../translations/types';
 import { LangProps } from './withLocale';
 import Layout from '~/components/Layout';
+import { PageMeta } from '../PageMeta';
 
-interface Meta {
-  title: string;
-}
-
-const PostLayout: React.FC<{ meta: Meta }> = ({ meta, children }) => {
-  return <Layout title={meta.title}>{children}</Layout>;
+const PostLayout: React.FC<{ meta: PageMeta }> = ({ meta, children }) => {
+  return <Layout meta={meta}>{children}</Layout>;
 };
 
-export default (meta: Meta): React.FC => ({ children }) => {
+export default (meta: PageMeta): React.FC => ({ children }) => {
   return <PostLayout meta={meta}>{children}</PostLayout>;
 };

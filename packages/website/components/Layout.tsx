@@ -21,12 +21,13 @@ import { useRouter } from 'next/router';
 import { LocaleContext } from '../src/context/LocaleContext';
 import { LocaleSwitcher } from './LocaleSwitcher';
 import { ContainerProps } from '@material-ui/core';
-import LogoMenu from '~/components/home/LogoMenu'
+import LogoMenu from '~/components/home/LogoMenu';
+import { PageMeta, optMeta, metaKeys } from '../src/PageMeta';
 interface Props {
-  title?: string;
   toolbar?: Component;
   maxWidth?: ContainerProps['maxWidth'];
   overrideToolbarRootColor?: boolean;
+  meta?: PageMeta;
 }
 
 const overrideToolbarStyle = makeStyles(
@@ -73,10 +74,10 @@ const ElevationScroll: React.FC = ({ children }) => {
 
 const Layout: React.FunctionComponent<Props> = ({
   children,
-  title = 'This is the default title',
   toolbar = null,
   maxWidth = 'md',
   overrideToolbarRootColor = false,
+  meta,
 }) => {
   if (overrideToolbarRootColor) {
     overrideToolbarStyle();
@@ -91,8 +92,15 @@ const Layout: React.FunctionComponent<Props> = ({
   return (
     <>
       <Head>
-        <title>{title}</title>
+        <title>{optMeta('title', locale, meta)}</title>
         <meta charSet="utf-8" />
+        {metaKeys.map((k, i) => {
+          const value = optMeta(k, locale, meta);
+          if (value) {
+            return <meta key={i} name={k} content={value} />;
+          }
+          return null;
+        })}
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
       </Head>
@@ -101,7 +109,6 @@ const Layout: React.FunctionComponent<Props> = ({
           <Toolbar>
             <LogoMenu />
             {toolbar}
-
             <div className={classes.grow}></div>
             <LocaleSwitcher />
           </Toolbar>
