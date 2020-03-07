@@ -1,4 +1,4 @@
-import { Avatar, Card, Typography, Container, GridList, Grid, Link } from '@material-ui/core';
+import { Avatar, Card, Typography, Container, GridList, Grid, Link, Box } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { Locale } from '../../src/translations/config';
 import { InlineLocale } from '~/src/translations/types';
@@ -28,12 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'center',
       flexDirection: 'column',
     },
-    teamTitle: {
-      paddingBottom: theme.spacing(4),
-    },
-    teamSummary: {
-      paddingBottom: theme.spacing(4),
-    },
+
     avatar: {
       height: theme.spacing(16),
       width: theme.spacing(16),
@@ -54,12 +49,6 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingRight: theme.spacing(8),
       paddingBottom: theme.spacing(3),
     },
-    geistWrapper: {
-      display: 'flex',
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
   })
 );
 export const ShowCases: React.FC = () => {
@@ -67,12 +56,15 @@ export const ShowCases: React.FC = () => {
   const { t, locale } = useTranslation();
   return (
     <Container className={classes.root} maxWidth="lg">
-      <Typography className={classes.teamTitle} variant="h3" component="strong">
+      <Typography variant="h3" component="strong">
         {caseTitle[locale]}
       </Typography>
 
-      <Typography className={classes.teamSummary}>{caseSummary[locale]}</Typography>
-      <Grid className={classes.geistWrapper} container spacing={4}>
+      <Box clone py={4}>
+        <Typography>{caseSummary[locale]}</Typography>
+      </Box>
+
+      <Grid container spacing={4} justify="center">
         {casesData.map((e, i) => (
           <Item key={i} item={e} />
         ))}

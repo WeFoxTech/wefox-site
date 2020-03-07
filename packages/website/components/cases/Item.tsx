@@ -16,6 +16,7 @@ import { zhCN, enUS } from 'date-fns/locale';
 import { Locale } from '../../src/translations/config';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
+import DateRangeIcon from '@material-ui/icons/DateRange';
 import TrendingFlatIcon from '@material-ui/icons/TrendingFlat';
 import LinkIcon from '@material-ui/icons/Link';
 
@@ -35,27 +36,8 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
       justifyContent: 'center',
       flexDirection: 'column',
-      position: 'relative',
-      paddingTop: theme.spacing(2),
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(2),
-      paddingBottom: theme.spacing(2),
       maxWidth: theme.spacing(48),
     },
-    name: {
-      paddingTop: theme.spacing(2),
-      paddingBottom: theme.spacing(1),
-    },
-    links: {
-      display: 'flex',
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    social: {
-      padding: theme.spacing(1),
-    },
-    twitter: {},
   })
 );
 
@@ -83,15 +65,11 @@ export const Desc: React.FC<{ item: ShowCaseDataItem }> = ({ item }) => {
 };
 
 const TimeBox: React.FC = ({ children }) => (
-  <Box
-    display="inline"
-    bgcolor="success.main"
-    p={4 / 8}
-    mx={2 / 8}
-    color="background.paper"
-    boxShadow={1}
-  >
-    <Typography variant="body2" component="span">{children}</Typography>
+  <Box display="inline" pt={1 / 2} mx={2 / 8} color="grey.500">
+    <DateRangeIcon color="secondary" fontSize="small" />
+    <Typography className="text-with-icon" variant="body2" component="span">
+      {children}
+    </Typography>
   </Box>
 );
 const TimeRange: React.FC<{ item: ShowCaseDataItem }> = ({ item }) => {
@@ -117,7 +95,7 @@ const TimeRange: React.FC<{ item: ShowCaseDataItem }> = ({ item }) => {
       {rangeDays > 2 && (
         <>
           <Box pt={0.5}>
-            <TrendingFlatIcon />
+            <TrendingFlatIcon color="disabled" />
           </Box>
           <TimeBox> {end}</TimeBox>
         </>
@@ -126,7 +104,6 @@ const TimeRange: React.FC<{ item: ShowCaseDataItem }> = ({ item }) => {
   );
 };
 const Name: React.FC<{ item: ShowCaseDataItem; showLink: boolean }> = ({ item, showLink }) => {
-  const classes = useStyles();
   const { t, locale } = useTranslation();
   let name: string;
   if (locale === 'zh' && item.cnName) {
@@ -136,8 +113,8 @@ const Name: React.FC<{ item: ShowCaseDataItem; showLink: boolean }> = ({ item, s
   }
   if (showLink && item.site) {
     return (
-      <Link className={classes.name} href={item.site} target="_blank">
-        <Typography className={classes.name} variant="h6" component="strong">
+      <Link href={item.site} target="_blank">
+        <Typography variant="h6" component="strong">
           <LinkIcon />
           {name}
         </Typography>
@@ -145,7 +122,7 @@ const Name: React.FC<{ item: ShowCaseDataItem; showLink: boolean }> = ({ item, s
     );
   } else {
     return (
-      <Typography className={classes.name} variant="h6" component="strong">
+      <Typography variant="h6" component="strong">
         {name}
       </Typography>
     );
@@ -165,30 +142,32 @@ export const Item: React.FC<{ item: ShowCaseDataItem }> = ({ item }) => {
   };
 
   return (
-    <Grid item xs="auto">
-      <Card
-        className={classes.card}
-        elevation={hover ? 10 : 1}
-        onMouseEnter={mouseEnter}
-        onMouseLeave={mouseLeave}
-      >
-        {/* <Avatar
+    <Grid item>
+      <Box clone px={2} pb={2} pt={1}>
+        <Card
+          className={classes.card}
+          elevation={hover ? 10 : 1}
+          onMouseEnter={mouseEnter}
+          onMouseLeave={mouseLeave}
+        >
+          {/* <Avatar
           className={classes.avatar}
           variant="circle"
           alt={data.name}
           src={data.avatar}
         ></Avatar> */}
-        <Name item={item} showLink={hover} />
+          <Name item={item} showLink={hover} />
 
-        <TimeRange item={item} />
-        <Grid container className={classes.links}>
+          <TimeRange item={item} />
+          {/* <Grid container> */}
           {/* <GitHub id={data.github}> </GitHub> */}
           {/* <Twitter id={data.twitter}> </Twitter> */}
           {/* <Weibo id={data.weibo}> </Weibo> */}
           {/* <Site url={item.site}></Site> */}
-        </Grid>
-        <Desc item={item}></Desc>
-      </Card>
+          {/* </Grid> */}
+          <Desc item={item}></Desc>
+        </Card>
+      </Box>
     </Grid>
   );
 };
