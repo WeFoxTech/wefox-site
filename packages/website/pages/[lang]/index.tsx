@@ -20,6 +20,7 @@ const IndexPage: React.FC = () => {
     title: 'WeFox Technology',
     keywords: [...commonKeyworks, 'technical consulting', 'Technical Adviser'],
     description: 'Professional technical consulting and consulting services',
+    author: 'fox, i@fox.mn',
     zh: {
       title: '微狐科技',
       keywords: [...commonKeyworks, '微狐', '微狐科技', '技术咨询', '技术顾问'],
