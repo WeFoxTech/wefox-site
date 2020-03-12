@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 import MuiLink, { LinkProps as MuiLinkProps } from '@material-ui/core/Link';
+import { isExternalUrl, isHashLink } from './config';
 
 type NextComposedProps = Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> &
   NextLinkProps;
@@ -57,7 +58,11 @@ function Link(props: LinkProps) {
   }
 
   const tmpHref = href as string;
-  let finalHref: string;
+  if (typeof href === 'string') {
+    if (isExternalUrl(href) || isHashLink(href)) {
+      return <MuiLink className={className} ref={innerRef} href={tmpHref} {...other} />;
+    }
+  }
 
   return (
     <MuiLink

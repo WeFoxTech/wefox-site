@@ -110,13 +110,13 @@ export const TechStacks: React.FC = () => {
 
   return (
     <>
-      <Container className={clsx(classes.center, classes.titleWraper)} maxWidth={'lg'}>
+      <Container component="section" id="techstack" className={clsx(classes.center, classes.titleWraper)} maxWidth={'lg'}>
         <Typography className={classes.title} variant="h3">
           {techStackTitle[locale]}
         </Typography>
       </Container>
 
-      <Container maxWidth="lg">
+      <Container  maxWidth="lg">
         <Grid container className={clsx(classes.tagWraper, classes.center)}>
           {techStacks[locale].map((e, i) => (
             <Tag key={i}>{e}</Tag>

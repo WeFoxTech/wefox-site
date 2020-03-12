@@ -55,7 +55,7 @@ export const ShowCases: React.FC = () => {
   const classes = useStyles();
   const { t, locale } = useTranslation();
   return (
-    <Container className={classes.root} maxWidth="lg">
+    <Container component="section" id="case" className={classes.root} maxWidth="lg">
       <Typography variant="h3" component="strong">
         {caseTitle[locale]}
       </Typography>

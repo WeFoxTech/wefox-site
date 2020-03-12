@@ -1,4 +1,4 @@
-import { Avatar, Card, Typography, Container, GridList, Grid, Link } from '@material-ui/core';
+import { Avatar, Card, Typography, Container, GridList, Grid, Link, Box } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { Locale } from '../../src/translations/config';
 import { InlineLocale } from '~/src/translations/types';
@@ -94,17 +94,21 @@ export const Team: React.FC = () => {
   const classes = useStyles();
   const { t, locale } = useTranslation();
   return (
-    <Container className={clsx( classes.center, classes.root)} maxWidth="lg">
-      <Typography className={classes.teamTitle} variant="h3" component="strong">
+    <Container component="section" id="team"  maxWidth="lg">
+      <Box pt={16} justifyContent="center" alignItems="center">
+
+      <Typography variant="h3" component="strong">
         {teamTitle[locale]}
       </Typography>
 
-      <Typography className={classes.teamSummary}>{teamSummary[locale]}</Typography>
+      <Typography>{teamSummary[locale]}</Typography>
       <Grid className={classes.center} container spacing={3}>
         {data.map((e, i) => (
           <Menber key={i} data={e} />
         ))}
       </Grid>
+      </Box>
+
     </Container>
   );
 };

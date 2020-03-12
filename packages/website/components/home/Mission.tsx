@@ -35,7 +35,7 @@ export const Mission: React.FC = () => {
 
   return (
     <div className={classes.root}>
-      <Container className={classes.mission} maxWidth="md">
+      <Container id="about" component="section" className={classes.mission} maxWidth="md">
         <Typography variant="h1" component="strong">
           {name[locale]}
         </Typography>
