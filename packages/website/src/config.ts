@@ -8,6 +8,13 @@ export function isExternalUrl(url: string | undefined | null) {
   return false;
 }
 
+export function isHashLink(href?: string) {
+  if (href) {
+    return href.startsWith('#');
+  }
+  return false;
+}
+
 export const contactInfo = {
   email: 'team@wefox.tech',
   tel: '13148371687',
