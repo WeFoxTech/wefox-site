@@ -11,7 +11,38 @@ import { TechStacks } from '~/components/home/TechStack';
 import { Team } from '~/components/team/Team';
 import { ShowCases } from '~/components/cases/Case';
 import { Contact } from '~/components/Contact';
-import { PageMeta } from '../../src/PageMeta';
+import { PageMeta } from '~/src/PageMeta';
+import { LayoutMenu } from '~/src/menu';
+import ViewModuleIcon from '@material-ui/icons/ViewModule';
+import GroupIcon from '@material-ui/icons/Group';
+import SlideshowIcon from '@material-ui/icons/Slideshow';
+
+const menus: LayoutMenu[] = [
+  {
+    type: 'link',
+    name: 'menuTechstack',
+    linkProps: {
+      href: '#techstack',
+    },
+    icon: <ViewModuleIcon color="primary" />,
+  },
+  {
+    type: 'link',
+    name: 'menuTeam',
+    linkProps: {
+      href: '#team',
+    },
+    icon: <GroupIcon color="primary" />,
+  },
+  {
+    type: 'link',
+    name: 'menuCase',
+    linkProps: {
+      href: '#case',
+    },
+    icon: <SlideshowIcon color="primary" />,
+  },
+];
 
 const IndexPage: React.FC = () => {
   const { t, locale } = useTranslation();
@@ -29,7 +60,7 @@ const IndexPage: React.FC = () => {
   };
 
   return (
-    <Layout meta={meta} maxWidth={false} overrideToolbarRootColor={true}>
+    <Layout meta={meta} menus={menus} maxWidth={false} overrideToolbarRootColor={true}>
       <Mission />
       <Divider />
       <TechStacks />

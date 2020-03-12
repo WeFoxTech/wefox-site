@@ -8,6 +8,9 @@ import {
   Container,
   useScrollTrigger,
   Box,
+  IconButton,
+  Hidden,
+  Drawer,
 } from '@material-ui/core';
 import { Footer } from './Footer';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
@@ -23,11 +26,15 @@ import { LocaleSwitcher } from './LocaleSwitcher';
 import { ContainerProps } from '@material-ui/core';
 import LogoMenu from '~/components/home/LogoMenu';
 import { PageMeta, optMeta, metaKeys } from '../src/PageMeta';
+import MenuIcon from '@material-ui/icons/Menu';
+import { LayoutMenu, useToolbarMenus } from '~/src/menu';
+import { useDrawerMenus } from '../src/menu';
 interface Props {
   toolbar?: Component;
   maxWidth?: ContainerProps['maxWidth'];
   overrideToolbarRootColor?: boolean;
   meta?: PageMeta;
+  menus?: LayoutMenu[];
 }
 
 const overrideToolbarStyle = makeStyles(
@@ -78,17 +85,18 @@ const Layout: React.FunctionComponent<Props> = ({
   maxWidth = 'md',
   overrideToolbarRootColor = false,
   meta,
+  menus,
 }) => {
   if (overrideToolbarRootColor) {
     overrideToolbarStyle();
   }
   const classes = useStyles();
   const { t, locale } = useTranslation();
-
   const router = useRouter();
-
+  const [open, setOpen] = React.useState(false);
   const [languageMenu, setLanguageMenu] = React.useState<Element | null>(null);
-
+  const toolbarMenus = useToolbarMenus(menus);
+  const drawerMenus = useDrawerMenus(menus);
   return (
     <>
       <Head>
@@ -99,7 +107,6 @@ const Layout: React.FunctionComponent<Props> = ({
           }
           return null;
         })}
-
         <title>{optMeta('title', locale, meta)}</title>
       </Head>
       <ElevationScroll>
@@ -107,8 +114,14 @@ const Layout: React.FunctionComponent<Props> = ({
           <Toolbar>
             <LogoMenu />
             {toolbar}
+            {toolbarMenus}
             <div className={classes.grow}></div>
             <LocaleSwitcher />
+            <Hidden smUp implementation="css">
+              <IconButton onClick={() => setOpen(true)}>
+                <MenuIcon />
+              </IconButton>
+            </Hidden>
           </Toolbar>
         </AppBar>
       </ElevationScroll>
@@ -119,6 +132,10 @@ const Layout: React.FunctionComponent<Props> = ({
           {children}
         </Container>
       </main>
+      <Drawer anchor="right" open={open} onBlur={() => setOpen(false)}>
+        {drawerMenus}
+      </Drawer>
+
       <footer>
         <Footer />
       </footer>
