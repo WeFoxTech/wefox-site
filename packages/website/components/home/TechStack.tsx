@@ -1,9 +1,10 @@
-import useTranslation from '../../src/hooks/useTranslation';
-import { Locale } from '../../src/translations/config';
+import useTranslation from '~/src/hooks/useTranslation';
+import { Locale } from '~/src/translations/config';
 import { Typography, Container, Box, Chip, Grid } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { marginTop, marginBottom } from './spacing';
 import clsx from 'clsx';
+import { InlineLocale } from '~/src/translations/types';
 
 const commonTechNames = [
   'Blockchain',
@@ -38,7 +39,7 @@ const commonTechNames = [
   'GitHub Action',
 ];
 
-const techStacks: { [key in Locale]: string[] } = {
+const techStacks: InlineLocale<string[]> = {
   en: [
     'AI',
     'docker',
@@ -56,34 +57,22 @@ const techStacks: { [key in Locale]: string[] } = {
   zh: ['区块链', '推荐算法', '大数据', '搜索', ...commonTechNames],
 };
 
-const techStackTitle: { [key in Locale]: string } = {
+const techStackTitle: InlineLocale = {
   en: 'Our technology stack',
   zh: '我们的技术栈',
+};
+const techStackSummary: InlineLocale = {
+  en:
+    'We have in-depth research in most Internet-related areas, including but not limited to the following',
+  zh: '我们在大部分互联网相关领域都有深入研究，包括但不局限于下面这些',
 };
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    titleWraper: {
-      marginTop: theme.spacing(marginTop),
-      marginBottom: theme.spacing(8),
-    },
-    title: {
-      paddingBottom: marginTop,
-    },
     tag: {
       padding: theme.spacing(2),
       margin: theme.spacing(1),
       minWidth: theme.spacing(18),
-    },
-    tagWraper: {
-      position: 'relative',
-      paddingBottom: theme.spacing(8),
-    },
-    center: {
-      display: 'flex',
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
     },
   })
 );
@@ -109,20 +98,20 @@ export const TechStacks: React.FC = () => {
   const classes = useStyles();
 
   return (
-    <>
-      <Container component="section" id="techstack" className={clsx(classes.center, classes.titleWraper)} maxWidth={'lg'}>
-        <Typography className={classes.title} variant="h3">
-          {techStackTitle[locale]}
-        </Typography>
-      </Container>
+    <Container component="section" id="techstack" maxWidth={'lg'}>
+      <Box pt={16} pb={8} justifyContent="center" alignItems="center" textAlign="center">
+        <Typography variant="h3">{techStackTitle[locale]}</Typography>
 
-      <Container  maxWidth="lg">
-        <Grid container className={clsx(classes.tagWraper, classes.center)}>
+        <Box clone py={4}>
+          <Typography>{techStackSummary[locale]}</Typography>
+        </Box>
+
+        <Grid container spacing={0} justify="center">
           {techStacks[locale].map((e, i) => (
             <Tag key={i}>{e}</Tag>
           ))}
         </Grid>
-      </Container>
-    </>
+      </Box>
+    </Container>
   );
 };

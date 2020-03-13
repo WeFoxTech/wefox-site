@@ -7,12 +7,12 @@ import { marginTop, marginBottom } from '../home/spacing';
 import { Item } from './Item';
 import { casesData } from '~/src/data/casesData.tsx';
 
-const caseTitle: InlineLocale<string> = {
+const caseTitle: InlineLocale = {
   en: 'Our success cases',
   zh: '我们的成功案列',
 };
 
-const caseSummary: InlineLocale<string> = {
+const caseSummary: InlineLocale = {
   en: 'We have successfully helped many businesses and individuals',
   zh: '我们成功帮助过多家企业和个人',
 };
@@ -55,20 +55,22 @@ export const ShowCases: React.FC = () => {
   const classes = useStyles();
   const { t, locale } = useTranslation();
   return (
-    <Container component="section" id="case" className={classes.root} maxWidth="lg">
-      <Typography variant="h3" component="strong">
-        {caseTitle[locale]}
-      </Typography>
+    <Container component="section" id="case" maxWidth="lg">
+      <Box pt={16} pb={8} justifyContent="center" alignItems="center" textAlign="center">
+        <Typography variant="h3" component="strong">
+          {caseTitle[locale]}
+        </Typography>
 
-      <Box clone py={4}>
-        <Typography>{caseSummary[locale]}</Typography>
+        <Box clone py={4}>
+          <Typography>{caseSummary[locale]}</Typography>
+        </Box>
+
+        <Grid container spacing={4} justify="center">
+          {casesData.map((e, i) => (
+            <Item key={i} item={e} />
+          ))}
+        </Grid>
       </Box>
-
-      <Grid container spacing={4} justify="center">
-        {casesData.map((e, i) => (
-          <Item key={i} item={e} />
-        ))}
-      </Grid>
     </Container>
   );
 };
