@@ -68,7 +68,6 @@ export const Version = () => {
       )}
       {sha && (
         <Grid item>
-          <Divider />
           <Typography component="span">{`${t('commit')}:`}</Typography>
           <Tooltip title={`${t('commit')}: ${sha}`}>
             <Typography component="span">

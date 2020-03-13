@@ -135,10 +135,7 @@ const Layout: React.FunctionComponent<Props> = ({
       <Drawer anchor="right" open={open} onBlur={() => setOpen(false)}>
         {drawerMenus}
       </Drawer>
-
-      <footer>
-        <Footer />
-      </footer>
+      <Footer />
     </>
   );
 };

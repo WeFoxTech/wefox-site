@@ -24,32 +24,32 @@ export const Footer: React.FC = () => {
   const { t } = useTranslation();
   // const classes = useStyles();
   return (
-    <Box bgcolor="grey.100" pt={8}>
-      <Grid container spacing={1} justify="center">
-        <Contact />
-
-        <Grid item>
-          <Typography component="span">&copy;2016-{new Date().getFullYear()}</Typography>
+    <Box component="footer" bgcolor="grey.100" pt={8}>
+      <Contact />
+      <Box clone py={2}>
+        <Grid container spacing={1} justify="center">
+          <Grid item>
+            <Typography component="span">&copy;2016-{new Date().getFullYear()}</Typography>
+          </Grid>
+          <Grid item>
+            <Tooltip title={t('inc.name')}>
+              <Link href="https://wefox.tech">wefox.tech</Link>
+            </Tooltip>
+          </Grid>
+          <Grid item>
+            <Typography> {t('inc.copyright')}</Typography>
+          </Grid>
+          <Grid item>
+            <Typography component="span">
+              <MuiLink
+                target="_blank"
+                href="http://www.beian.miit.gov.cn/"
+              >{`浙ICP备16033599号-6`}</MuiLink>
+            </Typography>
+          </Grid>
+          <Version />
         </Grid>
-        <Grid item>
-          <Tooltip title={t('inc.name')}>
-            <Link href="https://wefox.tech">wefox.tech</Link>
-          </Tooltip>
-        </Grid>
-
-        <Grid item>
-          <Typography> {t('inc.copyright')}</Typography>
-        </Grid>
-        <Grid item>
-          <Typography component="span">
-            <MuiLink
-              target="_blank"
-              href="http://www.beian.miit.gov.cn/"
-            >{`浙ICP备16033599号-6`}</MuiLink>
-          </Typography>
-        </Grid>
-        <Version />
-      </Grid>
+      </Box>
     </Box>
   );
 };
