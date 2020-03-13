@@ -17,7 +17,7 @@ enum ExtType {
 type Checker = [ExtType, RegExp];
 
 const checkers: Checker[] = [
-  [ExtType.img, /\.(jpe?g|png|gif|webp)/],
+  [ExtType.img, /\.(jpe?g|png|gif|webp|svg)/],
   [ExtType.audio, /\.(mp3|ogg)/],
   [ExtType.vedio, /\.(mp4)/],
 ];

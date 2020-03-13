@@ -1,7 +1,7 @@
 # vvfox website
 
-| ![CI](https://github.com/foxundermoon/vvfox-website/workflows/CI/badge.svg) | ![auto release](https://github.com/foxundermoon/vvfox-website/workflows/auto%20release/badge.svg) |
-| ----------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| ![CI](https://github.com/WeFoxTech/wefox-site/workflows/CI/badge.svg) | ![preview](https://github.com/WeFoxTech/wefox-site/workflows/preview/badge.svg) | ![auto release](https://github.com/WeFoxTech/wefox-site/workflows/auto%20release/badge.svg) |
+| --------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
 
 
 # setup dev
@@ -41,8 +41,6 @@ Release is now automated
 2. then merge to `master` branch.
 3. the rest things will automatic complete soon
 
-
 # licenses
 
-- [CC by-nc-sa](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode) ![](https://upload.wikimedia.org/wikipedia/commons/1/12/Cc-by-nc-sa_icon.svg)
-  
+[![CC by-nc-sa](https://img.wefox.tech/svg/Cc-by-nc-sa_icon.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode)
