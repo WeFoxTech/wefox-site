@@ -13,6 +13,7 @@ const common = {
   menuTechstack: 'tech stack',
   menuCase: 'case',
   menuTeam:'team',
+  about: 'About',
 };
 
 export default common;

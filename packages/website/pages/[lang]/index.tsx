@@ -16,13 +16,14 @@ import { LayoutMenu } from '~/src/menu';
 import ViewModuleIcon from '@material-ui/icons/ViewModule';
 import GroupIcon from '@material-ui/icons/Group';
 import SlideshowIcon from '@material-ui/icons/Slideshow';
+import InfoIcon from '@material-ui/icons/Info';
 
-const menus: LayoutMenu[] = [
+export const menus: LayoutMenu[] = [
   {
     type: 'link',
     name: 'menuTechstack',
     linkProps: {
-      href: '#techstack',
+      href: '/#techstack',
     },
     icon: <ViewModuleIcon color="primary" />,
   },
@@ -30,7 +31,7 @@ const menus: LayoutMenu[] = [
     type: 'link',
     name: 'menuTeam',
     linkProps: {
-      href: '#team',
+      href: '/#team',
     },
     icon: <GroupIcon color="primary" />,
   },
@@ -38,9 +39,17 @@ const menus: LayoutMenu[] = [
     type: 'link',
     name: 'menuCase',
     linkProps: {
-      href: '#case',
+      href: '/#case',
     },
     icon: <SlideshowIcon color="primary" />,
+  },
+  {
+    type: 'link',
+    name: 'about',
+    linkProps: {
+      href: '/about',
+    },
+    icon: <InfoIcon color="primary" />,
   },
 ];
 

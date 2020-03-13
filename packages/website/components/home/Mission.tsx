@@ -1,7 +1,7 @@
-import useTranslation from '../../src/hooks/useTranslation';
+import useTranslation from '~/src/hooks/useTranslation';
 import { Typography, Box, Container } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { Locale } from '../../src/translations/config';
+import { Locale } from '~/src/translations/config';
 import { marginTop, marginBottom } from './spacing';
 
 const useStyles = makeStyles((theme: Theme) =>
