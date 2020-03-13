@@ -1,13 +1,13 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { LocaleContext } from '../src/context/LocaleContext';
+import { LocaleContext } from '~/src/context/LocaleContext';
 import { Tooltip, Button, Typography, Menu, MenuItem } from '@material-ui/core';
 
 import LanguageIcon from '@material-ui/icons/Translate';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import useTranslation from '../src/hooks/useTranslation';
+import useTranslation from '~/src/hooks/useTranslation';
 
-import { languageNames, localeNames, Locale } from '../src/translations/config';
+import { languageNames, localeNames, Locale } from '~/src/translations/config';
 
 export const LocaleSwitcher: React.FC = () => {
   const { t, locale } = useTranslation();
@@ -22,7 +22,6 @@ export const LocaleSwitcher: React.FC = () => {
   const handleLocaleChange = React.useCallback(
     (l: Locale) => {
       const regex = new RegExp(`^/(${localeNames.join('|')})`);
-      console.log(router.asPath);
       let asPath = router.asPath.replace(regex, `/${l}`);
       if(asPath.endsWith('index.html')){
         asPath = asPath.replace(/index\.html$/,'')
@@ -38,7 +37,6 @@ export const LocaleSwitcher: React.FC = () => {
   };
 
   const handleLanguageMenuClose = (event: any) => {
-    console.log('handleLanguageMenuClose close language menu');
     setLanguageMenu(null);
   };
 
