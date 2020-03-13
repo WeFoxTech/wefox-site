@@ -24,7 +24,7 @@ export const Footer: React.FC = () => {
   const { t } = useTranslation();
   // const classes = useStyles();
   return (
-    <Box bgcolor="grey.100">
+    <Box bgcolor="grey.100" pt={8}>
       <Grid container spacing={1} justify="center">
         <Contact />
 

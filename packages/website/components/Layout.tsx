@@ -49,7 +49,7 @@ const overrideToolbarStyle = makeStyles(
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     main: {
-      // minHeight: '80vh',
+      minHeight: '50vh',
       // background: 'linear-gradient(45deg,#fe5196,#f77062)'
     },
     grow: {
