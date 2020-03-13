@@ -14,6 +14,7 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Link from './Link';
 import { TranslationKey } from './translations/types';
 import grey from '@material-ui/core/colors/grey';
+import { Locale } from '~/src/translations/config';
 
 type LayoutMenuType = 'link' | 'button';
 
@@ -47,6 +48,21 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+function withLocale(e: LayoutMenu, locale: Locale): LayoutMenu {
+  if (e.type === 'link' && e.linkProps?.href && (e.linkProps.href as string).startsWith('/')) {
+    let fixedProps: LinkMenu = {
+      ...e,
+      linkProps: {
+        ...e.linkProps,
+        href: `/[lang]${e.linkProps.href}`,
+        as: `/${locale}${e.linkProps.href}`,
+      },
+    };
+    return fixedProps;
+  }
+  return e;
+}
+
 export function useToolbarMenus(menus?: LayoutMenu[]) {
   if (!menus) return null;
   const { t, locale } = useTranslation();
@@ -55,26 +71,7 @@ export function useToolbarMenus(menus?: LayoutMenu[]) {
     <Hidden implementation="css" only="xs">
       <Box className={classes.root} display="flex" color="grey.50">
         {menus
-          .map(e => {
-            if (e.type === 'button') {
-              return e;
-            } else if (e.type === 'link') {
-              if (e.linkProps.href && (e.linkProps.href as string).startsWith('/')) {
-                let fixedProps: LinkMenu = {
-                  ...e,
-                  linkProps: {
-                    ...e.linkProps,
-                    href: `/[lang]${e.linkProps.href}`,
-                    as: `/${locale}${e.linkProps.href}`,
-                  },
-                };
-                return fixedProps;
-              } else {
-                return e;
-              }
-            }
-            return e;
-          })
+          .map(e => withLocale(e, locale))
           .map((e, i) => {
             if (e.type === 'link') {
               return (
@@ -102,24 +99,26 @@ export function useDrawerMenus(menus?: LayoutMenu[]) {
   return (
     <Box minWidth={240}>
       <List>
-        {menus.map((e, i) => {
-          if (e.type === 'link') {
-            return (
-              <Link key={i} {...e.linkProps}>
-                <ListItem button key={i}>
-                  {e.icon && <ListItemIcon>{e.icon}</ListItemIcon>}
-                  <ListItemText primary={t(e.name)} />
-                </ListItem>
-              </Link>
-            );
-          } else if (e.type === 'button') {
-            return (
-              <Button key={i} onClick={e.onClick} startIcon={e.icon}>
-                {t(e.name)}
-              </Button>
-            );
-          }
-        })}
+        {menus
+          .map(e => withLocale(e, locale))
+          .map((e, i) => {
+            if (e.type === 'link') {
+              return (
+                <Link key={i} {...e.linkProps}>
+                  <ListItem button key={i}>
+                    {e.icon && <ListItemIcon>{e.icon}</ListItemIcon>}
+                    <ListItemText primary={t(e.name)} />
+                  </ListItem>
+                </Link>
+              );
+            } else if (e.type === 'button') {
+              return (
+                <Button key={i} onClick={e.onClick} startIcon={e.icon}>
+                  {t(e.name)}
+                </Button>
+              );
+            }
+          })}
       </List>
     </Box>
   );
