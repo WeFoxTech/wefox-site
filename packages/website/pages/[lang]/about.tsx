@@ -32,13 +32,14 @@ const AboutPage = () => {
 
 export default withLocale(AboutPage);
 
-export async function unstable_getStaticPaths() {
+export async function getStaticPaths() {
   return {
     paths: ['en', 'zh'].map(l => ({ params: { lang: l } })),
+    fallback: false,
   };
 }
 
-export const unstable_getStaticProps: GetstaticProps = async ({ params }) => {
+export const getStaticProps: GetstaticProps = async ({ params }) => {
   const { lang } = params;
 
   return {

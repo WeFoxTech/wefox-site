@@ -42,7 +42,7 @@ Release is now automated
 3. the rest things will automatic complete soon
 
 
-# copyright
+# licenses
 
-- licenses [CC by-nc-sa](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode) ![](https://upload.wikimedia.org/wikipedia/commons/1/12/Cc-by-nc-sa_icon.svg)
+- [CC by-nc-sa](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode) ![](https://upload.wikimedia.org/wikipedia/commons/1/12/Cc-by-nc-sa_icon.svg)
   

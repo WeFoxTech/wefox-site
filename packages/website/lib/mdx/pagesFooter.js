@@ -7,13 +7,14 @@ export const hello = ()=>{
 }
 
 
-export async function unstable_getStaticPaths() {
+export async function getStaticPaths() {
   return {
     paths: ['en', 'zh'].map(l => ({ params: { lang: l } })),
+    fallback: false
   };
 }
 
-export const unstable_getStaticProps = async ({ params }) => {
+export const getStaticProps = async ({ params }) => {
   const { lang } = params;
 
   return {
