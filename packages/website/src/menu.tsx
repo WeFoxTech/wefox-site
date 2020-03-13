@@ -54,21 +54,42 @@ export function useToolbarMenus(menus?: LayoutMenu[]) {
   return (
     <Hidden implementation="css" only="xs">
       <Box className={classes.root} display="flex" color="grey.50">
-        {menus.map((e, i) => {
-          if (e.type === 'link') {
-            return (
-              <Link className={classes.toobarMenu} key={i} {...e.linkProps}>
-                {t(e.name)}
-              </Link>
-            );
-          } else if (e.type === 'button') {
-            return (
-              <Button key={i} onClick={e.onClick} startIcon={e.icon}>
-                {t(e.name)}
-              </Button>
-            );
-          }
-        })}
+        {menus
+          .map(e => {
+            if (e.type === 'button') {
+              return e;
+            } else if (e.type === 'link') {
+              if (e.linkProps.href && (e.linkProps.href as string).startsWith('/')) {
+                let fixedProps: LinkMenu = {
+                  ...e,
+                  linkProps: {
+                    ...e.linkProps,
+                    href: `/[lang]${e.linkProps.href}`,
+                    as: `/${locale}${e.linkProps.href}`,
+                  },
+                };
+                return fixedProps;
+              } else {
+                return e;
+              }
+            }
+            return e;
+          })
+          .map((e, i) => {
+            if (e.type === 'link') {
+              return (
+                <Link className={classes.toobarMenu} key={i} {...e.linkProps}>
+                  {t(e.name)}
+                </Link>
+              );
+            } else if (e.type === 'button') {
+              return (
+                <Button key={i} onClick={e.onClick} startIcon={e.icon}>
+                  {t(e.name)}
+                </Button>
+              );
+            }
+          })}
       </Box>
     </Hidden>
   );

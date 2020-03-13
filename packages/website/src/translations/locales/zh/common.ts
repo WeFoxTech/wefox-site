@@ -15,6 +15,7 @@ const common: AllTranslations['common'] = {
   menuTechstack: '技术栈',
   menuCase: '案例',
   menuTeam: '团队',
+  about: '关于我们',
 };
 
 export default common;
