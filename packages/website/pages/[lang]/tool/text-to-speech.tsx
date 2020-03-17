@@ -16,14 +16,14 @@ import { Speech } from '~/components/tool/Speech';
 
 const commonKeyworks = ['wefox'];
 const meta: PageMeta = {
-  title: 'About WeFox Technology',
+  title: 'Text-to-speech tool',
   keywords: [...commonKeyworks, 'technical consulting', 'Technical Adviser'],
   description: 'Professional technical consulting and consulting services',
-  author: 'fox, i@fox.mn',
+  author: 'fox, hi@fox.mn',
   zh: {
-    title: '关于微狐科技',
-    keywords: [...commonKeyworks, '微狐', '微狐科技', '技术咨询', '技术顾问'],
-    description: '微狐科技为中小微企业以及个人提供专业的技术咨询、顾问服务',
+    title: '文字转语音工具',
+    keywords: [...commonKeyworks, '文字转语音', '微狐科技', '技术咨询', '技术顾问'],
+    description: '帮助你把文字转化为语音，支持多个多个国家，八十多种声音',
   },
 };
 

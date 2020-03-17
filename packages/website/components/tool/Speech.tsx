@@ -2,6 +2,7 @@ import React from 'react';
 import PlayForWorkIcon from '@material-ui/icons/PlayForWork';
 import VoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
 import KeyboardVoiceIcon from '@material-ui/icons/KeyboardVoice';
+import Alert, { AlertProps } from '@material-ui/lab/Alert';
 
 import {
   Box,
@@ -13,8 +14,11 @@ import {
   Grid,
   IconButton,
   CircularProgress,
+  Snackbar,
 } from '@material-ui/core';
 import { Voice, voiceList } from './voicelist';
+import useTranslation from '../../src/hooks/useTranslation';
+import { InlineLocale } from '~/src/translations/types';
 
 const cfgKey = 'speech_cfg';
 
@@ -23,15 +27,15 @@ interface State {
   voiceList: Voice[];
   lastTokenTs?: number;
   regin?: string;
-  text?: string;
+  // text?: string;
   token?: string;
   loadingList?: boolean;
   ts?: number;
+  errorMsg?: string;
 }
 
 const initialState: State = {
   regin: 'eastasia',
-  text: '微狐科技欢迎你！',
   voiceList: voiceList,
 };
 
@@ -54,7 +58,23 @@ function reducer(state: State, action: Action): State {
 
 export const Speech: React.FC = () => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
+
+  const { t, locale } = useTranslation();
+  const initText: InlineLocale = {
+    zh: '你好，欢迎光临，这里是微狐科技，需要帮助可以联系我们。',
+    en: 'Hello and welcome, this is WeFox Technology, you can contact us if you need help.',
+  };
+  const title: InlineLocale = {
+    zh: '文字转语音工具',
+    en: 'Text-to-speech tool',
+  };
+  const [text, setText] = React.useState(initText[locale]);
+
   const fetchToken = async () => {
+    if (!state.regin || !state.token) {
+      throw new Error('key or regin not set correctly!');
+    }
+
     const rsp = await fetch(
       `https://${state.regin}.api.cognitive.microsoft.com/sts/v1.0/issuetoken`,
       {
@@ -150,16 +170,26 @@ export const Speech: React.FC = () => {
     }
   };
 
+  const onAlertClose = () => {
+    dispatch({ type: 'fix', newState: { errorMsg: undefined } });
+  };
+
   const play = async (voice: Voice) => {
     voice.loading = true;
     dispatch({ type: 'fix', newState: { voiceList: state.voiceList } });
-
-    const token = await checkToken();
+    let token;
+    try {
+      token = await checkToken();
+    } catch (err) {
+      voice.loading = false;
+      dispatch({ type: 'fix', newState: { errorMsg: err.message, voiceList: state.voiceList } });
+      return;
+    }
     const _url = `https://${state.regin}.tts.speech.microsoft.com/cognitiveservices/v1`;
     const body = `
     <speak version='1.0' xml:lang='${voice.Locale}'><voice xml:lang='${voice.Locale}' xml:gender='${voice.Gender}'
         name='${voice.ShortName}'>
-    ${state.text}
+    ${text}
     </voice></speak>`;
 
     const headers = {
@@ -186,7 +216,8 @@ export const Speech: React.FC = () => {
   };
 
   const changeText = (newText: string) => {
-    dispatch({ type: 'fix', newState: { text: newText } });
+    // dispatch({ type: 'fix', newState: { text: newText } });
+    setText(newText);
   };
 
   const textBlur = () => {
@@ -199,6 +230,13 @@ export const Speech: React.FC = () => {
 
   return (
     <Box pb={8}>
+      <Typography variant="h2">{title[locale]}</Typography>
+      <Snackbar open={!!state.errorMsg} autoHideDuration={6000} onClose={onAlertClose}>
+        <Alert onClose={onAlertClose} severity="error">
+          {state.errorMsg}
+        </Alert>
+      </Snackbar>
+
       <TextField
         title="set key"
         required
@@ -230,7 +268,7 @@ export const Speech: React.FC = () => {
         >
           <TextareaAutosize
             aria-label="text to speech"
-            value={state.text}
+            value={text}
             rowsMin={8}
             onChange={e => changeText(e.target.value)}
             onBlur={textBlur}
@@ -256,7 +294,7 @@ export const Speech: React.FC = () => {
 
       <Grid container spacing={4}>
         {state.voiceList.map((e, i) => {
-          const key = `${i}-${e.blobUrl}-${e.loading}-${state.text}`;
+          const key = `${i}-${e.blobUrl}-${e.loading}`;
           return (
             <Grid key={key} item>
               {e.loading ? (

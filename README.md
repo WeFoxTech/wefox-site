@@ -1,4 +1,4 @@
-# vvfox website
+# WeFox website
 
 | ![CI](https://github.com/WeFoxTech/wefox-site/workflows/CI/badge.svg) | ![preview](https://github.com/WeFoxTech/wefox-site/workflows/preview/badge.svg) | ![auto release](https://github.com/WeFoxTech/wefox-site/workflows/auto%20release/badge.svg) |
 | --------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
