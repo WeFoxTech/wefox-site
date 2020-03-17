@@ -71,7 +71,8 @@ export const Speech: React.FC = () => {
   const [text, setText] = React.useState(initText[locale]);
 
   const fetchToken = async () => {
-    if (!state.regin || !state.token) {
+    if (!state.regin || !state.key) {
+      console.log(`regin: ${state.regin}  key: ${state.key}`);
       throw new Error('key or regin not set correctly!');
     }
 
