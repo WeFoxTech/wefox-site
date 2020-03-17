@@ -14,33 +14,25 @@ import {
   IconButton,
   CircularProgress,
 } from '@material-ui/core';
+import { Voice, voiceList } from './voicelist';
 
 const cfgKey = 'speech_cfg';
 
-interface Voice {
-  Name: string;
-  ShortName: string;
-  Gender: 'Female' | 'Male';
-  Locale: string;
-  SampleRateHertz: string;
-  VoiceType: string;
-  blobUrl?: string;
-  loading?: boolean;
-}
-
 interface State {
   key?: string;
-  voiceList?: Voice[];
+  voiceList: Voice[];
   lastTokenTs?: number;
   regin?: string;
   text?: string;
   token?: string;
   loadingList?: boolean;
+  ts?: number;
 }
 
 const initialState: State = {
   regin: 'eastasia',
   text: '微狐科技欢迎你！',
+  voiceList: voiceList,
 };
 
 interface Action {
@@ -194,12 +186,15 @@ export const Speech: React.FC = () => {
   };
 
   const changeText = (newText: string) => {
+    dispatch({ type: 'fix', newState: { text: newText } });
+  };
+
+  const textBlur = () => {
+    console.log(`blur`);
     const voiceList = state.voiceList?.map(e => {
-      delete e.blobUrl;
-      delete e.loading;
-      return e;
+      return { ...e, blobUrl: undefined, loading: false };
     });
-    dispatch({ type: 'fix', newState: { voiceList, text: newText } });
+    dispatch({ type: 'fix', newState: { voiceList, ts: Date.now() } });
   };
 
   return (
@@ -238,9 +233,10 @@ export const Speech: React.FC = () => {
             value={state.text}
             rowsMin={8}
             onChange={e => changeText(e.target.value)}
+            onBlur={textBlur}
           ></TextareaAutosize>
         </Box>
-        <Box py={2}>
+        {/* <Box py={2}>
           {state.loadingList ? (
             <CircularProgress size={48} />
           ) : (
@@ -253,19 +249,20 @@ export const Speech: React.FC = () => {
               text for speech
             </Button>
           )}
-        </Box>
+        </Box> */}
       </Box>
 
       <Divider />
 
       <Grid container spacing={4}>
-        {state.voiceList?.map((e, i) => {
+        {state.voiceList.map((e, i) => {
+          const key = `${i}-${e.blobUrl}-${e.loading}-${state.text}`;
           return (
-            <Grid item>
+            <Grid key={key} item>
               {e.loading ? (
                 <CircularProgress />
               ) : e.blobUrl ? (
-                <audio controls>
+                <audio controls key={key}>
                   <source src={e.blobUrl} type="audio/mp3" />
                 </audio>
               ) : (
