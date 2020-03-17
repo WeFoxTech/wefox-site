@@ -1,5 +1,7 @@
 import React from 'react';
 import PlayForWorkIcon from '@material-ui/icons/PlayForWork';
+import VoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
+import KeyboardVoiceIcon from '@material-ui/icons/KeyboardVoice';
 
 import {
   Box,
@@ -10,8 +12,8 @@ import {
   Button,
   Grid,
   IconButton,
+  CircularProgress,
 } from '@material-ui/core';
-// import { useDebouncedCallback } from 'use-debounce';
 
 const cfgKey = 'speech_cfg';
 
@@ -23,6 +25,7 @@ interface Voice {
   SampleRateHertz: string;
   VoiceType: string;
   blobUrl?: string;
+  loading?: boolean;
 }
 
 interface State {
@@ -31,8 +34,8 @@ interface State {
   lastTokenTs?: number;
   regin?: string;
   text?: string;
-  currentBlobUrl?: string;
   token?: string;
+  loadingList?: boolean;
 }
 
 const initialState: State = {
@@ -59,7 +62,6 @@ function reducer(state: State, action: Action): State {
 
 export const Speech: React.FC = () => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
-
   const fetchToken = async () => {
     const rsp = await fetch(
       `https://${state.regin}.api.cognitive.microsoft.com/sts/v1.0/issuetoken`,
@@ -142,20 +144,28 @@ export const Speech: React.FC = () => {
   };
 
   const transAction = async () => {
+    if (!state.voiceList) {
+      dispatch({ type: 'fix', newState: { loadingList: true } });
+    }
+
     if (!state.token) {
       await fetchToken();
     }
 
     if (!state.voiceList) {
       await fetchVoiceList();
+      dispatch({ type: 'fix', newState: { loadingList: false } });
     }
   };
 
   const play = async (voice: Voice) => {
+    voice.loading = true;
+    dispatch({ type: 'fix', newState: { voiceList: state.voiceList } });
+
     const token = await checkToken();
     const _url = `https://${state.regin}.tts.speech.microsoft.com/cognitiveservices/v1`;
     const body = `
-    <speak version='1.0' xml:lang='zh-CN'><voice xml:lang='zh-CN' xml:gender='${voice.Gender}'
+    <speak version='1.0' xml:lang='${voice.Locale}'><voice xml:lang='${voice.Locale}' xml:gender='${voice.Gender}'
         name='${voice.ShortName}'>
     ${state.text}
     </voice></speak>`;
@@ -168,22 +178,32 @@ export const Speech: React.FC = () => {
 
     const rsp = await fetch(_url, { method: 'POST', headers, body });
 
-    console.log(rsp.status);
-    console.log(rsp.statusText);
-
-    console.log(rsp);
+    if (rsp.status > 300) {
+      console.error(`download voice failed!`);
+      console.log(rsp.status);
+      console.log(rsp.statusText);
+      console.log(rsp);
+      throw new Error('download voice failed');
+    }
 
     const blob = await rsp.blob();
     const url = window.URL.createObjectURL(blob);
-
-    console.log(url);
-
     voice.blobUrl = url;
+    voice.loading = false;
     dispatch({ type: 'fix', newState: { voiceList: state.voiceList } });
   };
 
+  const changeText = (newText: string) => {
+    const voiceList = state.voiceList?.map(e => {
+      delete e.blobUrl;
+      delete e.loading;
+      return e;
+    });
+    dispatch({ type: 'fix', newState: { voiceList, text: newText } });
+  };
+
   return (
-    <Box>
+    <Box pb={8}>
       <TextField
         title="set key"
         required
@@ -205,13 +225,36 @@ export const Speech: React.FC = () => {
 
       <Divider />
 
-      <TextareaAutosize
-        aria-label="text to speech"
-        value={state.text}
-        rowsMin={8}
-      ></TextareaAutosize>
-
-      <Button onClick={transAction}>trans</Button>
+      <Box py={4} display="flex" alignItems="center" justifyContent="center" flexDirection="column">
+        <Box
+          clone
+          minWidth={{
+            xs: 480,
+            lg: 720,
+          }}
+        >
+          <TextareaAutosize
+            aria-label="text to speech"
+            value={state.text}
+            rowsMin={8}
+            onChange={e => changeText(e.target.value)}
+          ></TextareaAutosize>
+        </Box>
+        <Box py={2}>
+          {state.loadingList ? (
+            <CircularProgress size={48} />
+          ) : (
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={transAction}
+              startIcon={<KeyboardVoiceIcon />}
+            >
+              text for speech
+            </Button>
+          )}
+        </Box>
+      </Box>
 
       <Divider />
 
@@ -219,7 +262,9 @@ export const Speech: React.FC = () => {
         {state.voiceList?.map((e, i) => {
           return (
             <Grid item>
-              {e.blobUrl ? (
+              {e.loading ? (
+                <CircularProgress />
+              ) : e.blobUrl ? (
                 <audio controls>
                   <source src={e.blobUrl} type="audio/mp3" />
                 </audio>
