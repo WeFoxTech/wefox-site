@@ -1,4 +1,6 @@
 import React from 'react';
+import PlayForWorkIcon from '@material-ui/icons/PlayForWork';
+
 import {
   Box,
   TextField,
@@ -7,6 +9,7 @@ import {
   Divider,
   Button,
   Grid,
+  IconButton,
 } from '@material-ui/core';
 // import { useDebouncedCallback } from 'use-debounce';
 
@@ -19,6 +22,7 @@ interface Voice {
   Locale: string;
   SampleRateHertz: string;
   VoiceType: string;
+  blobUrl?: string;
 }
 
 interface State {
@@ -151,9 +155,9 @@ export const Speech: React.FC = () => {
     const token = await checkToken();
     const _url = `https://${state.regin}.tts.speech.microsoft.com/cognitiveservices/v1`;
     const body = `
-    <speak version='1.0' xml:lang='zh-CN'><voice xml:lang='zh-CN' xml:gender='Female'
-        name='zh-CN-HuihuiRUS'>
-    先后任职过同花顺、每日互动等上市公司，现任哈啰单车算法专家。 大数据建模和可视化两年，时间序列数据建模、自然语言处理方面三年经验，擅长机器学习、深度学习等技术。此外兴趣面还包括传统信号处理，计算机视觉，无监督学习等。
+    <speak version='1.0' xml:lang='zh-CN'><voice xml:lang='zh-CN' xml:gender='${voice.Gender}'
+        name='${voice.ShortName}'>
+    ${state.text}
     </voice></speak>`;
 
     const headers = {
@@ -174,7 +178,8 @@ export const Speech: React.FC = () => {
 
     console.log(url);
 
-    dispatch({ type: 'fix', newState: { currentBlobUrl: url } });
+    voice.blobUrl = url;
+    dispatch({ type: 'fix', newState: { voiceList: state.voiceList } });
   };
 
   return (
@@ -210,19 +215,19 @@ export const Speech: React.FC = () => {
 
       <Divider />
 
-      {state.currentBlobUrl && (
-        <Box>
-          <audio controls>
-            <source src={state.currentBlobUrl} type="audio/mp3" />
-          </audio>
-        </Box>
-      )}
-
       <Grid container spacing={4}>
         {state.voiceList?.map((e, i) => {
           return (
             <Grid item>
-              <Button onClick={ev => play(e)}></Button>
+              {e.blobUrl ? (
+                <audio controls>
+                  <source src={e.blobUrl} type="audio/mp3" />
+                </audio>
+              ) : (
+                <IconButton onClick={ev => play(e)}>
+                  <PlayForWorkIcon />
+                </IconButton>
+              )}
               <TextField
                 value={e.Name}
                 label="Name"

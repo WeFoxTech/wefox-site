@@ -82,7 +82,7 @@ const ElevationScroll: React.FC = ({ children }) => {
 const Layout: React.FunctionComponent<Props> = ({
   children,
   toolbar = null,
-  maxWidth = 'md',
+  maxWidth = 'lg',
   overrideToolbarRootColor = false,
   meta,
   menus,
