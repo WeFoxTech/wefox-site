@@ -263,8 +263,9 @@ export const Speech: React.FC = () => {
         <Box
           clone
           minWidth={{
-            xs: 480,
-            lg: 720,
+            xs: '95vw',
+            sm: '90vw',
+            lg: '50vw',
           }}
         >
           <TextareaAutosize
