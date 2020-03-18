@@ -3,6 +3,7 @@ import PlayForWorkIcon from '@material-ui/icons/PlayForWork';
 import VoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
 import KeyboardVoiceIcon from '@material-ui/icons/KeyboardVoice';
 import Alert, { AlertProps } from '@material-ui/lab/Alert';
+import RefreshIcon from '@material-ui/icons/Refresh';
 
 import {
   Box,
@@ -15,6 +16,9 @@ import {
   IconButton,
   CircularProgress,
   Snackbar,
+  InputLabel,
+  Select,
+  MenuItem,
 } from '@material-ui/core';
 import { Voice, voiceList } from './voicelist';
 import useTranslation from '../../src/hooks/useTranslation';
@@ -69,6 +73,9 @@ export const Speech: React.FC = () => {
     en: 'Text-to-speech tool',
   };
   const [text, setText] = React.useState(initText[locale]);
+  const [gender, setGender] = React.useState('');
+  const [voiceType, setVoiceType] = React.useState('');
+  const [language, setLanguage] = React.useState('');
 
   const fetchToken = async () => {
     if (!state.regin || !state.key) {
@@ -156,19 +163,10 @@ export const Speech: React.FC = () => {
     }
   };
 
-  const transAction = async () => {
-    if (!state.voiceList) {
-      dispatch({ type: 'fix', newState: { loadingList: true } });
-    }
-
-    if (!state.token) {
-      await fetchToken();
-    }
-
-    if (!state.voiceList) {
-      await fetchVoiceList();
-      dispatch({ type: 'fix', newState: { loadingList: false } });
-    }
+  const loadVoicelist = async () => {
+    dispatch({ type: 'fix', newState: { loadingList: true, voiceList: undefined } });
+    await fetchVoiceList();
+    dispatch({ type: 'fix', newState: { loadingList: false } });
   };
 
   const onAlertClose = () => {
@@ -230,7 +228,7 @@ export const Speech: React.FC = () => {
   };
 
   return (
-    <Box pb={8}>
+    <Box pb={8} component="form">
       <Typography variant="h2">{title[locale]}</Typography>
       <Snackbar open={!!state.errorMsg} autoHideDuration={6000} onClose={onAlertClose}>
         <Alert onClose={onAlertClose} severity="error">
@@ -267,6 +265,7 @@ export const Speech: React.FC = () => {
             sm: '90vw',
             lg: '50vw',
           }}
+          mb={4}
         >
           <TextareaAutosize
             aria-label="text to speech"
@@ -276,85 +275,153 @@ export const Speech: React.FC = () => {
             onBlur={textBlur}
           ></TextareaAutosize>
         </Box>
-        {/* <Box py={2}>
-          {state.loadingList ? (
-            <CircularProgress size={48} />
-          ) : (
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={transAction}
-              startIcon={<KeyboardVoiceIcon />}
+        <Grid container spacing={3} justify="center">
+          <Grid item>
+            <InputLabel id="filter-gender-label">Gender</InputLabel>
+            <Select
+              labelId="filter-gender-label"
+              id="filter-gender-select"
+              value={gender}
+              onChange={e => setGender(e.target.value as string)}
             >
-              text for speech
-            </Button>
-          )}
-        </Box> */}
+              <MenuItem value={''}>None</MenuItem>
+              <MenuItem value={'Female'}>Female</MenuItem>
+              <MenuItem value={'Male'}>Male</MenuItem>
+            </Select>
+          </Grid>
+
+          <Grid item>
+            <InputLabel id="filter-language-label">Language</InputLabel>
+            <Select
+              labelId="filter-language-label"
+              id="filter-language-select"
+              value={language}
+              onChange={e => setLanguage(e.target.value as string)}
+            >
+              <MenuItem value={''}>None</MenuItem>
+              <MenuItem value={'en'}>en</MenuItem>
+              <MenuItem value={'zh'}>zh</MenuItem>
+            </Select>
+          </Grid>
+
+          <Grid item>
+            <InputLabel id="filter-voicetype-label">VoiceType</InputLabel>
+
+            <Select
+              labelId="filter-voicetype-label"
+              id="filter-voicetype-select"
+              value={voiceType}
+              onChange={e => setVoiceType(e.target.value as string)}
+            >
+              <MenuItem value={''}>None</MenuItem>
+              <MenuItem value={'Standard'}>Standard</MenuItem>
+              <MenuItem value={'Neural'}>Neural</MenuItem>
+            </Select>
+          </Grid>
+          <Grid item>
+            {state.loadingList ? (
+              <CircularProgress size={48} />
+            ) : (
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={loadVoicelist}
+                startIcon={<RefreshIcon />}
+              >
+                reload voice list
+              </Button>
+            )}
+          </Grid>
+        </Grid>
       </Box>
 
       <Divider />
 
       <Grid container spacing={4}>
-        {state.voiceList.map((e, i) => {
-          const key = `${i}-${e.blobUrl}-${e.loading}`;
-          return (
-            <Grid key={key} item>
-              {e.loading ? (
-                <CircularProgress />
-              ) : e.blobUrl ? (
-                <audio controls key={key}>
-                  <source src={e.blobUrl} type="audio/mp3" />
-                </audio>
-              ) : (
-                <IconButton onClick={ev => play(e)}>
-                  <PlayForWorkIcon />
-                </IconButton>
-              )}
-              <TextField
-                value={e.Name}
-                label="Name"
-                InputProps={{
-                  readOnly: true,
-                }}
-              />
-              <TextField
-                value={e.ShortName}
-                label="ShortName"
-                InputProps={{
-                  readOnly: true,
-                }}
-              />
-              <TextField
-                value={e.Gender}
-                label="Gender"
-                InputProps={{
-                  readOnly: true,
-                }}
-              />
-              <TextField
-                value={e.Locale}
-                label="Locale"
-                InputProps={{
-                  readOnly: true,
-                }}
-              />
-              <TextField
+        {state.voiceList
+          ?.filter(e => {
+            if (gender || language || voiceType) {
+              if (gender && language && voiceType) {
+                return (
+                  e.Gender === gender && e.Locale.startsWith(language) && e.VoiceType === voiceType
+                );
+              }
+              if (gender && language) {
+                return e.Gender === gender && e.Locale.startsWith(language);
+              }
+              if (gender && voiceType) {
+                return e.Gender === gender && e.VoiceType === voiceType;
+              }
+              if (language && voiceType) {
+                return e.Locale.startsWith(language) && e.VoiceType === voiceType;
+              }
+              if (gender) return e.Gender === gender;
+              if (language) return e.Locale.startsWith(language);
+              if (voiceType) return e.VoiceType === voiceType;
+            } else {
+              return true;
+            }
+          })
+          .map((e, i) => {
+            const key = `${i}-${e.blobUrl}-${e.loading}`;
+            return (
+              <Grid key={key} item>
+                {e.loading ? (
+                  <CircularProgress />
+                ) : e.blobUrl ? (
+                  <audio controls key={key}>
+                    <source src={e.blobUrl} type="audio/mp3" />
+                  </audio>
+                ) : (
+                  <IconButton onClick={ev => play(e)}>
+                    <PlayForWorkIcon />
+                  </IconButton>
+                )}
+                <TextField
+                  value={e.Name}
+                  label="Name"
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+                <TextField
+                  value={e.ShortName}
+                  label="ShortName"
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+                <TextField
+                  value={e.Gender}
+                  label="Gender"
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+                <TextField
+                  value={e.Locale}
+                  label="Locale"
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+                {/* <TextField
                 value={e.SampleRateHertz}
                 label="SampleRateHertz"
                 InputProps={{
                   readOnly: true,
                 }}
-              />
-              <TextField
-                value={e.VoiceType}
-                label="VoiceType"
-                InputProps={{
-                  readOnly: true,
-                }}
-              />
-            </Grid>
-          );
-        })}
+              /> */}
+                <TextField
+                  value={e.VoiceType}
+                  label="VoiceType"
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+              </Grid>
+            );
+          })}
       </Grid>
     </Box>
   );

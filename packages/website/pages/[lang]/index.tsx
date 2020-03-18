@@ -24,6 +24,7 @@ export const menus: LayoutMenu[] = [
     name: 'menuTechstack',
     linkProps: {
       href: '/#techstack',
+      scroll: false,
     },
     icon: <ViewModuleIcon color="primary" />,
   },
@@ -32,6 +33,8 @@ export const menus: LayoutMenu[] = [
     name: 'menuTeam',
     linkProps: {
       href: '/#team',
+      scroll: false,
+
     },
     icon: <GroupIcon color="primary" />,
   },
@@ -40,6 +43,7 @@ export const menus: LayoutMenu[] = [
     name: 'menuCase',
     linkProps: {
       href: '/#case',
+      scroll: false,
     },
     icon: <SlideshowIcon color="primary" />,
   },
@@ -48,6 +52,7 @@ export const menus: LayoutMenu[] = [
     name: 'about',
     linkProps: {
       href: '/about',
+      prefetch: true,
     },
     icon: <InfoIcon color="primary" />,
   },
