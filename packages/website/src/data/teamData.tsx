@@ -1,5 +1,6 @@
 import { MenberData } from '../../components/team/Menber';
 import FoxBioCn from '~/components/team/bio/FoxBioCn.mdx';
+import FoxBio from '~/components/team/bio/FoxBio.mdx';
 import BaboonBioCn from '~/components/team/bio/BaboonBioCn.mdx';
 import BaboonBio from '~/components/team/bio/BaboonBio.mdx';
 import SamBio from '~/components/team/bio/SamBio.mdx';
@@ -19,10 +20,8 @@ export const teamData: MenberData[] = [
     email: 'i@fox.mn', //  email address , optional
     tel: '+8613148371687', // tel number , optional
     avatar: `${avatarBaseUrl}/fox_mn.png`, // avatar url , optional
-    bio:
-      'Has multiple entrepreneurial experiences. He has rich R & D experience in front, back, mobile and blockchain. He has served as a technical consultant to a number of companies and individuals.', // bio description , required  string or function Component
-    bioCn:
-      '微狐科技创始人。对前、后、移动端、区块链都有丰富的研发经验。曾就职于个推、企鹏等公司技术专家，全栈开发，给多家企业和个人担任过技术咨询顾问', // Chinese bio description , required  string or function Component
+    bio: <FoxBio />, // bio description , required  string or function Component
+    bioCn: <FoxBioCn />, // Chinese bio description , required  string or function Component
   },
   {
     id: 'baboon',
