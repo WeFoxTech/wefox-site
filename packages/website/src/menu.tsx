@@ -11,6 +11,7 @@ import {
   ListItemText,
   Menu,
   MenuItem,
+  Typography,
 } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Link from './Link';
@@ -88,7 +89,10 @@ function withLinkOrButton(e: LinkMenu | ButtonMenu, i: number, isMenuChild = fal
     return (
       <Box clone pt={1} key={isMenuChild ? undefined : i}>
         <Link className={isMenuChild ? classes.childMenu : classes.toobarMenu} {...e.linkProps}>
-          {t(e.name)}
+          {isMenuChild ? e.icon : null}
+          <Typography component="span" className={'text-with-icon'}>
+            {t(e.name)}
+          </Typography>
         </Link>
       </Box>
     );

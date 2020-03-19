@@ -4,6 +4,8 @@ import ViewModuleIcon from '@material-ui/icons/ViewModule';
 import GroupIcon from '@material-ui/icons/Group';
 import SlideshowIcon from '@material-ui/icons/Slideshow';
 import InfoIcon from '@material-ui/icons/Info';
+import KeyboardVoiceIcon from '@material-ui/icons/KeyboardVoice';
+
 export const menusData: LayoutMenu[] = [
   {
     type: 'link',
@@ -39,6 +41,7 @@ export const menusData: LayoutMenu[] = [
       {
         type: 'link',
         name: 'textToSpeechTool',
+        icon: <KeyboardVoiceIcon color="primary" />,
         linkProps: {
           href: '/tool/text-to-speech',
           scroll: false,
