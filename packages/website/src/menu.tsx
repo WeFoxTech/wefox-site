@@ -148,9 +148,11 @@ export function useToolbarMenus(menus?: LayoutMenu[]) {
                     open={Boolean(popoverMenu[e.name])}
                     onClose={ev => setPopoverMenu({ ...popoverMenu, [e.name]: null })}
                   >
-                    {e.children.map((ce, ci) => {
-                      return <MenuItem key={ci}>{withLinkOrButton(ce, ci, true)}</MenuItem>;
-                    })}
+                    {e.children
+                      .map(c => withLocale(c, locale) as LinkMenu | ButtonMenu)
+                      .map((ce, ci) => {
+                        return <MenuItem key={ci}>{withLinkOrButton(ce, ci, true)}</MenuItem>;
+                      })}
                   </Menu>
                 </React.Fragment>
               );
