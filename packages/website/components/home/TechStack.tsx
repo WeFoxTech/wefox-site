@@ -21,6 +21,19 @@ import { K8sIcon } from '../icons/K8s';
 import { ElectronIcon } from '../icons/Electron';
 import { FilecoinIcon } from '../icons/Filecoin';
 import { IpfsIcon } from '../icons/Ipfs';
+import { BlockchainIcon } from '../icons/Blockchain';
+import { MySqlIcon } from '../icons/MySql';
+import { RedisIcon } from '../icons/Redis';
+import { PythonIcon } from '../icons/Python';
+import { BigdataIcon } from '../icons/Bigdata';
+import { DevOpsIcon  } from '../icons/DevOps';
+import { CsharpIcon  } from '../icons/Csharp';
+import { CplusIcon  } from '../icons/Cplus';
+import { TuijianIcon   } from '../icons/Tuijian';
+import { MongoDBIcon   } from '../icons/MongoDB';
+import { BitcoinIcon   } from '../icons/Bitcoin';
+import { VrIcon   } from '../icons/Vr';
+import { SpringIcon   } from '../icons/Spring';
 
 type TechStackData = string | [string, React.FC<IconProps>];
 
@@ -32,37 +45,38 @@ const commonTechNames: TechStackData[] = [
   'TypeScript',
   'JAMStack',
   ['electron', ElectronIcon],
-  'Blockchain',
-  'bitcoin',
+  ['Blockchain',BlockchainIcon],
+  ['bitcoin',BitcoinIcon],
   ['ipfs',IpfsIcon],
   ['filecoin',FilecoinIcon],
-  'DevOps',
-  'VR',
+  ['DevOps',DevOpsIcon],
+  ['VR',VrIcon],
   ['docker', DockerIcon],
   ['k8s', K8sIcon],
   ['golang', GolangIcon],
   ['java', JavaIcon],
   'dart',
-  'swift',
-  'C#',
+	'swift',
+	['c++',CplusIcon],
+  ['Csharp',CsharpIcon],
   'kotlin',
-  'python',
-  'MySql',
-  'Redis',
+  ['python',PythonIcon],
+  ['MySql',MySqlIcon],
+  ['Redis',RedisIcon],
   ['Android', AndroidIcon],
   ['iOS', AppleIcon],
-  'MongoDB',
+  ['MongoDB',MongoDBIcon],
   ['elasticsearch', ElasticsearchIcon],
-  'spring cloud',
+  ['spring cloud',SpringIcon],
   'flutter',
   'OpenSource',
   ['GitHub Action', GitHubIcon],
 ];
 
 const techStacks: InlineLocale<TechStackData[]> = {
-  en: [...commonTechNames, 'AI', 'docker', 'k8s', 'DevOps', 'Bigdata'],
+  en: [...commonTechNames, 'AI',  ['Bigdata',BigdataIcon]],
 
-  zh: [...commonTechNames, '区块链', '推荐算法', '大数据', ['搜索', SearchIcon]],
+  zh: [...commonTechNames, ['区块链',BlockchainIcon], ['推荐算法',TuijianIcon], ['大数据',BigdataIcon], ['搜索', SearchIcon]],
 };
 
 const techStackTitle: InlineLocale = {
