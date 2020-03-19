@@ -1,7 +1,8 @@
 import FoxSvg from '~/components/svgs/fox';
 import Link from '~/src/Link';
 import useTranslation from '~/src/hooks/useTranslation';
-import { Box, Typography, Theme, makeStyles, createStyles } from '@material-ui/core';
+import { Box, Typography,  } from '@material-ui/core';
+import {  Theme, makeStyles, createStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) =>createStyles({
   name:{

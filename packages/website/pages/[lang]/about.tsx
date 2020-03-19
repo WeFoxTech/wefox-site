@@ -8,7 +8,6 @@ import locales from '~/src/translations/locales';
 import useTranslation from '~/src/hooks/useTranslation';
 import { PageMeta } from '~/src/PageMeta';
 import { LayoutMenu } from '~/src/menu';
-import { menus } from '~/pages/[lang]/index';
 // import { About } from '~/components/about/About';
 
 const commonKeyworks = ['wefox'];
@@ -28,7 +27,7 @@ const AboutPage = () => {
   const { t, locale } = useTranslation();
 
   return (
-    <Layout meta={meta} menus={menus}>
+    <Layout meta={meta}>
       {locale === 'zh' ? <AboutZh /> : <About />}
       {/* <About /> */}
     </Layout>

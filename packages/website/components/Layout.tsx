@@ -28,7 +28,9 @@ import LogoMenu from '~/components/home/LogoMenu';
 import { PageMeta, optMeta, metaKeys } from '../src/PageMeta';
 import MenuIcon from '@material-ui/icons/Menu';
 import { LayoutMenu, useToolbarMenus } from '~/src/menu';
-import { useDrawerMenus } from '../src/menu';
+import { useDrawerMenus } from '~/src/menu';
+import { menusData } from '~/src/data/defaultMenusData';
+
 interface Props {
   toolbar?: Component;
   maxWidth?: ContainerProps['maxWidth'];
@@ -85,7 +87,7 @@ const Layout: React.FunctionComponent<Props> = ({
   maxWidth = 'lg',
   overrideToolbarRootColor = false,
   meta,
-  menus,
+  menus = menusData,
 }) => {
   if (overrideToolbarRootColor) {
     overrideToolbarStyle();
