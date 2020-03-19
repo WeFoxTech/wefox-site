@@ -31,7 +31,7 @@ const Index: React.FC = () => {
             </Typography>
           </Box>
           {localeNames.map(l => (
-            <Box textAlign="center" py={1}>
+            <Box key={l} textAlign="center" py={1}>
               <Link
                 variant="h5"
                 color="textPrimary"

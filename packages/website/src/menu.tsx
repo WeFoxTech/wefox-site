@@ -12,6 +12,7 @@ import {
   Menu,
   MenuItem,
   Typography,
+  SvgIconProps,
 } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Link from './Link';
@@ -21,6 +22,10 @@ import { Locale } from '~/src/translations/config';
 import React from 'react';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import clsx from 'clsx';
+import TreeView from '@material-ui/lab/TreeView';
+import TreeItem from '@material-ui/lab/TreeItem';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
 type LayoutMenuType = 'link' | 'button' | 'menulist';
 
@@ -36,13 +41,14 @@ interface LinkMenu extends NormalMenu {
 
 interface MenuList extends NormalMenu {
   type: 'menulist';
+  expanded: boolean;
   children: Array<ButtonMenu | LinkMenu>;
 }
 
 interface NormalMenu {
   name: TranslationKey;
   type: LayoutMenuType;
-  icon?: JSX.Element;
+  icon?: React.FC<SvgIconProps>;
 }
 
 export type LayoutMenu = ButtonMenu | LinkMenu | MenuList;
@@ -89,7 +95,7 @@ function withLinkOrButton(e: LinkMenu | ButtonMenu, i: number, isMenuChild = fal
     return (
       <Box clone pt={1} key={isMenuChild ? undefined : i}>
         <Link className={isMenuChild ? classes.childMenu : classes.toobarMenu} {...e.linkProps}>
-          {isMenuChild ? e.icon : null}
+          {isMenuChild ? e.icon ? <e.icon color="primary" /> : null : null}
           <Typography component="span" className={'text-with-icon'}>
             {t(e.name)}
           </Typography>
@@ -155,36 +161,72 @@ export function useToolbarMenus(menus?: LayoutMenu[]) {
   );
 }
 
+function renderTreeItem(e: LinkMenu | ButtonMenu | MenuList, i: number, nodeId: string) {
+  const { t, locale } = useTranslation();
+
+  if (e.type === 'link') {
+    return (
+      <TreeItem
+        key={i}
+        nodeId={nodeId}
+        label={
+          <Link key={i} {...e.linkProps}>
+            {e.icon && <e.icon color="primary" />}
+            <Box clone pl={2}>
+              <Typography component="span" className="text-with-icon">
+                {t(e.name)}
+              </Typography>
+            </Box>
+          </Link>
+        }
+      />
+    );
+  } else if (e.type === 'button') {
+    return (
+      <TreeItem
+        key={i}
+        nodeId={nodeId}
+        label={
+          <Button key={i} onClick={e.onClick} startIcon={e.icon}>
+            {t(e.name)}
+          </Button>
+        }
+      />
+    );
+  } else if (e.type === 'menulist') {
+    return (
+      <TreeItem
+        key={i}
+        nodeId={nodeId}
+        label={<Button startIcon={e.icon ? <e.icon color="primary" /> : null}>{t(e.name)}</Button>}
+      >
+        {e.children
+          .map(e => withLocale(e, locale))
+          .map((ce, ci) => {
+            return renderTreeItem(ce, ci, `${e.name}->${ce.name}`);
+          })}
+      </TreeItem>
+    );
+  }
+}
+
 export function useDrawerMenus(menus?: LayoutMenu[]) {
   if (!menus) return null;
   const { t, locale } = useTranslation();
 
   return (
-    <Box minWidth={240}>
-      <List>
+    <Box minWidth={'70vw'}>
+      <TreeView
+        defaultCollapseIcon={<ExpandMoreIcon />}
+        defaultExpandIcon={<ChevronRightIcon />}
+        expanded={menus.filter(menu => menu.type === 'menulist' && menu.expanded).map(m => m.name)}
+      >
         {menus
           .map(e => withLocale(e, locale))
           .map((e, i) => {
-            if (e.type === 'link') {
-              return (
-                <Link key={i} {...e.linkProps}>
-                  <ListItem button key={i}>
-                    {e.icon && <ListItemIcon>{e.icon}</ListItemIcon>}
-                    <ListItemText primary={t(e.name)} />
-                  </ListItem>
-                </Link>
-              );
-            } else if (e.type === 'button') {
-              return (
-                <Button key={i} onClick={e.onClick} startIcon={e.icon}>
-                  {t(e.name)}
-                </Button>
-              );
-            } else if (e.type === 'menulist') {
-              return null;
-            }
+            return renderTreeItem(e, i, e.name);
           })}
-      </List>
+      </TreeView>
     </Box>
   );
 }
