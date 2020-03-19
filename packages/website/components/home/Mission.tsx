@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme: Theme) =>
       // position: 'absolute',
       margin: 0,
       backgroundColor: theme.palette.primary.main,
-      transformOrigin: '0 100%'
+      transformOrigin: '0 100%',
     },
     mission: {
       paddingTop: theme.spacing(3),
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const solgan: { [key in Locale]: string } = {
   en: '——Our mission is to open up technical possibilities for you.',
-  zh: '——我们专注于为各种领域提供技术咨询服务',
+  zh: '——我们专注于为各种领域提供技术咨询+企业培训服务',
 };
 
 const name: { [key in Locale]: string } = {

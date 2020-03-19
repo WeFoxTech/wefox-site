@@ -22,12 +22,12 @@ export const teamData: MenberData[] = [
     bio:
       'Has multiple entrepreneurial experiences. He has rich R & D experience in front, back, mobile and blockchain. He has served as a technical consultant to a number of companies and individuals.', // bio description , required  string or function Component
     bioCn:
-      '有多次创业经历。对前、后、移动端、区块链都有丰富的研发经验。曾给多家企业和个人担任过技术咨询顾问。', // Chinese bio description , required  string or function Component
+      '微狐科技创始人。对前、后、移动端、区块链都有丰富的研发经验。曾就职于个推、企鹏等公司技术专家，全栈开发，给多家企业和个人担任过技术咨询顾问', // Chinese bio description , required  string or function Component
   },
   {
     id: 'baboon',
     name: 'Baboon',
-    cnName: '吴昊',
+    cnName: 'Baboon',
     site: undefined,
     github: 'baboonwu',
     weibo: undefined,
@@ -100,7 +100,7 @@ export const teamData: MenberData[] = [
     bio:
       'Graduated from Auckland University of Technology, Bachelor of computer and Information science. Working in a local company as front-end developer, know a thing or two about React and related staff.',
     bioCn:
-      '毕业于新西兰奥克兰理工大学计算机与信息科学专业，目前在奥克兰当地一家公司做前端开发。技术栈以React为主。',
+      '毕业于新西兰奥克兰理工大学计算机与信息科学专业，目前在奥克兰一家科技公司做前端开发。擅长Javascript、React 等技术',
   },
   {
     id: 'sam',
