@@ -7,6 +7,12 @@ import clsx from 'clsx';
 import { InlineLocale } from '~/src/translations/types';
 
 const commonTechNames = [
+  'javascript',
+  'react',
+  'next.js',
+  'TypeScript',
+  'JAMStack',
+  'electron',
   'Blockchain',
   'bitcoin',
   'ipfs',
@@ -15,14 +21,11 @@ const commonTechNames = [
   'VR',
   'docker',
   'k8s',
-  'JAMStack',
-  'TypeScript',
   'golang',
   'java',
   'dart',
   'swift',
   'C#',
-  'javascript',
   'kotlin',
   'python',
   'MySql',
@@ -32,29 +35,15 @@ const commonTechNames = [
   'MongoDB',
   'elasticsearch',
   'spring cloud',
-  'next.js',
-  'react',
   'flutter',
   'OpenSource',
   'GitHub Action',
 ];
 
 const techStacks: InlineLocale<string[]> = {
-  en: [
-    'AI',
-    'docker',
-    'k8s',
-    'DevOps',
-    'Bigdata',
-    'react',
-    'next.js',
-    'electron',
-    'elasticsearch',
-    'spring cloud',
-    ...commonTechNames,
-  ],
+  en: [...commonTechNames, 'AI', 'docker', 'k8s', 'DevOps', 'Bigdata'],
 
-  zh: ['区块链', '推荐算法', '大数据', '搜索', ...commonTechNames],
+  zh: [...commonTechNames, '区块链', '推荐算法', '大数据', '搜索'],
 };
 
 const techStackTitle: InlineLocale = {
@@ -101,11 +90,9 @@ export const TechStacks: React.FC = () => {
     <Container component="section" id="techstack" maxWidth={'lg'}>
       <Box pt={16} pb={8} justifyContent="center" alignItems="center" textAlign="center">
         <Typography variant="h3">{techStackTitle[locale]}</Typography>
-
         <Box clone py={4}>
           <Typography>{techStackSummary[locale]}</Typography>
         </Box>
-
         <Grid container spacing={0} justify="center">
           {techStacks[locale].map((e, i) => (
             <Tag key={i}>{e}</Tag>
