@@ -10,13 +10,12 @@ import clsx from 'clsx';
 
 const teamTitle: InlineLocale = {
   en: 'Our passionate team',
-  zh: '我们的团队',
+  zh: '我们的专家团队',
 };
 
 const teamSummary: InlineLocale = {
-  en:
-    'We come from all over the world, have our own job, and engage in technical consulting or consulting work in our spare time.',
-  zh: '我们来自世界各地，有着自己的本职工作，业余时间从事技术咨询工作',
+  en: 'We come from all over the world, have our own areas of expertise.',
+  zh: '我们来自世界各地，有着自己擅长的领域',
 };
 
 const data = teamData.filter(e => !e.hidden);
