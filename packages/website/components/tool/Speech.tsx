@@ -74,7 +74,7 @@ export const Speech: React.FC = () => {
   };
   const [text, setText] = React.useState(initText[locale]);
   const [gender, setGender] = React.useState('');
-  const [voiceType, setVoiceType] = React.useState('');
+  const [voiceType, setVoiceType] = React.useState('Neural');
   const [language, setLanguage] = React.useState('');
 
   const fetchToken = async () => {
