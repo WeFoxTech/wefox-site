@@ -33,6 +33,20 @@ export const menusData: LayoutMenu[] = [
     icon: <SlideshowIcon color="primary" />,
   },
   {
+    type: 'menulist',
+    name: 'tools',
+    children: [
+      {
+        type: 'link',
+        name: 'textToSpeechTool',
+        linkProps: {
+          href: '/tool/text-to-speech',
+          scroll: false,
+        },
+      },
+    ],
+  },
+  {
     type: 'link',
     name: 'about',
     linkProps: {

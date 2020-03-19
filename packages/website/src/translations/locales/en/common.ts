@@ -9,11 +9,13 @@ const common = {
   version: 'Version',
   commit: 'Commit',
   buildNumber: 'Build Number',
-  menuAboutUs: 'about us',
-  menuTechstack: 'tech stack',
-  menuCase: 'case',
-  menuTeam:'team',
+  menuAboutUs: 'About us',
+  menuTechstack: 'Tech stack',
+  menuCase: 'Case',
+  menuTeam: 'Team',
   about: 'About',
+  tools: 'Tools',
+  textToSpeechTool: 'Text-to-speech Tool',
 };
 
 export default common;

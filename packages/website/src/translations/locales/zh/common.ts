@@ -16,6 +16,8 @@ const common: AllTranslations['common'] = {
   menuCase: '案例',
   menuTeam: '团队',
   about: '关于我们',
+  tools: '工具箱',
+  textToSpeechTool: '文字转语音',
 };
 
 export default common;
