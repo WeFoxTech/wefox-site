@@ -1,28 +1,47 @@
 import useTranslation from '~/src/hooks/useTranslation';
 import { Locale } from '~/src/translations/config';
-import { Typography, Container, Box, Chip, Grid } from '@material-ui/core';
+import { Typography, Container, Box, Chip, Grid, IconProps } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { marginTop, marginBottom } from './spacing';
 import clsx from 'clsx';
 import { InlineLocale } from '~/src/translations/types';
+import AndroidIcon from '@material-ui/icons/Android';
+import GitHubIcon from '@material-ui/icons/GitHub';
+import SearchIcon from '@material-ui/icons/Search';
+import { JsIcon } from '../icons/Js';
+import { ReactIcon } from '../icons/React';
+import { NextJsIcon } from '../icons/NextJs';
+import { Html5Icon } from '../icons/Html5';
+import { GolangIcon } from '../icons/Golang';
+import { DockerIcon } from '../icons/Docker';
+import AppleIcon from '@material-ui/icons/Apple';
+import { ElasticsearchIcon } from '../icons/Elasticsearch';
+import { JavaIcon } from '../icons/Java';
+import { K8sIcon } from '../icons/K8s';
+import { ElectronIcon } from '../icons/Electron';
+import { FilecoinIcon } from '../icons/Filecoin';
+import { IpfsIcon } from '../icons/Ipfs';
 
-const commonTechNames = [
-  'javascript',
-  'react',
-  'next.js',
+type TechStackData = string | [string, React.FC<IconProps>];
+
+const commonTechNames: TechStackData[] = [
+  ['Html5', Html5Icon],
+  ['javascript', JsIcon],
+  ['react', ReactIcon],
+  ['next.js', NextJsIcon],
   'TypeScript',
   'JAMStack',
-  'electron',
+  ['electron', ElectronIcon],
   'Blockchain',
   'bitcoin',
-  'ipfs',
-  'filecoin',
+  ['ipfs',IpfsIcon],
+  ['filecoin',FilecoinIcon],
   'DevOps',
   'VR',
-  'docker',
-  'k8s',
-  'golang',
-  'java',
+  ['docker', DockerIcon],
+  ['k8s', K8sIcon],
+  ['golang', GolangIcon],
+  ['java', JavaIcon],
   'dart',
   'swift',
   'C#',
@@ -30,20 +49,20 @@ const commonTechNames = [
   'python',
   'MySql',
   'Redis',
-  'Android',
-  'iOS',
+  ['Android', AndroidIcon],
+  ['iOS', AppleIcon],
   'MongoDB',
-  'elasticsearch',
+  ['elasticsearch', ElasticsearchIcon],
   'spring cloud',
   'flutter',
   'OpenSource',
-  'GitHub Action',
+  ['GitHub Action', GitHubIcon],
 ];
 
-const techStacks: InlineLocale<string[]> = {
+const techStacks: InlineLocale<TechStackData[]> = {
   en: [...commonTechNames, 'AI', 'docker', 'k8s', 'DevOps', 'Bigdata'],
 
-  zh: [...commonTechNames, '区块链', '推荐算法', '大数据', '搜索'],
+  zh: [...commonTechNames, '区块链', '推荐算法', '大数据', ['搜索', SearchIcon]],
 };
 
 const techStackTitle: InlineLocale = {
@@ -66,16 +85,24 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Tag: React.FC = ({ children }) => {
+const Tag: React.FC<{ data: TechStackData }> = ({ data }) => {
   const classes = useStyles();
+  let label: string;
+  let Icon = null;
+  if (Array.isArray(data)) {
+    [label, Icon] = data;
+  } else {
+    label = data;
+  }
   return (
     <Grid item xs="auto">
       <Chip
         variant="default"
+        icon={Icon ? <Icon fontSize="small" /> : undefined}
         color="primary"
         clickable={true}
         size="medium"
-        label={children}
+        label={label}
         className={classes.tag}
       ></Chip>
     </Grid>
@@ -95,7 +122,7 @@ export const TechStacks: React.FC = () => {
         </Box>
         <Grid container spacing={0} justify="center">
           {techStacks[locale].map((e, i) => (
-            <Tag key={i}>{e}</Tag>
+            <Tag key={i} data={e} />
           ))}
         </Grid>
       </Box>
