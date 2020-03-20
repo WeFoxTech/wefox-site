@@ -65,6 +65,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     menuList: {
       textTransform: 'none',
+      paddingTop: theme.spacing(1),
     },
     childMenu: {
       color: theme.palette.primary.main,
