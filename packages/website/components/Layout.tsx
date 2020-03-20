@@ -119,7 +119,7 @@ const Layout: React.FunctionComponent<Props> = ({
             {toolbarMenus}
             <div className={classes.grow}></div>
             <LocaleSwitcher />
-            <Hidden smUp implementation="css">
+            <Hidden mdUp implementation="css">
               <IconButton onClick={() => setOpen(true)}>
                 <MenuIcon />
               </IconButton>

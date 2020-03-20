@@ -121,7 +121,7 @@ export function useToolbarMenus(menus?: LayoutMenu[]) {
   const classes = useStyles();
   const [popoverMenu, setPopoverMenu] = React.useState<{ [key: string]: null | HTMLElement }>({});
   return (
-    <Hidden implementation="css" only="xs">
+    <Hidden implementation="css" smDown>
       <Box className={classes.root} display="flex" color="grey.50">
         {menus
           .map(e => withLocale(e, locale))
@@ -175,9 +175,7 @@ function renderTreeItem(e: LinkMenu | ButtonMenu | MenuList, i: number, nodeId: 
           <Link key={i} {...e.linkProps}>
             {e.icon && <e.icon color="primary" />}
             <Box clone pl={2}>
-              <Typography component="span" className="text-with-icon">
-                {t(e.name)}
-              </Typography>
+              <Typography component="span">{t(e.name)}</Typography>
             </Box>
           </Link>
         }
