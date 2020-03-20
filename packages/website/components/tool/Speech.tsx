@@ -39,7 +39,7 @@ interface State {
 }
 
 const initialState: State = {
-  regin: 'eastasia',
+  regin: 'southeastasia',
   voiceList: voiceList,
 };
 
