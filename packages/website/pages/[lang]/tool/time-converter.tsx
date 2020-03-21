@@ -5,6 +5,7 @@ import { GetstaticProps } from '~/src/types/next';
 import locales from '~/src/translations/locales';
 import useTranslation from '~/src/hooks/useTranslation';
 import { PageMeta } from '~/src/PageMeta';
+import { TimeConterter } from '~/components/tool/TimeConverter';
 
 const commonKeyworks = ['wefox', 'time unit'];
 const meta: PageMeta = {
@@ -19,17 +20,17 @@ const meta: PageMeta = {
   },
 };
 
-const TimeConvert = () => {
+const TimeConvertPage = () => {
   const { t, locale } = useTranslation();
 
   return (
     <Layout meta={meta}>
-      <TimeConvert />
+      <TimeConterter />
     </Layout>
   );
 };
 
-export default withLocale(TimeConvert);
+export default withLocale(TimeConvertPage);
 
 export async function getStaticPaths() {
   return {
