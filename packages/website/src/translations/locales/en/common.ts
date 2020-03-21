@@ -15,7 +15,12 @@ const common = {
   menuTeam: 'Team',
   about: 'About',
   tools: 'Tools',
-  textToSpeechTool: 'Text-to-speech Tool',
+  copy: 'Copy',
+  reset: 'Reset',
+  copySuccess: 'Copy Success',
+  copyFailure: 'Copy Failure',
+  toolTextToSpeech: 'Text-to-speech Tool',
+  toolTimeConverter: 'Time converter tool',
 };
 
 export default common;

@@ -1,9 +1,7 @@
-
-import contact from './contact'
-import common from './common'
-
+import common from './common';
+import converter from './converter';
 
 export default {
-  contact,
+  converter,
   common,
-}
+};

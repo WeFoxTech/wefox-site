@@ -5,6 +5,7 @@ import GroupIcon from '@material-ui/icons/Group';
 import SlideshowIcon from '@material-ui/icons/Slideshow';
 import InfoIcon from '@material-ui/icons/Info';
 import KeyboardVoiceIcon from '@material-ui/icons/KeyboardVoice';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import ToolIcon from '@material-ui/icons/Build';
 
 export const menusData: LayoutMenu[] = [
@@ -43,10 +44,19 @@ export const menusData: LayoutMenu[] = [
     children: [
       {
         type: 'link',
-        name: 'textToSpeechTool',
+        name: 'toolTextToSpeech',
         icon: KeyboardVoiceIcon,
         linkProps: {
           href: '/tool/text-to-speech',
+          scroll: false,
+        },
+      },
+      {
+        type: 'link',
+        name: 'toolTimeConverter',
+        icon: AccessTimeIcon,
+        linkProps: {
+          href: '/tool/time-converter',
           scroll: false,
         },
       },
