@@ -15,9 +15,13 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Hidden,
 } from '@material-ui/core';
 import BigNumber from 'bignumber.js';
 import { TranslationKey, InlineLocale } from '~/src/translations/types';
+import copy from 'copy-to-clipboard';
+import FileCopyIcon from '@material-ui/icons/FileCopy';
+import Alert from '@material-ui/lab/Alert';
 
 enum CalculatorName {
   Nanosecond,
@@ -46,7 +50,10 @@ export const TimeConterter: React.FC = () => {
     Partial<{ [key in CalculatorName]: string | null | undefined }>
   >({});
 
+  const textArea = React.useRef<HTMLTextAreaElement>(null);
+
   const [error, setError] = React.useState<null | string>(null);
+  const [success, setSuccess] = React.useState<null | string>(null);
 
   const checkAndSetNs = (
     name: CalculatorName,
@@ -56,7 +63,7 @@ export const TimeConterter: React.FC = () => {
     if (value) {
       const dotTimes = (value.match(/\./g) || []).length;
       if (dotTimes > 1) {
-        setError(`. appear ${dotTimes}`);
+        setError(`. appear ${dotTimes} times`);
       } else {
         if (/\.0*$/.test(value) || /^\d*\.$/.test(value)) {
           setFixedType({ [name]: value });
@@ -71,6 +78,15 @@ export const TimeConterter: React.FC = () => {
       }
     } else {
       setNs(null);
+    }
+  };
+
+  const copyText = (name: string, text: string) => {
+    const result = copy(text);
+    if (result) {
+      setSuccess(t('copySuccess'));
+    } else {
+      setError(t('copyFailure'));
     }
   };
 
@@ -200,9 +216,38 @@ export const TimeConterter: React.FC = () => {
 
   return (
     <Box>
-      {/* <Typography>{error}</Typography> */}
-      <Box textAlign="center">
+      <Snackbar
+        open={!!error || !!success}
+        autoHideDuration={2000}
+        onClose={e => {
+          setError(null);
+          setSuccess(null);
+        }}
+      >
+        <Alert
+          onClose={e => {
+            setError(null);
+            setSuccess(null);
+          }}
+          severity={error ? 'error' : success ? 'success' : 'info'}
+        >
+          {error || success}
+        </Alert>
+      </Snackbar>
+      <Box textAlign="center" justifyContent="center">
         <Typography variant="h3">{title[locale]}</Typography>
+        <Box pt={4}>
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={e => {
+              setNs(null);
+              setFixedType({});
+            }}
+          >
+            {t('reset')}
+          </Button>
+        </Box>
       </Box>
       <Box pt={2} pb={16} justifyContent="center" alignItems="center" textAlign="center">
         <form>
@@ -212,7 +257,12 @@ export const TimeConterter: React.FC = () => {
               return (
                 <Grid key={i} item xs={12} md={6}>
                   <Box px={16}>
-                    <TextField fullWidth label={t(k)} value={v} onChange={h}></TextField>
+                    <TextField label={t(k)} value={v} onChange={h}></TextField>
+                    {v && (
+                      <Button startIcon={<FileCopyIcon />} onClick={e => copyText(k, v)}>
+                        {t('copy')}
+                      </Button>
+                    )}
                   </Box>
                 </Grid>
               );

@@ -15,6 +15,10 @@ const common = {
   menuTeam: 'Team',
   about: 'About',
   tools: 'Tools',
+  copy: 'Copy',
+  reset: 'Reset',
+  copySuccess: 'Copy Success',
+  copyFailure: 'Copy Failure',
   toolTextToSpeech: 'Text-to-speech Tool',
   toolTimeConverter: 'Time converter tool',
 };

@@ -17,6 +17,10 @@ const common: AllTranslations['common'] = {
   menuTeam: '团队',
   about: '关于我们',
   tools: '工具箱',
+  copy: '拷贝',
+  copySuccess: '拷贝成功',
+  copyFailure: '拷贝失败',
+  reset: '重置',
   toolTextToSpeech: '文字转语音',
   toolTimeConverter: '时间单位转换工具',
 };
