@@ -1,23 +1,17 @@
-
 import * as React from 'react';
 import Layout from '~/components/Layout';
-import About from '~/components/about/About.mdx';
-import AboutZh from '~/components/about/About-zh.mdx';
 import withLocale from '~/src/hocs/withLocale';
 import { GetstaticProps } from '~/src/types/next';
 import locales from '~/src/translations/locales';
 import useTranslation from '~/src/hooks/useTranslation';
 import { PageMeta } from '~/src/PageMeta';
-import { LayoutMenu } from '~/src/menu';
 import { Speech } from '~/components/tool/Speech';
-// import { About } from '~/components/about/About';
 
-
-const commonKeyworks = ['wefox'];
+const commonKeyworks = ['wefox', 'Text-to-speech'];
 const meta: PageMeta = {
   title: 'Text-to-speech tool',
   keywords: [...commonKeyworks, 'technical consulting', 'Technical Adviser'],
-  description: 'Professional technical consulting and consulting services',
+  description: 'Help you convert text to speech, support multiple countries, more than 80 sounds',
   author: 'fox, hi@fox.mn',
   zh: {
     title: '文字转语音工具',
@@ -31,8 +25,6 @@ const AboutPage = () => {
 
   return (
     <Layout meta={meta}>
-      {/* {locale === 'zh' ? <AboutZh /> : <About />} */}
-      {/* <About /> */}
       <Speech />
     </Layout>
   );
@@ -49,7 +41,6 @@ export async function getStaticPaths() {
 
 export const getStaticProps: GetstaticProps = async ({ params }) => {
   const { lang } = params;
-
   return {
     props: {
       locale: lang,
@@ -57,4 +48,3 @@ export const getStaticProps: GetstaticProps = async ({ params }) => {
     },
   };
 };
-
