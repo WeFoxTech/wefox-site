@@ -20,6 +20,9 @@ import BigNumber from 'bignumber.js';
 import { TranslationKey, InlineLocale } from '~/src/translations/types';
 
 enum CalculatorName {
+  Nanosecond,
+  Microsecond,
+  Millisecond,
   Second,
   Minute,
   Hour,
@@ -58,7 +61,7 @@ export const TimeConterter: React.FC = () => {
         if (/\.0*$/.test(value) || /^\d*\.$/.test(value)) {
           setFixedType({ [name]: value });
         } else if (/^[\d\.]+$/.test(value)) {
-          setNs(calc(new BigNumber(value, 10)).multipliedBy(oneSecond));
+          setNs(calc(new BigNumber(value, 10)));
           setFixedType({ [name]: null });
         } else {
           const charArr = value.split('');
@@ -77,9 +80,33 @@ export const TimeConterter: React.FC = () => {
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   ]> = [
     [
+      'timeUnitNanosecond',
+      fixedType[CalculatorName.Nanosecond] ?? ns?.toString(10) ?? '',
+      e => checkAndSetNs(CalculatorName.Nanosecond, e.currentTarget.value, bn => bn),
+    ],
+    [
+      'timeUnitMicrosecond',
+      fixedType[CalculatorName.Microsecond] ?? ns?.dividedBy(1000).toString(10) ?? '',
+      e =>
+        checkAndSetNs(CalculatorName.Microsecond, e.currentTarget.value, bn =>
+          bn.multipliedBy(1000)
+        ),
+    ],
+    [
+      'timeUnitMillisecond',
+      fixedType[CalculatorName.Millisecond] ?? ns?.dividedBy(1000000).toString(10) ?? '',
+      e =>
+        checkAndSetNs(CalculatorName.Millisecond, e.currentTarget.value, bn =>
+          bn.multipliedBy(1000000)
+        ),
+    ],
+    [
       'timeUnitSecond',
       fixedType[CalculatorName.Second] ?? ns?.dividedBy(oneSecond).toString(10) ?? '',
-      e => checkAndSetNs(CalculatorName.Second, e.currentTarget.value, bn => bn),
+      e =>
+        checkAndSetNs(CalculatorName.Second, e.currentTarget.value, bn =>
+          bn.multipliedBy(oneSecond)
+        ),
     ],
     [
       'timeUnitMinute',
@@ -89,7 +116,10 @@ export const TimeConterter: React.FC = () => {
           .dividedBy(60)
           .toFixed() ??
         '',
-      e => checkAndSetNs(CalculatorName.Minute, e.currentTarget.value, bn => bn.multipliedBy(60)),
+      e =>
+        checkAndSetNs(CalculatorName.Minute, e.currentTarget.value, bn =>
+          bn.multipliedBy(oneSecond).multipliedBy(60)
+        ),
     ],
 
     [
@@ -102,7 +132,9 @@ export const TimeConterter: React.FC = () => {
           .toString() ??
         '',
       e =>
-        checkAndSetNs(CalculatorName.Hour, e.currentTarget.value, bn => bn.multipliedBy(60 * 60)),
+        checkAndSetNs(CalculatorName.Hour, e.currentTarget.value, bn =>
+          bn.multipliedBy(oneSecond).multipliedBy(60 * 60)
+        ),
     ],
 
     [
@@ -115,7 +147,7 @@ export const TimeConterter: React.FC = () => {
         '',
       e =>
         checkAndSetNs(CalculatorName.Day, e.currentTarget.value, bn =>
-          bn.multipliedBy(60 * 60 * 24)
+          bn.multipliedBy(oneSecond).multipliedBy(60 * 60 * 24)
         ),
     ],
 
@@ -125,11 +157,12 @@ export const TimeConterter: React.FC = () => {
         ns
           ?.dividedBy(oneSecond)
           .dividedBy(60 * 60 * 24 * 7)
+          .toFixed(0)
           .toString() ??
         '',
       e =>
         checkAndSetNs(CalculatorName.Week, e.currentTarget.value, bn =>
-          bn.multipliedBy(60 * 60 * 24 * 7)
+          bn.multipliedBy(oneSecond).multipliedBy(60 * 60 * 24 * 7)
         ),
     ],
     [
@@ -137,12 +170,17 @@ export const TimeConterter: React.FC = () => {
       fixedType[CalculatorName.Month] ??
         ns
           ?.dividedBy(oneSecond)
-          .dividedBy(60 * 60 * 24 * 30)
+          .dividedBy(60 * 60 * 24 * 365)
+          .multipliedBy(12)
+          .toFixed(0)
           .toString() ??
         '',
       e =>
         checkAndSetNs(CalculatorName.Month, e.currentTarget.value, bn =>
-          bn.multipliedBy(60 * 60 * 24 * 30)
+          bn
+            .multipliedBy(oneSecond)
+            .multipliedBy(60 * 60 * 24 * 365)
+            .dividedBy(12)
         ),
     ],
     [
@@ -155,7 +193,7 @@ export const TimeConterter: React.FC = () => {
         '',
       e =>
         checkAndSetNs(CalculatorName.Year, e.currentTarget.value, bn =>
-          bn.multipliedBy(60 * 60 * 24 * 365)
+          bn.multipliedBy(oneSecond).multipliedBy(60 * 60 * 24 * 365)
         ),
     ],
   ];
@@ -168,12 +206,12 @@ export const TimeConterter: React.FC = () => {
       </Box>
       <Box pt={2} pb={16} justifyContent="center" alignItems="center" textAlign="center">
         <form>
-          <Grid container spacing={4}>
+          <Grid container spacing={4} justify="center">
             {data.map((e, i) => {
               const [k, v, h] = e;
               return (
-                <Grid item>
-                  <Box minWidth={512}>
+                <Grid key={i} item xs={12} md={6}>
+                  <Box px={16}>
                     <TextField fullWidth label={t(k)} value={v} onChange={h}></TextField>
                   </Box>
                 </Grid>
