@@ -21,6 +21,7 @@ const common = {
   copyFailure: 'Copy Failure',
   toolTextToSpeech: 'Text-to-speech Tool',
   toolTimeConverter: 'Time converter tool',
+  toolByteConverter: 'Byte converter tool',
 };
 
 export default common;

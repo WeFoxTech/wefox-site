@@ -7,6 +7,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import KeyboardVoiceIcon from '@material-ui/icons/KeyboardVoice';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import ToolIcon from '@material-ui/icons/Build';
+import { SdcardIcon } from '~/components/icons/Sdcard';
 
 export const menusData: LayoutMenu[] = [
   {
@@ -48,6 +49,15 @@ export const menusData: LayoutMenu[] = [
         icon: KeyboardVoiceIcon,
         linkProps: {
           href: '/tool/text-to-speech',
+          scroll: false,
+        },
+      },
+      {
+        type: 'link',
+        name: 'toolByteConverter',
+        icon: SdcardIcon,
+        linkProps: {
+          href: '/tool/byte-unit-converter',
           scroll: false,
         },
       },
