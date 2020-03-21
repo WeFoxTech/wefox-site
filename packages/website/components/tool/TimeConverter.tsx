@@ -16,6 +16,9 @@ import {
   Select,
   MenuItem,
   Hidden,
+  InputAdornment,
+  FormControl,
+  Input,
 } from '@material-ui/core';
 import BigNumber from 'bignumber.js';
 import { TranslationKey, InlineLocale } from '~/src/translations/types';
@@ -251,18 +254,32 @@ export const TimeConterter: React.FC = () => {
       </Box>
       <Box pt={2} pb={16} justifyContent="center" alignItems="center" textAlign="center">
         <form>
-          <Grid container spacing={4} justify="center">
+          <Grid container spacing={1} justify="center">
             {data.map((e, i) => {
               const [k, v, h] = e;
               return (
                 <Grid key={i} item xs={12} md={6}>
-                  <Box px={16}>
-                    <TextField label={t(k)} value={v} onChange={h}></TextField>
-                    {v && (
-                      <Button startIcon={<FileCopyIcon />} onClick={e => copyText(k, v)}>
-                        {t('copy')}
-                      </Button>
-                    )}
+                  <Box>
+                    <FormControl>
+                      <InputLabel htmlFor={k}>{t(k)}</InputLabel>
+                      <Input
+                        id={k}
+                        value={v}
+                        onChange={h}
+                        fullWidth
+                        type="number"
+                        multiline
+                        endAdornment={
+                          <InputAdornment position="end">
+                            {v && (
+                              <Button startIcon={<FileCopyIcon />} onClick={e => copyText(k, v)}>
+                                {t('copy')}
+                              </Button>
+                            )}
+                          </InputAdornment>
+                        }
+                      ></Input>
+                    </FormControl>
                   </Box>
                 </Grid>
               );
