@@ -17,7 +17,8 @@ const common: AllTranslations['common'] = {
   menuTeam: '团队',
   about: '关于我们',
   tools: '工具箱',
-  textToSpeechTool: '文字转语音',
+  toolTextToSpeech: '文字转语音',
+  toolTimeConverter: '时间单位转换工具',
 };
 
 export default common;
