@@ -23,6 +23,7 @@ const common: AllTranslations['common'] = {
   reset: '重置',
   toolTextToSpeech: '文字转语音',
   toolTimeConverter: '时间单位转换工具',
+  toolByteConverter: '字节单位转换工具',
 };
 
 export default common;
