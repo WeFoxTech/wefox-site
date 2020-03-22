@@ -8,6 +8,7 @@ import KeyboardVoiceIcon from '@material-ui/icons/KeyboardVoice';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import ToolIcon from '@material-ui/icons/Build';
 import { SdcardIcon } from '~/components/icons/Sdcard';
+import { BitIcon } from '../../components/icons/Bit';
 
 export const menusData: LayoutMenu[] = [
   {
@@ -58,6 +59,15 @@ export const menusData: LayoutMenu[] = [
         icon: SdcardIcon,
         linkProps: {
           href: '/tool/byte-unit-converter',
+          scroll: false,
+        },
+      },
+      {
+        type: 'link',
+        name: 'toolBiteConverter',
+        icon: BitIcon,
+        linkProps: {
+          href: '/tool/bit-unit-converter',
           scroll: false,
         },
       },

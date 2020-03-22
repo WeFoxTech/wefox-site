@@ -4,11 +4,17 @@ import {
   Box,
   TextField,
   Typography,
+  TextareaAutosize,
+  Divider,
   Button,
   Grid,
   IconButton,
+  CircularProgress,
   Snackbar,
   InputLabel,
+  Select,
+  MenuItem,
+  Hidden,
   InputAdornment,
   FormControl,
   Input,
@@ -23,8 +29,8 @@ import Link from '~/src/Link';
 import HelpIcon from '@material-ui/icons/Help';
 
 const title: InlineLocale = {
-  zh: '字节单位换算工具',
-  en: 'Byte Unit Conversion Tool',
+  zh: '比特单位换算工具',
+  en: 'Bit Unit Conversion Tool',
 };
 
 interface DataItem {
@@ -37,76 +43,72 @@ const units = {
     v: 1,
     name: 'bit',
   },
-  B: {
-    v: 8,
-    name: 'Byte',
-  },
-  Ki: {
-    v: 2 ** 10 * 8,
+  Kibit: {
+    v: 2 ** 10,
     name: 'kibi',
   },
-  Mi: {
-    v: 2 ** 20 * 8,
+  Mibit: {
+    v: 2 ** 20,
     name: 'mebi',
   },
-  Gi: {
-    v: 2 ** 30 * 8,
+  Gibit: {
+    v: 2 ** 30,
     name: 'gibi',
   },
-  Ti: {
-    v: 2 ** 40 * 8,
+  Tibit: {
+    v: 2 ** 40,
     name: 'tebi',
   },
-  Pi: {
-    v: 2 ** 50 * 8,
+  Pibit: {
+    v: 2 ** 50,
     name: 'pebi',
   },
-  Ei: {
-    v: 2 ** 60 * 8,
+  Eibit: {
+    v: 2 ** 60,
     name: 'exbi',
   },
-  Zi: {
-    v: 2 ** 70 * 8,
+  Zibit: {
+    v: 2 ** 70,
     name: 'zebi',
   },
-  Yi: {
-    v: 2 ** 80 * 8,
+  Yibit: {
+    v: 2 ** 80,
     name: 'yobi',
   },
 };
 
 const decimals = {
-  k: {
+  kbit: {
     v: 1000,
-    name: 'kilo',
+    name: 'kilobit',
   },
-  M: {
+  Mbit: {
     v: 1000 ** 2,
-    name: 'mega',
+    name: 'megabit',
   },
-  G: {
+  Gbit: {
     v: 1000 ** 3,
-    name: 'giga',
+    name: 'gigabit',
   },
-  T: {
+  Tbit: {
     v: 1000 ** 4,
-    name: 'tera',
+    name: 'terabit',
   },
-  P: {
+  Pbit: {
     v: 1000 ** 5,
-    name: 'peta',
+    name: 'petabit',
   },
-  E: {
+  Ebit: {
     v: 1000 ** 6,
-    name: 'exa',
+    name: 'exabit',
   },
-  Z: {
+  Zbit: {
     v: 1000 ** 7,
-    name: 'zetta',
+    name: 'zettabit',
   },
-  Y: {
+  Ybit: {
     v: 1000 ** 8,
-    name: 'yotta',
+    name: 'yottabit',
   },
 };
 
@@ -118,7 +120,7 @@ type Decimal = typeof decimals;
 
 type DecimalKey = keyof Decimal;
 
-export const ByteConverter: React.FC = () => {
+export const BitConverter: React.FC = () => {
   const { t, locale } = useTranslation();
   const [ns, setNs] = React.useState<null | BigNumber>(null);
   const [fixedType, setFixedType] = React.useState<
@@ -191,7 +193,7 @@ export const ByteConverter: React.FC = () => {
     let byteValue = fixedType[key];
     if (!byteValue) {
       if (ns) {
-        byteValue = new BigNumber(ns.dividedBy(8).toFixed()).dividedBy(v).toString(10);
+        byteValue = new BigNumber(ns.toFixed()).dividedBy(v).toString(10);
       } else {
         byteValue = '';
       }
@@ -201,7 +203,7 @@ export const ByteConverter: React.FC = () => {
       key,
       byteValue,
       (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-        checkAndSetNs(key, e.currentTarget.value, bn => bn.multipliedBy(v).multipliedBy(8)),
+        checkAndSetNs(key, e.currentTarget.value, bn => bn.multipliedBy(v)),
       item,
     ];
   });
@@ -229,7 +231,7 @@ export const ByteConverter: React.FC = () => {
       <Box textAlign="center" justifyContent="center">
         <Typography variant="h3">
           {title[locale]}
-          <Link href="https://en.wikipedia.org/wiki/Byte" target="_blank">
+          <Link href="https://en.wikipedia.org/wiki/Bit" target="_blank">
             <HelpIcon />
           </Link>
         </Typography>
