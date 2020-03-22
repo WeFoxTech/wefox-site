@@ -99,7 +99,8 @@ export const ByteConverter: React.FC = () => {
     const key = ele as UnitKey;
     return [
       key,
-      fixedType[key] ?? ns?.dividedBy(units[key]).toString(10) ?? '',
+      fixedType[key] ??
+        (key === 'bit' ? ns?.toFixed(0) ?? '' : ns?.dividedBy(units[key]).toString(10) ?? ''),
       (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
         checkAndSetNs(key, e.currentTarget.value, bn => bn.multipliedBy(units[key])),
     ];
