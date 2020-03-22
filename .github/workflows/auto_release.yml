@@ -34,7 +34,6 @@ jobs:
           echo "::set-env name=NEED_RELEASE::yes"
           echo "::set-env name=NOW_ARGS::--prod"
 
-
       - uses: actions/checkout@v2
         if: env.NEED_RELEASE == 'yes'
 
@@ -46,9 +45,11 @@ jobs:
         with:
           token: ${{secrets.github_token}}
       - name: set version env
+        if: env.NEED_RELEASE == 'yes'
         run: |
           echo "::set-env name=VERSION::$(cat lerna.json|jq -r .version)"
       - run: sudo timedatectl set-timezone Asia/Shanghai
+        if: env.NEED_RELEASE == 'yes'
       - name: Use Node.js 12.x
         uses: actions/setup-node@v1
         if: env.NEED_RELEASE == 'yes'
@@ -142,7 +143,7 @@ jobs:
           --thread-count 50
         working-directory: ${{ env.OUT_DIR }}
       - uses: actions/upload-artifact@v1
-      #   if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
+        #   if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
         if: failure()
         with:
           name: upload.log
