@@ -24,6 +24,7 @@ const common: AllTranslations['common'] = {
   toolTextToSpeech: '文字转语音',
   toolTimeConverter: '时间单位转换工具',
   toolByteConverter: '字节单位转换工具',
+  toolBiteConverter: '字节单位转换工具',
 };
 
 export default common;

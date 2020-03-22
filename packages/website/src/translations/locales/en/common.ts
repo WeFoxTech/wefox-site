@@ -22,6 +22,7 @@ const common = {
   toolTextToSpeech: 'Text-to-speech Tool',
   toolTimeConverter: 'Time converter tool',
   toolByteConverter: 'Byte converter tool',
+  toolBiteConverter: 'Bit converter tool',
 };
 
 export default common;
