@@ -97,7 +97,7 @@ function withLinkOrButton(e: LinkMenu | ButtonMenu, i: number, isMenuChild = fal
       <Box clone pt={1} key={isMenuChild ? undefined : i}>
         <Link className={isMenuChild ? classes.childMenu : classes.toobarMenu} {...e.linkProps}>
           {isMenuChild ? e.icon ? <e.icon color="primary" /> : null : null}
-          <Box clone pl={1} pr={2}>
+          <Box clone pl={2} pr={4} pb={1}>
             <Typography component="span" className={'text-with-icon'}>
               {t(e.name)}
             </Typography>
