@@ -27,6 +27,7 @@ import FileCopyIcon from '@material-ui/icons/FileCopy';
 import Alert from '@material-ui/lab/Alert';
 import Link from '~/src/Link';
 import HelpIcon from '@material-ui/icons/Help';
+import { ResetFab } from '../fab/ResetFab';
 
 const title: InlineLocale = {
   zh: '比特单位换算工具',
@@ -235,19 +236,6 @@ export const BitConverter: React.FC = () => {
             <HelpIcon />
           </Link>
         </Typography>
-
-        <Box pt={4}>
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={e => {
-              setNs(null);
-              setFixedType({});
-            }}
-          >
-            {t('reset')}
-          </Button>
-        </Box>
       </Box>
       <Box pt={2} pb={16} justifyContent="center" alignItems="center" textAlign="center">
         <form>
@@ -322,6 +310,12 @@ export const BitConverter: React.FC = () => {
           </Grid>
         </form>
       </Box>
+      <ResetFab
+        onClick={() => {
+          setNs(null);
+          setFixedType({});
+        }}
+      />
     </Box>
   );
 };

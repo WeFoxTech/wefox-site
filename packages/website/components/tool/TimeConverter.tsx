@@ -25,6 +25,7 @@ import { TranslationKey, InlineLocale } from '~/src/translations/types';
 import copy from 'copy-to-clipboard';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import Alert from '@material-ui/lab/Alert';
+import { ResetFab } from '../fab/ResetFab';
 
 enum CalculatorName {
   Nanosecond,
@@ -239,18 +240,6 @@ export const TimeConterter: React.FC = () => {
       </Snackbar>
       <Box textAlign="center" justifyContent="center">
         <Typography variant="h3">{title[locale]}</Typography>
-        <Box pt={4}>
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={e => {
-              setNs(null);
-              setFixedType({});
-            }}
-          >
-            {t('reset')}
-          </Button>
-        </Box>
       </Box>
       <Box pt={2} pb={16} justifyContent="center" alignItems="center" textAlign="center">
         <form>
@@ -287,6 +276,12 @@ export const TimeConterter: React.FC = () => {
           </Grid>
         </form>
       </Box>
+      <ResetFab
+        onClick={() => {
+          setNs(null);
+          setFixedType({});
+        }}
+      />
       <TimeUnitSvg />
     </Box>
   );
