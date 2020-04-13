@@ -25,6 +25,8 @@ const common: AllTranslations['common'] = {
   toolTimeConverter: '时间单位转换工具',
   toolByteConverter: '字节单位转换工具',
   toolBiteConverter: '比特单位转换工具',
+
+  job: '工作机会',
 };
 
 export default common;

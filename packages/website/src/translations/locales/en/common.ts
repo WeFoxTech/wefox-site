@@ -23,6 +23,7 @@ const common = {
   toolTimeConverter: 'Time converter tool',
   toolByteConverter: 'Byte converter tool',
   toolBiteConverter: 'Bit converter tool',
+  job: 'job',
 };
 
 export default common;
