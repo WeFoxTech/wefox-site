@@ -18,6 +18,10 @@ const afterCompile = async (path, content) => {
   if (/\/website\/pages\//.test(path)) {
     const footer = await readMdxLib('pagesFooter.js');
     content = content.replace(/export default function MDXContent/, 'export function MDXContent');
+    if (!/export\s+default\s+withPost\(/.test(content)) {
+      content = `export default withPost({title: 'wefox'})\n${content}`;
+    }
+
     return `${content}\n${footer}`;
   }
   return content;

@@ -1,16 +1,9 @@
-
-export default withLocale(MDXContent)
-
-export const hello = ()=>{
-
-  return 'world'
-}
-
+export default withLocale(MDXContent);
 
 export async function getStaticPaths() {
   return {
     paths: ['en', 'zh'].map(l => ({ params: { lang: l } })),
-    fallback: false
+    fallback: false,
   };
 }
 
