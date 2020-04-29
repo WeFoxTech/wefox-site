@@ -23,9 +23,12 @@ export const meta = {
 
 # 开放面试题
 
-如果你能解答下面两道题目其中一题，请联系我们，我们直接录用。如果能解答两道**薪资翻倍**。 可以借助[google](https://www.google.com/),[百度](https://www.baidu.com/), [必应](https://www.bing.com/)等各大搜索引擎，也可以求助身边的朋友。总之我们不限制你解题的方式，也不限制时间，但是也别太久哦，我们招满人之后就关闭职位了。
+如果你能解答下面两道题目其中一题，请联系我们。 可以借助[google](https://www.google.com/),[百度](https://www.baidu.com/), [必应](https://www.bing.com/)等各大搜索引擎，也可以求助身边的朋友。总之我们不限制你解题的方式，也不限制时间，但是也别太久哦，我们招满人之后就关闭职位了。
 
-1. 把一个多页的 web 应用部署到[ipfs](https://ipfs.io/)网络
+1. 以矿工身份加入[filecoin](https://filecoin.io/)[测试网](https://stats.testnet.filecoin.io/)且算力大于`0`
+   - 告知我们你的`矿工id` 比如(`t017255`)
+   - 确认是否加入成功`lotus state list-miners |grep t017255` - 查看自己的算力 `lotus state power t017255`
+2. 把一个多页的 web 应用部署到[ipfs](https://ipfs.io/)网络
 
    - 通过普通 http 网关可以正常使用
    - 页面之间可以相互跳转
@@ -33,11 +36,6 @@ export const meta = {
    - 告知我们`webapp`的[`CID`](https://docs.ipfs.io/guides/concepts/cid/)。
    - 需要能加载`ipfs`网络上的`css`、`javascript`或者`字体`资源，才能称之为`web app`哟
    - 比如([`QmctDmAgS75nxUGiCaUzZodWBAq3MXAmEPmZ8EVCrkdnF1`](https://ipfs.io/ipfs/QmctDmAgS75nxUGiCaUzZodWBAq3MXAmEPmZ8EVCrkdnF1/event/))
-
-2. 以矿工身份加入[filecoin](https://filecoin.io/)[测试网](https://stats.testnet.filecoin.io/)且算力大于 0
-   - 告知我们你的`矿工id` 比如(`t017255`)
-   - 确认是否加入成功`lotus state list-miners |grep t017255`
-   - 查看自己的算力 `lotus state power t017255`
 
 - 附加题: 参与[复制证明游戏](https://github.com/filecoin-project/replication-game) ，告知我们你的游戏 id 或者游戏得分。
 
@@ -85,17 +83,14 @@ export const meta = {
 > 50k 要求
 >
 > - 至少能完整解答上面两题面试题中其中一题
-> - 熟练使用 golang 和 rust 开发语言
+> - 熟练使用`golang`和`rust`语言
 > - 熟读[filecoin specs](https://filecoin-project.github.io/specs/)
+> - 熟读[lotus](https://github.com/filecoin-project/lotus)项目源码，能够对其进行性能优化
 > - 理解[filecoin](https://filecoin.io/)相关各种概念、算法原理、安全机制
 
 ## 招聘公司
 
 浙江顺睿科技有限公司
-
-> 不用关心我们的商业模式 <br />
-> 我们不用融资 <br />
-> 我们不割韭菜 <br />
 
 ## 岗位诱惑
 
