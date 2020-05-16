@@ -146,6 +146,15 @@ export const teamData: MenberData[] = [
     bioCn: '移动开发工程师，涉及 iOS、h5、微信小程序等。',
   },
   {
+    id: 'aten',
+    name: 'Aten',
+    cnName: 'Aten',
+    avatar: `${avatarBaseUrl}/aten.jpg`,
+    site: 'https://github.com/AtenJin',
+    bio: 'A blockchain infrastructure developer which have focused on blockchain more then 3 years. Early developer for Substrate blockchain framewrok and is very familiar with Bitcoin, Ethereum, Polkadot Filecoin, etc. The   former Webank developer for blockchain FISCO-BCOS, now working for ChainX and developing a rust version filecoin and miner.',
+    bioCn: '3年以上区块链底层开发工程师，[Substrate](https://meiqia.com)区块链框架早期开发者，熟悉Bitcoin，Ethereum，Polkadot，Filecoin等主流区块链。曾在微众银行任职区块链开发，现为ChainX核心开发工程师以及Filecoin的Rust版本Plum及挖矿程序的核心工程师。',
+  },
+  {
     id: 'hellsam',
     name: 'hellsam',
     cnName: undefined,
