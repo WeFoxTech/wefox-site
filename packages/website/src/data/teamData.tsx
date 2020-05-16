@@ -45,7 +45,7 @@ export const teamData: MenberData[] = [
     zhuanlan: 'c_74315572',
 
     bio:
-      'A blockchain infrastructure developer which have focused on blockchain more then 3 years. Early developer for Substrate blockchain framewrok and is very familiar with Bitcoin, Ethereum, Polkadot Filecoin, etc. The   former Webank developer for blockchain FISCO-BCOS, now working for ChainX and developing a rust version filecoin and miner.',
+      'A blockchain infrastructure developer which have focused on blockchain more then 3 years. Early developer for Substrate blockchain framewrok and is very familiar with Bitcoin, Ethereum, Polkadot Filecoin, etc. The former Webank developer for blockchain FISCO-BCOS, now working for ChainX and developing a rust version filecoin and miner.',
     bioCn: <AtenBioCn />,
   },
   {
