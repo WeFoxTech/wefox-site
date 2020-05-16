@@ -12,6 +12,7 @@ import LinkIcon from '@material-ui/icons/Link';
 import { WeiboIcon } from '../icons/Weibo';
 import { MDXComponent } from '~/src/types/mdx';
 import useTranslation from '~/src/hooks/useTranslation';
+import { ZhihuIcon } from '../icons/Zhihu';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -39,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export type  MenberBio = string | MDXComponent | JSX.Element;
+export type MenberBio = string | MDXComponent | JSX.Element;
 export interface MenberData {
   name: string;
   id: string;
@@ -54,6 +55,7 @@ export interface MenberData {
   hidden?: boolean;
   email?: string;
   tel?: string;
+  zhuanlan?: string;
 }
 
 export const GitHub: React.FC<{ id?: string }> = ({ id }) => {
@@ -182,6 +184,31 @@ const Email: React.FC<{ address?: string }> = ({ address }) => {
   }
 };
 
+const Zhuanlan: React.FC<{ zhuanlan?: string }> = ({ zhuanlan }) => {
+  if (zhuanlan) {
+    return (
+      <Grid item>
+        <Tooltip
+          title={
+            <>
+              <LinkIcon />
+              <Typography component="span" className="text-with-icon">
+                {`zhuanlan.zhihu.com/${zhuanlan}`}
+              </Typography>
+            </>
+          }
+        >
+          <Link target="_blank" href={`https://zhuanlan.zhihu.com/${zhuanlan}`}>
+            <ZhihuIcon />
+          </Link>
+        </Tooltip>
+      </Grid>
+    );
+  } else {
+    return null;
+  }
+};
+
 const Tel: React.FC<{ tel?: string }> = ({ tel }) => {
   if (tel) {
     return (
@@ -216,7 +243,7 @@ export const Bio: React.FC<{ menber: MenberData }> = ({ menber }) => {
     bio = menber.bio;
   }
   if (typeof bio === 'string') {
-    return  <Typography>{bio}</Typography> ;
+    return <Typography>{bio}</Typography>;
   } else if (React.isValidElement(bio)) {
     return <>{bio}</>;
   } else {
@@ -275,14 +302,15 @@ export const Menber: React.FC<MenberProps> = ({ data }) => {
         ></Avatar>
         <Name menber={data} />
         <Box pt={2}>
-        <Grid container spacing={2} justify="center">
-          <GitHub id={data.github}> </GitHub>
-          <Twitter id={data.twitter}> </Twitter>
-          <Weibo id={data.weibo}> </Weibo>
-          <Site url={data.site}></Site>
-          <Email address={data.email} />
-          <Tel tel={data.tel} />
-        </Grid>
+          <Grid container spacing={2} justify="center">
+            <GitHub id={data.github}> </GitHub>
+            <Twitter id={data.twitter}> </Twitter>
+            <Weibo id={data.weibo}> </Weibo>
+            <Site url={data.site}></Site>
+            <Zhuanlan zhuanlan={data.zhuanlan} />
+            <Email address={data.email} />
+            <Tel tel={data.tel} />
+          </Grid>
         </Box>
 
         <Bio menber={data}></Bio>
