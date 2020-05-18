@@ -5,92 +5,71 @@ export const meta = {
   description: 'lockchain technology research recruitment announcement',
   author: 'fox, hi@fox.mn',
   zh: {
-    title: '区块链技术研究招聘公告',
-    keywords: [
-      '区块链招聘',
-      'ipfs职位',
-      'filecoin职位',
-      'ipfs',
-      'filecoin',
-      '开放面试题',
-      '创新技术职位',
-    ],
+    title: 'filecoin技术招聘公告',
+    keywords: ['区块链招聘', 'ipfs职位', 'filecoin职位', 'ipfs', 'filecoin'],
     description: '区块链技术研究招聘公告',
   },
 };
 
-<H3 center> 区块链技术招聘公告</H3>
+<H3 center>招聘公告</H3>
 
-# 开放面试题
-
-如果你能解答下面两道题目其中一题，请联系我们。可以借助[google](https://www.google.com/),[百度](https://www.baidu.com/), [必应](https://www.bing.com/)等各大搜索引擎，也可以求助身边的朋友。总之我们不限制你解题的方式，也不限制时间，但是也别太久哦，我们招满人之后就关闭职位了。
-
-1. 以矿工身份加入[filecoin](https://filecoin.io/)[测试网](https://stats.testnet.filecoin.io/)且算力大于`0`
-
-   - 告知我们你的`矿工id` 比如(`t017255`)
-   - 确认是否加入成功`lotus state list-miners |grep t017255`
-   - 查看自己的算力 `lotus state power t017255`
-   - 需要自己动手完成，可以在朋友的帮助下完成，但是要能理解每个操作步骤
-
-2. 把一个多页的 web 应用部署到[ipfs](https://ipfs.io/)网络
-
-   - 通过普通 http 网关可以正常使用
-   - 页面之间可以相互跳转
-   - 子页面可以直接浏览器打开访问
-   - 告知我们`webapp`的[`CID`](https://docs.ipfs.io/guides/concepts/cid/)。
-   - 能加载`ipfs`网络上的`css`、`javascript`或者`字体`资源
-   - 比如([`QmctDmAgS75nxUGiCaUzZodWBAq3MXAmEPmZ8EVCrkdnF1`](https://ipfs.io/ipfs/QmctDmAgS75nxUGiCaUzZodWBAq3MXAmEPmZ8EVCrkdnF1/event/))
-
-- 附加题: 参与[复制证明游戏](https://github.com/filecoin-project/replication-game) ，告知我们你的游戏 id 或者游戏得分。
-
-> 题目不是很难，不要有畏惧心理，其中一题按照[文档](https://docs.lotu.sh/)操作即可。 <br />
-> 题目只是帮助我们筛选到合适的人。主要考察动手能力和快速学习新知识解决问题的能力。 <br />
-> 题目做到一半被 block 住了也不要灰心，如果对这个工作感兴趣可以联系我们，有机会一起搞事情。 <br />
-> 非杭州的小伙伴如果感兴趣，也可以过来杭州，我们在 loft 办公，有空闲的房间可以免费提供给你住。 <br />
-> 如果你足够优秀，我们也为你提供了远程工作岗位，甚至远程兼职岗位。 <br />
-
----
-
-<H5 center> 如果搞不定上面的面试题，也可以走下面正常招聘流程</H5>
-
-# ipfs、filecoin 技术研究员
+# 开发运维工程师
 
 ## 工作内容
 
-- [ipfs](https://ipfs.io/),[filecoin](https://filecoin.io/)生态技术研究
+- [filecoin](https://filecoin.io/)挖矿集群运维管理
+- 分布式存储集群运维管理
+- 服务器监控、告警
 
-## 招聘需求
+## 技能要求
 
-- 非在职状态
-- 计算机相关专业专科或以上（如果你对 ipfs 非常了解，不受此限制）
-- 有阅读英文文档，追溯源码解决问题的能力
-- 熟悉 linux 操作系统的使用，能阅读和编写 bash 脚本
-- 能熟练使用其中一门编程语言(golang、javascript、c++、rust)
+- 有分布式文件存储系统运维经验【ceph、glusterFS、mooseFS】
+- 有 k8s 使用经验
+- 能快速的拉起一套监控、告警系统【Prometheus、grafana、influxDB、Open-Falcon】
+- 熟练 Ansible 使用
 
 ## 加分项
 
+- 具备从硬件到软件的集群组网技能
+- 熟练常用万兆交换机、路由器使用
+- 有以下证书【CCNA、CCNP、CCIE】
+
+## 薪资
+
+15-30k
+
+---
+
+# filecoin 区块链开发工程师
+
+## 工作内容
+
+- filecoin 集群挖矿解决方案研究、设计
+
+## 技能要求
+
+- 理解[filecoin](https://filecoin.io/)相关各种概念、算法原理、安全机制
 - 熟读[Filecoin Spec](https://filecoin-project.github.io/specs/)
+- 熟读[lotus](https://github.com/filecoin-project/lotus)项目源码，能够对其进行性能优化，改造
+- 有阅读英文文档，追溯源码解决问题的能力
+- 熟悉 linux 操作系统的使用，能阅读和编写 bash 脚本
+- 能熟练使用以下至少一门编程语言(golang、c++、rust、javascript)
+
+## 加分项
+
 - 能随手电子配件市场自己组装一台 pc 电脑或者服务器
 - 了解 ipfs、libp2p 运行原理，深入研究过相关系统设计、阅读过部分或全部源码
 - 了解区块链的技术原理、有 Dapp 研发经历
 - 了解[filecoin](https://filecoin.io/)项目，了解其中的共识原理
-- 有参与过测试网挖矿（t1、t2、t3）都可以
-- 有过分布式文件存储系统开发、运维经验(Ceph、HDFS、GlusterFS)
 - 熟练 docker 的使用、有 k8s 使用经验
 - 熟练[ubuntu](https://ubuntu.com/)或者 [arch](https://www.archlinux.org/)系统的使用
 - 熟练使用 vscode 编辑器
 
-## 薪资福利
+## 薪资
 
-15-50k
+15-40k
 
-> 50k 要求
->
-> - 能完整解答上面第一道面试题
-> - 熟练使用`golang`和`rust`语言
-> - 熟读[filecoin specs](https://filecoin-project.github.io/specs/)
-> - 熟读[lotus](https://github.com/filecoin-project/lotus)项目源码，能够对其进行性能优化
-> - 理解[filecoin](https://filecoin.io/)相关各种概念、算法原理、安全机制
+---
 
 ## 招聘公司
 
@@ -99,7 +78,7 @@ export const meta = {
 ## 岗位诱惑
 
 - 我们这里有[RTX 2080 Ti 显卡](https://www.nvidia.com/en-us/geforce/graphics-cards/rtx-2080-ti/),[EPYC 7742](https://www.amd.com/zh-hans/products/cpu/amd-epyc-7742)、[Threadripper 3990x](https://www.amd.com/en/products/cpu/amd-ryzen-threadripper-3990x)CPU,以[P](https://en.wikipedia.org/wiki/PIB)为单位的硬盘随你玩。
-- 我们在杭州西湖边上、二号线[庆菱路](https://map.baidu.com/poi/%E5%BA%86%E8%8F%B1%E8%B7%AF/@13380973.225583334,3515290.0222130097,17.67z?uid=fab66a6d788dad440f0a70f8&info_merge=1&isBizPoi=false&ugc_type=3&ugc_ver=1&device_ratio=2&compat=1&querytype=detailConInfo&da_src=shareurl)地铁口办公，通勤方便。
+- 我们在杭州二号线[庆菱路](https://map.baidu.com/poi/%E5%BA%86%E8%8F%B1%E8%B7%AF/@13380973.225583334,3515290.0222130097,17.67z?uid=fab66a6d788dad440f0a70f8&info_merge=1&isBizPoi=false&ugc_type=3&ugc_ver=1&device_ratio=2&compat=1&querytype=detailConInfo&da_src=shareurl)地铁口办公，通勤方便。
 - 我们没有 996,周末双休，至少双倍带薪年假时间，工作日有充裕的时间给你自学各种技术。
 - 不用每天加班写业务代码。
 - 有一线互联网大厂的技术顾问团全方位提升你的技术。
