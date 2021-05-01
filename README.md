@@ -25,7 +25,7 @@ yarn export
 
 ```
 
-# release
+# prerelease
 
 Release is now automated
 
@@ -35,7 +35,7 @@ Release is now automated
 2. then merge to `master` branch
 3. the rest things will automatic complete soon
 
-# prerelease
+# release
 
 1. add `:release` postfix on commit message.
 2. then merge to `master` branch.
