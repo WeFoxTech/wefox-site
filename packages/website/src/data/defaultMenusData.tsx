@@ -82,14 +82,14 @@ export const menusData: LayoutMenu[] = [
       },
     ],
   },
-  {
-    type: 'link',
-    name: 'job',
-    linkProps: {
-      href: '/job/ipfs',
-    },
-    icon: InfoIcon,
-  },
+  // {
+  //   type: 'link',
+  //   name: 'job',
+  //   linkProps: {
+  //     href: '/job/ipfs',
+  //   },
+  //   icon: InfoIcon,
+  // },
   {
     type: 'link',
     name: 'about',
