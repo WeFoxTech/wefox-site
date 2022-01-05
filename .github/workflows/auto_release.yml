@@ -41,7 +41,7 @@ jobs:
       - name: Generate build number
         if: env.NEED_RELEASE == 'yes'
         id: buildnumber
-        uses: einaregilsson/build-number@v2
+        uses: einaregilsson/build-number@v3
         with:
           token: ${{secrets.github_token}}
       - name: set version env
@@ -111,10 +111,10 @@ jobs:
           asset_content_type: application/gzip
       #  ---------------- release for centralized --------------------------------------
       - name: Setup qshell
-        uses: foxundermoon/setup-qshell@v1
+        uses: foxundermoon/setup-qshell@v5
         if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
         with:
-          qshell-version: '2.4.1'
+          qshell-version: '2.6.2'
       - name: show qshell version
         if: env.NEED_RELEASE == 'yes' && env.RELEASE_TYPE == 'release'
         run: qshell version
