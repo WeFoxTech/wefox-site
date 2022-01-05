@@ -22,17 +22,17 @@ jobs:
       - name: check prerelease
         if: endsWith(github.event.head_commit.message,':prerelease') || endsWith(github.event.head_commit.message, '👀') || endsWith(github.event.head_commit.message, '👁')
         run: |
-          echo "::set-env name=RELEASE_TYPE::prerelease"
-          echo "::set-env name=PRERELEASE::true"
-          echo "::set-env name=NEED_RELEASE::yes"
-          echo "::set-env name=NOW_ARGS:: "
+          echo "RELEASE_TYPE=prerelease" >> $GITHUB_ENV
+          echo "PRERELEASE=true" >> $GITHUB_ENV
+          echo "NEED_RELEASE=yes" >> $GITHUB_ENV
+          echo "NOW_ARGS= " >> $GITHUB_ENV
       - name: check release
         if: endsWith(github.event.head_commit.message,':release') || endsWith(github.event.head_commit.message,'💯')
         run: |
-          echo "::set-env name=RELEASE_TYPE::release"
-          echo "::set-env name=PRERELEASE::false"
-          echo "::set-env name=NEED_RELEASE::yes"
-          echo "::set-env name=NOW_ARGS::--prod"
+          echo "RELEASE_TYPE=release" >> $GITHUB_ENV
+          echo "PRERELEASE=false" >> $GITHUB_ENV
+          echo "NEED_RELEASE=yes" >> $GITHUB_ENV
+          echo "NOW_ARGS=--prod" >> $GITHUB_ENV
 
       - uses: actions/checkout@v2
         if: env.NEED_RELEASE == 'yes'
@@ -47,7 +47,7 @@ jobs:
       - name: set version env
         if: env.NEED_RELEASE == 'yes'
         run: |
-          echo "::set-env name=VERSION::$(cat lerna.json|jq -r .version)"
+          echo "VERSION=$(cat lerna.json|jq -r .version)" >> $GITHUB_ENV
       - run: sudo timedatectl set-timezone Asia/Shanghai
         if: env.NEED_RELEASE == 'yes'
       - name: Use Node.js 12.x
@@ -96,7 +96,7 @@ jobs:
           name=$(cat ./packages/website/package.json |jq -r .name)
           fileName=${name}-${{ env.VERSION }}.${{ steps.buildnumber.outputs.build_number }}.tar.gz
           tar  -cf "./${fileName}"   ./packages/website/out
-          echo "::set-env name=FILE_NAME::${fileName}"
+          echo "FILE_NAME=${fileName}" >> $GITHUB_ENV
 
       - name: Upload Release Asset
         if: env.NEED_RELEASE == 'yes'
