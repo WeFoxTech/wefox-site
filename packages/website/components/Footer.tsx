@@ -43,7 +43,7 @@ export const Footer: React.FC = () => {
             <Typography component="span">
               <MuiLink
                 target="_blank"
-                href="http://www.beian.miit.gov.cn/"
+                href="https://beian.miit.gov.cn/"
               >{`浙ICP备16033599号-6`}</MuiLink>
             </Typography>
           </Grid>
